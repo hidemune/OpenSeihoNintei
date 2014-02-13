@@ -30,16 +30,20 @@ private SetaiPanel[] sp ;
         this.setBounds(x, y, thisBounds.width, thisBounds.height);
         //初期化
         //世帯一覧画面：世帯員パネルの生成
+        int h = OpenSeihoNintei.MaxSetaiIn * 64;
+        Dimension dimP = panelSetaiBase.getPreferredSize();
+        panelSetaiBase.setPreferredSize(new Dimension(dimP.width, h + 100));
+        panelSetai.setPreferredSize(new Dimension(dimP.width, h));
+        
         sp = new SetaiPanel[OpenSeihoNintei.MaxSetaiIn];
         for (int i = 0; i < OpenSeihoNintei.MaxSetaiIn; i++) {
             sp[i] = new SetaiPanel();
             panelSetai.add(sp[i]);
-            //panelSetai
+            sp[i].setPreferredSize(new Dimension(dimP.width, 64));
+        }
+        for (int i = 0; i < OpenSeihoNintei.MaxSetaiIn; i++) {
             sp[i].setVisible(true);
         }
-        int h = OpenSeihoNintei.MaxSetaiIn * 64;
-        panelSetai.setPreferredSize(new Dimension(500, h));
-        panelSetaiBase.setPreferredSize(new Dimension(500, h + 100));
     }
 
     /**
@@ -78,16 +82,16 @@ private SetaiPanel[] sp ;
 
         jLabel1.setText("苗字");
 
-        textMyouji.setText("田中");
-
         jButton1.setText("苗字セット");
-        jButton1.setToolTipText("構成員チェックした行のみ苗字が反映されます");
+        jButton1.setToolTipText("構成員チェックした行のみ苗字が反映されます。\nこの機能は無理に使う必要はありません。");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
 
+        panelSetai.setDoubleBuffered(false);
+        panelSetai.setMinimumSize(new java.awt.Dimension(0, 896));
         panelSetai.setLayout(new java.awt.GridLayout(0, 1));
 
         jButton2.setText("チェック及び確定");
@@ -102,18 +106,16 @@ private SetaiPanel[] sp ;
         panelSetaiBaseLayout.setHorizontalGroup(
             panelSetaiBaseLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(panelSetaiBaseLayout.createSequentialGroup()
-                .add(panelSetaiBaseLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(panelSetaiBaseLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .add(jLabel1)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(textMyouji, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 94, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jButton1)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 326, Short.MAX_VALUE)
-                        .add(jButton2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 129, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                    .add(panelSetai, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                .addContainerGap()
+                .add(jLabel1)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(textMyouji, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 94, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                .add(jButton1)
+                .add(88, 88, 88)
+                .add(jButton2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 129, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(272, Short.MAX_VALUE))
+            .add(panelSetai, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         panelSetaiBaseLayout.setVerticalGroup(
             panelSetaiBaseLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -121,14 +123,15 @@ private SetaiPanel[] sp ;
                 .add(panelSetaiBaseLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(panelSetaiBaseLayout.createSequentialGroup()
                         .addContainerGap()
-                        .add(panelSetaiBaseLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                            .add(panelSetaiBaseLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                                .add(jLabel1)
-                                .add(textMyouji, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                            .add(jButton1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
-                    .add(jButton2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 35, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(panelSetai, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE))
+                        .add(panelSetaiBaseLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(jLabel1)
+                            .add(textMyouji, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 17, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                    .add(panelSetaiBaseLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                        .add(jButton2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 41, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(jButton1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .add(18, 18, 18)
+                .add(panelSetai, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 896, Short.MAX_VALUE)
+                .add(60, 60, 60))
         );
 
         jScrollPane1.setViewportView(panelSetaiBase);
@@ -206,11 +209,11 @@ private SetaiPanel[] sp ;
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jTabbedPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 709, Short.MAX_VALUE)
+            .add(jTabbedPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 749, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jTabbedPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE)
+            .add(jTabbedPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 399, Short.MAX_VALUE)
         );
 
         pack();

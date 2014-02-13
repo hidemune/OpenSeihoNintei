@@ -111,33 +111,22 @@ public class SetaiPanel extends javax.swing.JPanel {
 
         checked = new javax.swing.JCheckBox();
         textName = new javax.swing.JTextField();
-        textYmd = new OpenSeiho.textYmdPanel();
         jLabel1 = new javax.swing.JLabel();
         textNenrei = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
+        textYmd = new OpenSeiho.textYmdPanel();
+        comboID1 = new OpenSeiho.comboID();
+        comboID2 = new OpenSeiho.comboID();
 
         setFocusCycleRoot(true);
-        setFocusTraversalPolicy(null);
         setFocusTraversalPolicyProvider(true);
+        setMinimumSize(new java.awt.Dimension(0, 64));
         setPreferredSize(new java.awt.Dimension(686, 64));
 
         org.openide.awt.Mnemonics.setLocalizedText(checked, org.openide.util.NbBundle.getMessage(SetaiPanel.class, "SetaiPanel.checked.text")); // NOI18N
         checked.setToolTipText(org.openide.util.NbBundle.getMessage(SetaiPanel.class, "SetaiPanel.checked.toolTipText")); // NOI18N
 
         textName.setText(org.openide.util.NbBundle.getMessage(SetaiPanel.class, "SetaiPanel.textName.text")); // NOI18N
-
-        textYmd.setCaption(org.openide.util.NbBundle.getMessage(SetaiPanel.class, "SetaiPanel.textYmd.caption")); // NOI18N
-        textYmd.setTextYMD(org.openide.util.NbBundle.getMessage(SetaiPanel.class, "SetaiPanel.textYmd.textYMD")); // NOI18N
-        textYmd.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                textYmdFocusLost(evt);
-            }
-        });
-        textYmd.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                textYmdPropertyChange(evt);
-            }
-        });
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(SetaiPanel.class, "SetaiPanel.jLabel1.text")); // NOI18N
 
@@ -147,59 +136,73 @@ public class SetaiPanel extends javax.swing.JPanel {
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel2, org.openide.util.NbBundle.getMessage(SetaiPanel.class, "SetaiPanel.jLabel2.text")); // NOI18N
 
+        textYmd.setCaption(org.openide.util.NbBundle.getMessage(SetaiPanel.class, "SetaiPanel.textYmd.caption")); // NOI18N
+        textYmd.setDebugGraphicsOptions(0);
+
+        comboID1.setCaption(org.openide.util.NbBundle.getMessage(SetaiPanel.class, "SetaiPanel.comboID1.caption")); // NOI18N
+        comboID1.setComboWidth(new java.lang.Integer(50));
+        comboID1.setId0(new java.lang.Integer(1));
+        comboID1.setPostCap(org.openide.util.NbBundle.getMessage(SetaiPanel.class, "SetaiPanel.comboID1.postCap")); // NOI18N
+
+        comboID2.setCaption(org.openide.util.NbBundle.getMessage(SetaiPanel.class, "SetaiPanel.comboID2.caption")); // NOI18N
+        comboID2.setComboWidth(new java.lang.Integer(100));
+        comboID2.setId0(new java.lang.Integer(2));
+        comboID2.setPostCap(org.openide.util.NbBundle.getMessage(SetaiPanel.class, "SetaiPanel.comboID2.postCap")); // NOI18N
+
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
+                .addContainerGap()
+                .add(checked)
+                .add(18, 18, 18)
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                    .add(layout.createSequentialGroup()
+                        .add(textName, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 152, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .add(comboID1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 81, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(textYmd, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 258, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .add(18, 18, 18)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(layout.createSequentialGroup()
-                        .add(15, 15, 15)
-                        .add(checked)
-                        .add(18, 18, 18)
-                        .add(textName, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 152, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                        .add(comboID2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                        .add(154, 154, 154))
                     .add(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .add(textYmd, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jLabel1)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(textNenrei, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 41, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jLabel2)))
-                .add(0, 147, Short.MAX_VALUE))
+                        .add(jLabel2)
+                        .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .add(layout.createSequentialGroup()
+                .add(comboID2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(7, 7, 7)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(checked)
-                    .add(textName, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(jLabel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(textNenrei, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jLabel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .add(0, 12, Short.MAX_VALUE))
+            .add(layout.createSequentialGroup()
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                        .add(checked)
+                        .add(textName, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(comboID1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                    .add(jLabel2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                        .add(textNenrei)
-                        .add(jLabel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .add(textYmd, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .add(textYmd, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(0, 0, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void textYmdPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_textYmdPropertyChange
-        // TODO add your handling code here:
-        //DebugMode = true;
-        //logDebug(evt.getPropertyName());
-    }//GEN-LAST:event_textYmdPropertyChange
-
-    private void textYmdFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_textYmdFocusLost
-        // TODO add your handling code here:
-        //logDebug("now!");
-    }//GEN-LAST:event_textYmdFocusLost
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox checked;
+    private OpenSeiho.comboID comboID1;
+    private OpenSeiho.comboID comboID2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JTextField textName;
