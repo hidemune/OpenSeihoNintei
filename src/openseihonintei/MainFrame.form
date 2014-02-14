@@ -35,6 +35,9 @@
   </Layout>
   <SubComponents>
     <Container class="javax.swing.JTabbedPane" name="jTabbedPane1">
+      <Properties>
+        <Property name="focusable" type="boolean" value="false"/>
+      </Properties>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
       <SubComponents>
@@ -68,12 +71,23 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="textMyouji" min="-2" pref="94" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="88" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="textMyouji" min="-2" pref="94" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
+                                  <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="textMyoujiKana" min="-2" pref="94" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" attributes="0">
+                                  <Component id="comboIDNinzuu" min="-2" pref="121" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace min="-2" pref="160" max="-2" attributes="0"/>
                           <Component id="jButton2" min="-2" pref="129" max="-2" attributes="0"/>
-                          <EmptySpace pref="272" max="32767" attributes="0"/>
+                          <EmptySpace pref="122" max="32767" attributes="0"/>
                       </Group>
                       <Component id="panelSetai" alignment="0" max="32767" attributes="0"/>
                   </Group>
@@ -81,20 +95,24 @@
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Group type="102" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="textMyouji" alignment="3" min="-2" pref="17" max="-2" attributes="0"/>
+                                      <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="textMyoujiKana" alignment="3" min="-2" pref="17" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                                      <Component id="textMyouji" min="-2" pref="17" max="-2" attributes="0"/>
+                                      <Component id="comboIDNinzuu" alignment="1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jButton1" alignment="1" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                                  <Component id="jButton2" alignment="3" min="-2" pref="41" max="-2" attributes="0"/>
-                                  <Component id="jButton1" alignment="3" max="32767" attributes="0"/>
-                              </Group>
+                              <Component id="jButton2" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                           <Component id="panelSetai" pref="896" max="32767" attributes="0"/>
                           <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
                       </Group>
@@ -134,10 +152,32 @@
                 <Component class="javax.swing.JButton" name="jButton2">
                   <Properties>
                     <Property name="text" type="java.lang.String" value="&#x30c1;&#x30a7;&#x30c3;&#x30af;&#x53ca;&#x3073;&#x78ba;&#x5b9a;"/>
+                    <Property name="focusable" type="boolean" value="false"/>
                   </Properties>
                   <Events>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
                   </Events>
+                </Component>
+                <Component class="javax.swing.JTextField" name="textMyoujiKana">
+                  <Properties>
+                    <Property name="toolTipText" type="java.lang.String" value="&#x3072;&#x3089;&#x304c;&#x306a;&#x5165;&#x529b;&#x3057;&#x3066;Enter&#x3092;&#x62bc;&#x3059;&#x3068;&#x3001;&#x5168;&#x89d2;&#x30ab;&#x30ca;&#x306b;&#x306a;&#x308a;&#x307e;&#x3059;"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textMyoujiKanaActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel2">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="&#x82d7;&#x5b57;&#x30ab;&#x30ca;"/>
+                  </Properties>
+                </Component>
+                <Component class="OpenSeiho.comboID" name="comboIDNinzuu">
+                  <Properties>
+                    <Property name="caption" type="java.lang.String" value=""/>
+                    <Property name="comboWidth" type="java.lang.Integer" value="70"/>
+                    <Property name="id0" type="java.lang.Integer" value="3"/>
+                    <Property name="postCap" type="java.lang.String" value="&#x4eba;&#x4e16;&#x5e2f;"/>
+                  </Properties>
                 </Component>
               </SubComponents>
             </Container>

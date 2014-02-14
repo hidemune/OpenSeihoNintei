@@ -6,7 +6,9 @@
 
 package openseihonintei;
 
+import com.ibm.icu.text.Transliterator;
 import java.awt.Dimension;
+import javax.swing.ImageIcon;
 
 /**
  *
@@ -20,6 +22,7 @@ private SetaiPanel[] sp ;
      */
     public MainFrame() {
         initComponents();
+        setIconImage(new ImageIcon("hidemune_s.png").getImage());
         //画面を中心に表示
         java.awt.GraphicsEnvironment env = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment();
         // 変数desktopBoundsにデスクトップ領域を表すRectangleが代入される
@@ -44,6 +47,8 @@ private SetaiPanel[] sp ;
         for (int i = 0; i < OpenSeihoNintei.MaxSetaiIn; i++) {
             sp[i].setVisible(true);
         }
+        comboIDNinzuu.enableInputMethods(false);
+        //comboIDNinzuu.
     }
 
     /**
@@ -63,6 +68,9 @@ private SetaiPanel[] sp ;
         jButton1 = new javax.swing.JButton();
         panelSetai = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
+        textMyoujiKana = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        comboIDNinzuu = new OpenSeiho.comboID();
         jScrollPane2 = new javax.swing.JScrollPane();
         jPanel2 = new javax.swing.JPanel();
         jButton3 = new javax.swing.JButton();
@@ -76,6 +84,8 @@ private SetaiPanel[] sp ;
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("生活保護認定");
+
+        jTabbedPane1.setFocusable(false);
 
         panelSetaiBase.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         panelSetaiBase.setPreferredSize(new java.awt.Dimension(713, 20));
@@ -95,11 +105,26 @@ private SetaiPanel[] sp ;
         panelSetai.setLayout(new java.awt.GridLayout(0, 1));
 
         jButton2.setText("チェック及び確定");
+        jButton2.setFocusable(false);
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
             }
         });
+
+        textMyoujiKana.setToolTipText("ひらがな入力してEnterを押すと、全角カナになります");
+        textMyoujiKana.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textMyoujiKanaActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setText("苗字カナ");
+
+        comboIDNinzuu.setCaption("");
+        comboIDNinzuu.setComboWidth(new java.lang.Integer(70));
+        comboIDNinzuu.setId0(new java.lang.Integer(3));
+        comboIDNinzuu.setPostCap("人世帯");
 
         org.jdesktop.layout.GroupLayout panelSetaiBaseLayout = new org.jdesktop.layout.GroupLayout(panelSetaiBase);
         panelSetaiBase.setLayout(panelSetaiBaseLayout);
@@ -109,27 +134,39 @@ private SetaiPanel[] sp ;
                 .addContainerGap()
                 .add(jLabel1)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(textMyouji, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 94, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                .add(jButton1)
-                .add(88, 88, 88)
+                .add(panelSetaiBaseLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(panelSetaiBaseLayout.createSequentialGroup()
+                        .add(textMyouji, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 94, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(26, 26, 26)
+                        .add(jLabel2)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(textMyoujiKana, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 94, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(panelSetaiBaseLayout.createSequentialGroup()
+                        .add(comboIDNinzuu, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 121, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jButton1)))
+                .add(160, 160, 160)
                 .add(jButton2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 129, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(272, Short.MAX_VALUE))
+                .addContainerGap(122, Short.MAX_VALUE))
             .add(panelSetai, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         panelSetaiBaseLayout.setVerticalGroup(
             panelSetaiBaseLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(panelSetaiBaseLayout.createSequentialGroup()
-                .add(panelSetaiBaseLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                .add(panelSetaiBaseLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
                     .add(panelSetaiBaseLayout.createSequentialGroup()
                         .addContainerGap()
-                        .add(panelSetaiBaseLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                        .add(panelSetaiBaseLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                             .add(jLabel1)
-                            .add(textMyouji, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 17, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-                    .add(panelSetaiBaseLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                        .add(jButton2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 41, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .add(jButton1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .add(18, 18, 18)
+                            .add(textMyouji, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 17, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(jLabel2)
+                            .add(textMyoujiKana, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 17, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(panelSetaiBaseLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(org.jdesktop.layout.GroupLayout.TRAILING, comboIDNinzuu, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(org.jdesktop.layout.GroupLayout.TRAILING, jButton1)))
+                    .add(jButton2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .add(panelSetai, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 896, Short.MAX_VALUE)
                 .add(60, 60, 60))
         );
@@ -221,10 +258,19 @@ private SetaiPanel[] sp ;
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        //人数がセットされていれば、チェックをつける(人数セットは必須ではない。手動チェックでOK)
+        int ninzuu = comboIDNinzuu.getValue();
+        if (ninzuu > 0) {
+            for (int i = 0; i < ninzuu; i++) {
+                sp[i].setChecked(true);
+            }
+        }
+        
         //苗字セット
         for (int i = 0; i < OpenSeihoNintei.MaxSetaiIn; i++) {
             if (sp[i].getChecked()) {
                 sp[i].setMyouji(textMyouji.getText());
+                sp[i].setMyoujiKana(textMyoujiKana.getText());
             }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -237,6 +283,13 @@ private SetaiPanel[] sp ;
             sp[i].setNenrei(nendo);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void textMyoujiKanaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textMyoujiKanaActionPerformed
+        // TODO add your handling code here:
+        //ひらがな→カタカナ変換
+        Transliterator tr = Transliterator.getInstance("Hiragana-Katakana");
+        textMyoujiKana.setText(tr.transform(textMyoujiKana.getText()));
+    }//GEN-LAST:event_textMyoujiKanaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -274,6 +327,7 @@ private SetaiPanel[] sp ;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private OpenSeiho.comboID comboIDNinzuu;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -281,6 +335,7 @@ private SetaiPanel[] sp ;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JList jList2;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -292,5 +347,6 @@ private SetaiPanel[] sp ;
     private javax.swing.JPanel panelSetai;
     private javax.swing.JPanel panelSetaiBase;
     private javax.swing.JTextField textMyouji;
+    private javax.swing.JTextField textMyoujiKana;
     // End of variables declaration//GEN-END:variables
 }

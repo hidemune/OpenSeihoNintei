@@ -18,6 +18,8 @@
 
 package openseihonintei;
 
+import com.ibm.icu.text.Transliterator;
+
 /**
  *
  * @author hdm
@@ -46,10 +48,17 @@ public class SetaiPanel extends javax.swing.JPanel {
     }
     public void setMyouji(String Myouji) {
         String wk = textName.getText();
-        if (wk.startsWith(Myouji)) {
+        if (wk.indexOf(Myouji) >= 0) {
             return;
         }
         textName.setText(Myouji + "　" + wk);
+    }
+    public void setMyoujiKana(String Myouji) {
+        String wk = textKana.getText();
+        if (wk.indexOf(Myouji) >= 0) {
+            return;
+        }
+        textKana.setText(Myouji + "　" + wk);
     }
     /**
      * 認定年齢を算出：4月1日時点の年齢、ただし、マイナスになる場合は０とする。
@@ -117,8 +126,9 @@ public class SetaiPanel extends javax.swing.JPanel {
         textYmd = new OpenSeiho.textYmdPanel();
         comboID1 = new OpenSeiho.comboID();
         comboID2 = new OpenSeiho.comboID();
+        textKana = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
 
-        setFocusCycleRoot(true);
         setFocusTraversalPolicyProvider(true);
         setMinimumSize(new java.awt.Dimension(0, 64));
         setPreferredSize(new java.awt.Dimension(686, 64));
@@ -127,12 +137,18 @@ public class SetaiPanel extends javax.swing.JPanel {
         checked.setToolTipText(org.openide.util.NbBundle.getMessage(SetaiPanel.class, "SetaiPanel.checked.toolTipText")); // NOI18N
 
         textName.setText(org.openide.util.NbBundle.getMessage(SetaiPanel.class, "SetaiPanel.textName.text")); // NOI18N
+        textName.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                textNameKeyPressed(evt);
+            }
+        });
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(SetaiPanel.class, "SetaiPanel.jLabel1.text")); // NOI18N
 
         textNenrei.setEditable(false);
         textNenrei.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         textNenrei.setText(org.openide.util.NbBundle.getMessage(SetaiPanel.class, "SetaiPanel.textNenrei.text")); // NOI18N
+        textNenrei.setFocusable(false);
 
         org.openide.awt.Mnemonics.setLocalizedText(jLabel2, org.openide.util.NbBundle.getMessage(SetaiPanel.class, "SetaiPanel.jLabel2.text")); // NOI18N
 
@@ -149,6 +165,15 @@ public class SetaiPanel extends javax.swing.JPanel {
         comboID2.setId0(new java.lang.Integer(2));
         comboID2.setPostCap(org.openide.util.NbBundle.getMessage(SetaiPanel.class, "SetaiPanel.comboID2.postCap")); // NOI18N
 
+        textKana.setText(org.openide.util.NbBundle.getMessage(SetaiPanel.class, "SetaiPanel.textKana.text")); // NOI18N
+        textKana.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textKanaActionPerformed(evt);
+            }
+        });
+
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel3, org.openide.util.NbBundle.getMessage(SetaiPanel.class, "SetaiPanel.jLabel3.text")); // NOI18N
+
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -157,46 +182,60 @@ public class SetaiPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .add(checked)
                 .add(18, 18, 18)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                    .add(layout.createSequentialGroup()
-                        .add(textName, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 152, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .add(comboID1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 81, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                    .add(textYmd, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 258, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .add(18, 18, 18)
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(layout.createSequentialGroup()
-                        .add(comboID2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
-                        .add(154, 154, 154))
+                        .add(textName, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 152, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jLabel3)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(textKana, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 152, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(comboID1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 81, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(comboID2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 139, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                     .add(layout.createSequentialGroup()
+                        .add(textYmd, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 258, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jLabel1)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(textNenrei, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 41, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jLabel2)
-                        .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .add(jLabel2)))
+                .addContainerGap(194, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(layout.createSequentialGroup()
-                .add(comboID2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(7, 7, 7)
-                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jLabel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(textNenrei, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jLabel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .add(0, 12, Short.MAX_VALUE))
-            .add(layout.createSequentialGroup()
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                         .add(checked)
-                        .add(textName, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                        .add(textName, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(jLabel3)
+                        .add(textKana, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(comboID2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(comboID1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(textYmd, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(0, 0, Short.MAX_VALUE))
+                .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(textYmd, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                        .add(jLabel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(textNenrei, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(jLabel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void textNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textNameKeyPressed
+        // TODO add your handling code here:
+        //textKana.setText(textKana.getText() + evt.getExtendedKeyCode());
+    }//GEN-LAST:event_textNameKeyPressed
+
+    private void textKanaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textKanaActionPerformed
+        // TODO add your handling code here:
+        //ひらがな→カタカナ変換
+        Transliterator tr = Transliterator.getInstance("Hiragana-Katakana");
+        textKana.setText(tr.transform(textKana.getText()));
+    }//GEN-LAST:event_textKanaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -205,6 +244,8 @@ public class SetaiPanel extends javax.swing.JPanel {
     private OpenSeiho.comboID comboID2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JTextField textKana;
     private javax.swing.JTextField textName;
     private javax.swing.JTextField textNenrei;
     private OpenSeiho.textYmdPanel textYmd;
