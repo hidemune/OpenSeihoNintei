@@ -22,6 +22,7 @@ public static int MaxSetaiIn = 14;
         // TODO code application logic here
         MainFrame frm = new MainFrame();
         frm.setVisible(true);
+        //frm.init();
     }
     
 }

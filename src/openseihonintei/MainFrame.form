@@ -24,12 +24,12 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jTabbedPane1" alignment="0" pref="749" max="32767" attributes="0"/>
+          <Component id="jTabbedPane1" alignment="0" pref="820" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jTabbedPane1" alignment="0" pref="399" max="32767" attributes="0"/>
+          <Component id="jTabbedPane1" alignment="0" pref="451" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -38,6 +38,9 @@
       <Properties>
         <Property name="focusable" type="boolean" value="false"/>
       </Properties>
+      <Events>
+        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="jTabbedPane1StateChanged"/>
+      </Events>
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
       <SubComponents>
@@ -69,25 +72,24 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Component id="textMyouji" min="-2" pref="94" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                                  <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="textMyoujiKana" min="-2" pref="94" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="102" attributes="0">
-                                  <Component id="comboIDNinzuu" min="-2" pref="121" max="-2" attributes="0"/>
+                                  <Component id="textMyouji1" min="-2" pref="94" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jButton7" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Component id="textYmdPanel3" pref="251" max="32767" attributes="0"/>
+                                      <Component id="textYmdNintei" max="32767" attributes="0"/>
+                                  </Group>
                               </Group>
                           </Group>
-                          <EmptySpace min="-2" pref="160" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                           <Component id="jButton2" min="-2" pref="129" max="-2" attributes="0"/>
-                          <EmptySpace pref="122" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="147" max="-2" attributes="0"/>
                       </Group>
                       <Component id="panelSetai" alignment="0" max="32767" attributes="0"/>
                   </Group>
@@ -95,49 +97,41 @@
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="textMyouji" alignment="3" min="-2" pref="17" max="-2" attributes="0"/>
-                                      <Component id="jLabel2" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="textMyoujiKana" alignment="3" min="-2" pref="17" max="-2" attributes="0"/>
+                                  <Component id="jButton2" min="-2" pref="82" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="textMyouji1" alignment="3" min="-2" pref="17" max="-2" attributes="0"/>
+                                          <Component id="jButton7" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="textYmdNintei" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="comboIDNinzuu" alignment="1" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jButton1" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  </Group>
+                                  <Component id="textYmdPanel3" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
+                                  <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <Component id="jButton2" max="32767" attributes="0"/>
                           </Group>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="panelSetai" min="-2" pref="816" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
-                          <Component id="panelSetai" pref="896" max="32767" attributes="0"/>
-                          <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Component class="javax.swing.JLabel" name="jLabel1">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="&#x82d7;&#x5b57;"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JTextField" name="textMyouji">
-                </Component>
-                <Component class="javax.swing.JButton" name="jButton1">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="&#x82d7;&#x5b57;&#x30bb;&#x30c3;&#x30c8;"/>
-                    <Property name="toolTipText" type="java.lang.String" value="&#x69cb;&#x6210;&#x54e1;&#x30c1;&#x30a7;&#x30c3;&#x30af;&#x3057;&#x305f;&#x884c;&#x306e;&#x307f;&#x82d7;&#x5b57;&#x304c;&#x53cd;&#x6620;&#x3055;&#x308c;&#x307e;&#x3059;&#x3002;&#xa;&#x3053;&#x306e;&#x6a5f;&#x80fd;&#x306f;&#x7121;&#x7406;&#x306b;&#x4f7f;&#x3046;&#x5fc5;&#x8981;&#x306f;&#x3042;&#x308a;&#x307e;&#x305b;&#x3093;&#x3002;"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
-                  </Events>
-                </Component>
                 <Container class="javax.swing.JPanel" name="panelSetai">
                   <Properties>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
+                        <EtchetBorder/>
+                      </Border>
+                    </Property>
                     <Property name="doubleBuffered" type="boolean" value="false"/>
                     <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
                       <Dimension value="[0, 896]"/>
@@ -158,25 +152,127 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JTextField" name="textMyoujiKana">
+                <Component class="javax.swing.JLabel" name="jLabel6">
                   <Properties>
-                    <Property name="toolTipText" type="java.lang.String" value="&#x3072;&#x3089;&#x304c;&#x306a;&#x5165;&#x529b;&#x3057;&#x3066;Enter&#x3092;&#x62bc;&#x3059;&#x3068;&#x3001;&#x5168;&#x89d2;&#x30ab;&#x30ca;&#x306b;&#x306a;&#x308a;&#x307e;&#x3059;"/>
+                    <Property name="text" type="java.lang.String" value="&#x30b1;&#x30fc;&#x30b9;No"/>
                   </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="textMyouji1">
                   <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textMyoujiKanaActionPerformed"/>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textMyouji1ActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel2">
+                <Component class="javax.swing.JButton" name="jButton7">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="&#x82d7;&#x5b57;&#x30ab;&#x30ca;"/>
+                    <Property name="text" type="java.lang.String" value="&#x81ea;&#x52d5;&#x63a1;&#x756a;"/>
+                    <Property name="toolTipText" type="java.lang.String" value="&#x69cb;&#x6210;&#x54e1;&#x30c1;&#x30a7;&#x30c3;&#x30af;&#x3057;&#x305f;&#x884c;&#x306e;&#x307f;&#x82d7;&#x5b57;&#x304c;&#x53cd;&#x6620;&#x3055;&#x308c;&#x307e;&#x3059;&#x3002;&#xa;&#x3053;&#x306e;&#x6a5f;&#x80fd;&#x306f;&#x7121;&#x7406;&#x306b;&#x4f7f;&#x3046;&#x5fc5;&#x8981;&#x306f;&#x3042;&#x308a;&#x307e;&#x305b;&#x3093;&#x3002;"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton7ActionPerformed"/>
+                    <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jButton7KeyPressed"/>
+                  </Events>
+                </Component>
+                <Container class="javax.swing.JPanel" name="jPanel1">
+                  <Properties>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
+                        <EtchetBorder/>
+                      </Border>
+                    </Property>
+                  </Properties>
+
+                  <Layout>
+                    <DimensionLayout dim="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="textMyouji" min="-2" pref="94" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="textMyoujiKana" min="-2" pref="94" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="comboIDNinzuu" min="-2" pref="121" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jButton1" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace pref="57" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                    <DimensionLayout dim="1">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
+                                      <Component id="jLabel1" max="32767" attributes="0"/>
+                                  </Group>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jButton1" alignment="1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="comboIDNinzuu" alignment="1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="textMyoujiKana" alignment="1" min="-2" pref="22" max="-2" attributes="0"/>
+                                      <Component id="jLabel2" alignment="1" min="-2" pref="20" max="-2" attributes="0"/>
+                                      <Component id="textMyouji" alignment="1" min="-2" pref="22" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
+                    </DimensionLayout>
+                  </Layout>
+                  <SubComponents>
+                    <Component class="javax.swing.JLabel" name="jLabel1">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x82d7;&#x5b57;"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="textMyouji">
+                    </Component>
+                    <Component class="javax.swing.JLabel" name="jLabel2">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x82d7;&#x5b57;&#x30ab;&#x30ca;"/>
+                      </Properties>
+                    </Component>
+                    <Component class="javax.swing.JTextField" name="textMyoujiKana">
+                      <Properties>
+                        <Property name="toolTipText" type="java.lang.String" value="&#x3072;&#x3089;&#x304c;&#x306a;&#x5165;&#x529b;&#x3057;&#x3066;Enter&#x3092;&#x62bc;&#x3059;&#x3068;&#x3001;&#x5168;&#x89d2;&#x30ab;&#x30ca;&#x306b;&#x306a;&#x308a;&#x307e;&#x3059;"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textMyoujiKanaActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="jButton1">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="&#x82d7;&#x5b57;&#x30bb;&#x30c3;&#x30c8;"/>
+                        <Property name="toolTipText" type="java.lang.String" value="&#x69cb;&#x6210;&#x54e1;&#x30c1;&#x30a7;&#x30c3;&#x30af;&#x3057;&#x305f;&#x884c;&#x306e;&#x307f;&#x82d7;&#x5b57;&#x304c;&#x53cd;&#x6620;&#x3055;&#x308c;&#x307e;&#x3059;&#x3002;&#xa;&#x3053;&#x306e;&#x6a5f;&#x80fd;&#x306f;&#x7121;&#x7406;&#x306b;&#x4f7f;&#x3046;&#x5fc5;&#x8981;&#x306f;&#x3042;&#x308a;&#x307e;&#x305b;&#x3093;&#x3002;"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+                        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jButton1KeyPressed"/>
+                      </Events>
+                    </Component>
+                    <Component class="OpenSeiho.comboID" name="comboIDNinzuu">
+                      <Properties>
+                        <Property name="caption" type="java.lang.String" value=""/>
+                        <Property name="comboWidth" type="java.lang.Integer" value="70"/>
+                        <Property name="defaultID1" type="java.lang.String" value=""/>
+                        <Property name="id0" type="java.lang.Integer" value="3"/>
+                        <Property name="postCap" type="java.lang.String" value="&#x4eba;&#x4e16;&#x5e2f;"/>
+                      </Properties>
+                    </Component>
+                  </SubComponents>
+                </Container>
+                <Component class="OpenSeiho.textYmdPanel" name="textYmdNintei">
+                  <Properties>
+                    <Property name="caption" type="java.lang.String" value="&#x8a8d;&#x5b9a;&#x65e5;"/>
                   </Properties>
                 </Component>
-                <Component class="OpenSeiho.comboID" name="comboIDNinzuu">
+                <Component class="OpenSeiho.textYmdPanel" name="textYmdPanel3">
                   <Properties>
-                    <Property name="caption" type="java.lang.String" value=""/>
-                    <Property name="comboWidth" type="java.lang.Integer" value="70"/>
-                    <Property name="id0" type="java.lang.Integer" value="3"/>
-                    <Property name="postCap" type="java.lang.String" value="&#x4eba;&#x4e16;&#x5e2f;"/>
+                    <Property name="caption" type="java.lang.String" value="&#x8d77;&#x6848;&#x65e5;"/>
                   </Properties>
                 </Component>
               </SubComponents>
@@ -194,66 +290,547 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Container class="javax.swing.JPanel" name="jPanel2">
+            <Container class="javax.swing.JPanel" name="jPanelkojin">
 
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace pref="556" max="32767" attributes="0"/>
-                          <Component id="jButton4" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jButton3" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                                  <Component id="jComboBoxKojin" min="-2" pref="177" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="setaiInPanel" alignment="0" min="-2" pref="717" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <Component id="jCheckBox1" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                          <Component id="comboID1" min="-2" pref="216" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="comboIDKyuti" min="-2" pref="104" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="comboIDTouki" min="-2" pref="159" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                          </Group>
+                          <EmptySpace pref="446" max="32767" attributes="0"/>
                       </Group>
-                      <Component id="jScrollPane5" alignment="0" max="32767" attributes="0"/>
+                      <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
+                              <Component id="jPanelKasan" min="-2" pref="728" max="-2" attributes="0"/>
+                              <EmptySpace pref="385" max="32767" attributes="0"/>
+                          </Group>
+                      </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="jButton3" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jButton4" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="comboID1" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Component id="jComboBoxKojin" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="setaiInPanel" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="jCheckBox1" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" attributes="0">
+                                          <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
+                                          <Component id="comboIDTouki" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                              </Group>
+                              <Component id="comboIDKyuti" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane5" pref="382" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                          <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace pref="4675" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="146" max="-2" attributes="0"/>
+                              <Component id="jPanelKasan" min="-2" pref="265" max="-2" attributes="0"/>
+                              <EmptySpace pref="4422" max="32767" attributes="0"/>
+                          </Group>
                       </Group>
                   </Group>
                 </DimensionLayout>
               </Layout>
               <SubComponents>
-                <Component class="javax.swing.JButton" name="jButton3">
+                <Component class="OpenSeiho.comboID" name="comboID1">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="jButton1"/>
+                    <Property name="caption" type="java.lang.String" value="&#x751f;&#x6d3b;&#x5f62;&#x614b; "/>
+                    <Property name="comboWidth" type="java.lang.Integer" value="150"/>
+                    <Property name="id0" type="java.lang.Integer" value="4"/>
+                    <Property name="postCap" type="java.lang.String" value=""/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JButton" name="jButton4">
+                <Component class="javax.swing.JComboBox" name="jComboBoxKojin">
                   <Properties>
-                    <Property name="text" type="java.lang.String" value="jButton2"/>
+                    <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                      <StringArray count="4">
+                        <StringItem index="0" value="Item 1"/>
+                        <StringItem index="1" value="Item 2"/>
+                        <StringItem index="2" value="Item 3"/>
+                        <StringItem index="3" value="Item 4"/>
+                      </StringArray>
+                    </Property>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBoxKojinActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="openseihonintei.SetaiPanel" name="setaiInPanel">
+                </Component>
+                <Component class="javax.swing.JCheckBox" name="jCheckBox1">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="&#x4e16;&#x5e2f;&#x4e3b;"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBox1ActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="OpenSeiho.comboID" name="comboIDKyuti">
+                  <Properties>
+                    <Property name="caption" type="java.lang.String" value="&#x7d1a;&#x5730;"/>
+                    <Property name="comboWidth" type="java.lang.Integer" value="70"/>
+                    <Property name="defaultID1" type="java.lang.String" value="0"/>
+                    <Property name="id0" type="java.lang.Integer" value="5"/>
+                    <Property name="postCap" type="java.lang.String" value=""/>
                   </Properties>
                 </Component>
-                <Container class="javax.swing.JScrollPane" name="jScrollPane5">
-                  <AuxValues>
-                    <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-                  </AuxValues>
+                <Component class="OpenSeiho.comboID" name="comboIDTouki">
+                  <Properties>
+                    <Property name="caption" type="java.lang.String" value="&#x51ac;&#x5b63;&#x533a;&#x5206;"/>
+                    <Property name="comboWidth" type="java.lang.Integer" value="100"/>
+                    <Property name="defaultID1" type="java.lang.String" value="0"/>
+                    <Property name="id0" type="java.lang.Integer" value="6"/>
+                    <Property name="postCap" type="java.lang.String" value=""/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel3">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="&#x52a0;&#x7b97;"/>
+                  </Properties>
+                </Component>
+                <Container class="javax.swing.JPanel" name="jPanelKasan">
+                  <Properties>
+                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                      <Border info="org.netbeans.modules.form.compat2.border.EtchedBorderInfo">
+                        <EtchetBorder/>
+                      </Border>
+                    </Property>
+                  </Properties>
 
-                  <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+                  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridLayout">
+                    <Property name="columns" type="int" value="1"/>
+                    <Property name="rows" type="int" value="8"/>
+                  </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JList" name="jList2">
-                      <Properties>
-                        <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
-                          <StringArray count="5">
-                            <StringItem index="0" value="Item 1"/>
-                            <StringItem index="1" value="Item 2"/>
-                            <StringItem index="2" value="Item 3"/>
-                            <StringItem index="3" value="Item 4"/>
-                            <StringItem index="4" value="Item 5"/>
-                          </StringArray>
-                        </Property>
-                      </Properties>
-                    </Component>
+                    <Container class="javax.swing.JPanel" name="jPanel6">
+
+                      <Layout>
+                        <DimensionLayout dim="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jCheckBox3" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
+                                  <Component id="comboIDKasanNinpu" min="-2" pref="151" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="comboIDKasanSanpu" min="-2" pref="178" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="textSyussanYmd" min="-2" pref="266" max="-2" attributes="0"/>
+                                  <EmptySpace max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                        </DimensionLayout>
+                        <DimensionLayout dim="1">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jCheckBox3" min="-2" pref="21" max="-2" attributes="0"/>
+                                      <Component id="comboIDKasanNinpu" min="-2" max="-2" attributes="0"/>
+                                      <Component id="comboIDKasanSanpu" min="-2" max="-2" attributes="0"/>
+                                      <Component id="textSyussanYmd" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="0" pref="9" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                        </DimensionLayout>
+                      </Layout>
+                      <SubComponents>
+                        <Component class="javax.swing.JCheckBox" name="jCheckBox3">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="&#x598a;&#x7523;&#x5a66;"/>
+                          </Properties>
+                        </Component>
+                        <Component class="OpenSeiho.comboID" name="comboIDKasanNinpu">
+                          <Properties>
+                            <Property name="caption" type="java.lang.String" value="&#x598a;&#x5a66;"/>
+                            <Property name="comboWidth" type="java.lang.Integer" value="120"/>
+                            <Property name="id0" type="java.lang.Integer" value="11"/>
+                            <Property name="postCap" type="java.lang.String" value=""/>
+                          </Properties>
+                        </Component>
+                        <Component class="OpenSeiho.comboID" name="comboIDKasanSanpu">
+                          <Properties>
+                            <Property name="caption" type="java.lang.String" value="&#x7523;&#x5a66;"/>
+                            <Property name="comboWidth" type="java.lang.Integer" value="150"/>
+                            <Property name="id0" type="java.lang.Integer" value="12"/>
+                            <Property name="postCap" type="java.lang.String" value=""/>
+                          </Properties>
+                        </Component>
+                        <Component class="OpenSeiho.textYmdPanel" name="textSyussanYmd">
+                          <Properties>
+                            <Property name="caption" type="java.lang.String" value="&#x51fa;&#x7523;(&#x4e88;&#x5b9a;)&#x65e5;"/>
+                          </Properties>
+                        </Component>
+                      </SubComponents>
+                    </Container>
+                    <Container class="javax.swing.JPanel" name="jPanel7">
+
+                      <Layout>
+                        <DimensionLayout dim="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jCheckBox4" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
+                                  <Component id="comboIDKasanSyougai" min="-2" pref="256" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="textKaigoHi" min="-2" pref="108" max="-2" attributes="0"/>
+                                  <EmptySpace pref="154" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                        </DimensionLayout>
+                        <DimensionLayout dim="1">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jCheckBox4" min="-2" pref="21" max="-2" attributes="0"/>
+                                      <Component id="comboIDKasanSyougai" min="-2" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="textKaigoHi" alignment="3" min="-2" pref="19" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace min="0" pref="10" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                        </DimensionLayout>
+                      </Layout>
+                      <SubComponents>
+                        <Component class="javax.swing.JCheckBox" name="jCheckBox4">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="&#x969c;&#x5bb3;&#x8005;"/>
+                          </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBox4ActionPerformed"/>
+                          </Events>
+                        </Component>
+                        <Component class="OpenSeiho.comboID" name="comboIDKasanSyougai">
+                          <Properties>
+                            <Property name="caption" type="java.lang.String" value=""/>
+                            <Property name="comboWidth" type="java.lang.Integer" value="250"/>
+                            <Property name="defaultID1" type="java.lang.String" value="0"/>
+                            <Property name="id0" type="java.lang.Integer" value="13"/>
+                            <Property name="postCap" type="java.lang.String" value=""/>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JLabel" name="jLabel4">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="&#x4ecb;&#x8b77;&#x4eba;&#x8cbb;&#x7528;"/>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JTextField" name="textKaigoHi">
+                          <Properties>
+                            <Property name="horizontalAlignment" type="int" value="4"/>
+                            <Property name="text" type="java.lang.String" value="\u005c0" containsInvalidXMLChars="true"/>
+                          </Properties>
+                        </Component>
+                      </SubComponents>
+                    </Container>
+                    <Container class="javax.swing.JPanel" name="jPanel8">
+
+                      <Layout>
+                        <DimensionLayout dim="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jCheckBox5" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="textKaigoSisetu" min="-2" pref="108" max="-2" attributes="0"/>
+                                  <EmptySpace pref="484" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                        </DimensionLayout>
+                        <DimensionLayout dim="1">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="jCheckBox5" alignment="3" min="-2" pref="21" max="-2" attributes="0"/>
+                                      <Component id="textKaigoSisetu" alignment="3" min="-2" pref="19" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="0" pref="11" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                        </DimensionLayout>
+                      </Layout>
+                      <SubComponents>
+                        <Component class="javax.swing.JCheckBox" name="jCheckBox5">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="&#x4ecb;&#x8b77;&#x65bd;&#x8a2d;&#x5165;&#x6240;&#x8005;"/>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JTextField" name="textKaigoSisetu">
+                          <Properties>
+                            <Property name="horizontalAlignment" type="int" value="4"/>
+                            <Property name="text" type="java.lang.String" value="\u005c0" containsInvalidXMLChars="true"/>
+                          </Properties>
+                        </Component>
+                      </SubComponents>
+                    </Container>
+                    <Container class="javax.swing.JPanel" name="jPanel9">
+
+                      <Layout>
+                        <DimensionLayout dim="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jCheckBox2" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace pref="639" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                        </DimensionLayout>
+                        <DimensionLayout dim="1">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jCheckBox2" min="-2" pref="21" max="-2" attributes="0"/>
+                                  <EmptySpace min="0" pref="11" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                        </DimensionLayout>
+                      </Layout>
+                      <SubComponents>
+                        <Component class="javax.swing.JCheckBox" name="jCheckBox2">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="&#x5728;&#x5b85;&#x60a3;&#x8005;"/>
+                          </Properties>
+                        </Component>
+                      </SubComponents>
+                    </Container>
+                    <Container class="javax.swing.JPanel" name="jPanel10">
+
+                      <Layout>
+                        <DimensionLayout dim="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jCheckBox6" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <Component id="comboIDHousyasen" min="-2" pref="105" max="-2" attributes="0"/>
+                                  <EmptySpace pref="500" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                        </DimensionLayout>
+                        <DimensionLayout dim="1">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="jCheckBox6" min="-2" pref="21" max="-2" attributes="0"/>
+                                          <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="comboIDHousyasen" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="0" pref="10" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                        </DimensionLayout>
+                      </Layout>
+                      <SubComponents>
+                        <Component class="javax.swing.JCheckBox" name="jCheckBox6">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="&#x653e;&#x5c04;&#x7dda;&#x969c;&#x5bb3;&#x8005;"/>
+                          </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBox6ActionPerformed"/>
+                          </Events>
+                        </Component>
+                        <Component class="OpenSeiho.comboID" name="comboIDHousyasen">
+                          <Properties>
+                            <Property name="caption" type="java.lang.String" value=""/>
+                            <Property name="id0" type="java.lang.Integer" value="16"/>
+                            <Property name="postCap" type="java.lang.String" value=""/>
+                          </Properties>
+                        </Component>
+                      </SubComponents>
+                    </Container>
+                    <Container class="javax.swing.JPanel" name="jPanel11">
+
+                      <Layout>
+                        <DimensionLayout dim="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jCheckBox7" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="33" max="-2" attributes="0"/>
+                                  <Component id="comboIDKasanJidouYouiku" min="-2" pref="163" max="-2" attributes="0"/>
+                                  <EmptySpace pref="443" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                        </DimensionLayout>
+                        <DimensionLayout dim="1">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                      <Component id="comboIDKasanJidouYouiku" alignment="0" pref="0" max="32767" attributes="0"/>
+                                      <Component id="jCheckBox7" alignment="0" max="32767" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="0" pref="11" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                        </DimensionLayout>
+                      </Layout>
+                      <SubComponents>
+                        <Component class="javax.swing.JCheckBox" name="jCheckBox7">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="&#x5150;&#x7ae5;&#x990a;&#x80b2;"/>
+                          </Properties>
+                        </Component>
+                        <Component class="OpenSeiho.comboID" name="comboIDKasanJidouYouiku">
+                          <Properties>
+                            <Property name="caption" type="java.lang.String" value=""/>
+                            <Property name="comboWidth" type="java.lang.Integer" value="150"/>
+                            <Property name="id0" type="java.lang.Integer" value="17"/>
+                            <Property name="postCap" type="java.lang.String" value=""/>
+                          </Properties>
+                        </Component>
+                      </SubComponents>
+                    </Container>
+                    <Container class="javax.swing.JPanel" name="jPanel12">
+
+                      <Layout>
+                        <DimensionLayout dim="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jCheckBox8" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
+                                  <Component id="textKasanKaigoHokenRyou" min="-2" pref="100" max="-2" attributes="0"/>
+                                  <EmptySpace pref="505" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                        </DimensionLayout>
+                        <DimensionLayout dim="1">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="jCheckBox8" alignment="3" min="-2" pref="21" max="-2" attributes="0"/>
+                                      <Component id="textKasanKaigoHokenRyou" alignment="3" min="-2" pref="19" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="0" pref="11" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                        </DimensionLayout>
+                      </Layout>
+                      <SubComponents>
+                        <Component class="javax.swing.JCheckBox" name="jCheckBox8">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="&#x4ecb;&#x8b77;&#x4fdd;&#x967a;&#x6599;"/>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JTextField" name="textKasanKaigoHokenRyou">
+                          <Properties>
+                            <Property name="horizontalAlignment" type="int" value="4"/>
+                            <Property name="text" type="java.lang.String" value="\u005c0" containsInvalidXMLChars="true"/>
+                          </Properties>
+                        </Component>
+                      </SubComponents>
+                    </Container>
+                    <Container class="javax.swing.JPanel" name="jPanel13">
+
+                      <Layout>
+                        <DimensionLayout dim="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jCheckBox9" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
+                                  <Component id="comboIDKasanBoshi" min="-2" pref="105" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="textKasanBoshiNinzuu" min="-2" pref="27" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="86" max="-2" attributes="0"/>
+                                  <Component id="jCheckBox10" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="0" pref="279" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                        </DimensionLayout>
+                        <DimensionLayout dim="1">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                          <Component id="comboIDKasanBoshi" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jCheckBox9" min="-2" pref="21" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                                          <Component id="textKasanBoshiNinzuu" alignment="3" min="-2" pref="19" max="-2" attributes="0"/>
+                                          <Component id="jLabel5" alignment="3" max="32767" attributes="0"/>
+                                          <Component id="jCheckBox10" alignment="3" min="-2" pref="21" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace min="0" pref="10" max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                        </DimensionLayout>
+                      </Layout>
+                      <SubComponents>
+                        <Component class="javax.swing.JCheckBox" name="jCheckBox9">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="&#x6bcd;&#x5b50;"/>
+                          </Properties>
+                        </Component>
+                        <Component class="OpenSeiho.comboID" name="comboIDKasanBoshi">
+                          <Properties>
+                            <Property name="caption" type="java.lang.String" value=""/>
+                            <Property name="id0" type="java.lang.Integer" value="19"/>
+                            <Property name="postCap" type="java.lang.String" value=""/>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JTextField" name="textKasanBoshiNinzuu">
+                          <Properties>
+                            <Property name="horizontalAlignment" type="int" value="4"/>
+                            <Property name="text" type="java.lang.String" value="0"/>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JLabel" name="jLabel5">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="&#x4eba;"/>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JCheckBox" name="jCheckBox10">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="&#x91cd;&#x8907;&#x8abf;&#x6574;"/>
+                          </Properties>
+                        </Component>
+                      </SubComponents>
+                    </Container>
                   </SubComponents>
                 </Container>
               </SubComponents>
@@ -277,7 +854,7 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace pref="556" max="32767" attributes="0"/>
+                          <EmptySpace pref="965" max="32767" attributes="0"/>
                           <Component id="jButton6" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jButton5" min="-2" max="-2" attributes="0"/>
@@ -293,7 +870,7 @@
                               <Component id="jButton5" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="jButton6" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="388" max="32767" attributes="0"/>
+                          <EmptySpace pref="768" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>

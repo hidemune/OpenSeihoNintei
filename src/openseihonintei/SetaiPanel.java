@@ -19,6 +19,7 @@
 package openseihonintei;
 
 import com.ibm.icu.text.Transliterator;
+import java.awt.Color;
 
 /**
  *
@@ -40,11 +41,61 @@ public class SetaiPanel extends javax.swing.JPanel {
         initComponents();
     }
 
+    
+    public void setEditable(boolean editable) {
+        textName.setEditable(editable);
+        textKana.setEditable(editable);
+        textYmd.setEditable(editable);
+        comboID1.setEnabled(editable);
+        comboID2.setEnabled(editable);
+    }
+    public void setNameKj(String str) {
+        textName.setText(str);
+    }
+    public String getNameKj() {
+        return textName.getText();
+    }
+    public void setNameKn(String str) {
+        textKana.setText(str);
+    }
+    public String getNameKn() {
+        return textKana.getText();
+    }
+    public void setSeibetu(String str) {
+        comboID1.setID1(str);
+    }
+    public String getSeibetu() {
+        return comboID1.getID1();
+    }
+    public void setZokugara(String str) {
+        comboID2.setID1(str);
+    }
+    public String getZokugara() {
+        return comboID2.getID1();
+    }
     public void setChecked(boolean chk) {
         checked.setSelected(chk);
     }
-    public boolean getChecked() {
+    public String getBirthYmd() {
+        return textYmd.getID();
+    }
+    public void setBirthYmd(String Ymd) {
+        textYmd.setID(Ymd);
+    }
+    public String getNenrei() {
+        return textNenrei.getText();
+    }
+    public void setNenrei(String str) {
+        textNenrei.setText(str);
+    }
+    public boolean isChecked() {
         return checked.isSelected();
+    }
+    public void setTextYmdErr(boolean error) {
+        textYmd.setTextYmdErr(error);
+    }
+    public boolean isDate() {
+        return textYmd.isDate();
     }
     public void setMyouji(String Myouji) {
         String wk = textName.getText();
@@ -67,12 +118,11 @@ public class SetaiPanel extends javax.swing.JPanel {
     public void setNenrei(int nendo) {
         //日付を取得(生年月日)
         String ymdID = textYmd.getID();
-        try {
-            Long.parseLong(ymdID);
-        } catch (Exception e) {
+        if (!isDate()) {
             textNenrei.setText("");
             return;
         }
+        
         String y = ymdID.substring(0, 4);
         String m = ymdID.substring(4, 6);
         String d = ymdID.substring(6, 8);
@@ -137,6 +187,11 @@ public class SetaiPanel extends javax.swing.JPanel {
         checked.setToolTipText(org.openide.util.NbBundle.getMessage(SetaiPanel.class, "SetaiPanel.checked.toolTipText")); // NOI18N
 
         textName.setText(org.openide.util.NbBundle.getMessage(SetaiPanel.class, "SetaiPanel.textName.text")); // NOI18N
+        textName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textNameActionPerformed(evt);
+            }
+        });
         textName.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 textNameKeyPressed(evt);
@@ -226,8 +281,7 @@ public class SetaiPanel extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void textNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textNameKeyPressed
-        // TODO add your handling code here:
-        //textKana.setText(textKana.getText() + evt.getExtendedKeyCode());
+
     }//GEN-LAST:event_textNameKeyPressed
 
     private void textKanaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textKanaActionPerformed
@@ -237,6 +291,16 @@ public class SetaiPanel extends javax.swing.JPanel {
         textKana.setText(tr.transform(textKana.getText()));
     }//GEN-LAST:event_textKanaActionPerformed
 
+    private void textNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textNameActionPerformed
+        // Check
+        /*
+        if (textName.getText().equals("")) {
+            textName.setBackground(Color.red);
+        } else {
+            textName.setBackground(Color.green);
+        }
+                */
+    }//GEN-LAST:event_textNameActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox checked;
