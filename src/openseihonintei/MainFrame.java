@@ -9,9 +9,13 @@ package openseihonintei;
 import OpenSeiho.classYMD;
 import com.ibm.icu.text.SimpleDateFormat;
 import com.ibm.icu.text.Transliterator;
+import java.awt.Desktop;
 import java.awt.Dimension;
+import java.io.File;
+import java.net.URI;
 import java.util.Calendar;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 
 /**
@@ -20,6 +24,7 @@ import javax.swing.JTabbedPane;
  */
 public class MainFrame extends javax.swing.JFrame {
 private static SetaiPanel[] sp ;
+private static String ninteiYMD = "99999999";
 
     //共通部分
     public static boolean DebugMode = false;
@@ -33,9 +38,10 @@ private static SetaiPanel[] sp ;
      * Creates new form MainFrame
      */
     public MainFrame() {
+        
         sp = new SetaiPanel[OpenSeihoNintei.MaxSetaiIn];
         for (int i = 0; i < OpenSeihoNintei.MaxSetaiIn; i++) {
-            sp[i] = new SetaiPanel();
+            sp[i] = new SetaiPanel(this);
         }
         
         initComponents();
@@ -76,7 +82,7 @@ private static SetaiPanel[] sp ;
         Calendar cal = Calendar.getInstance();
         SimpleDateFormat df = new SimpleDateFormat("yyyyMMdd");
         strWk = df.format(cal.getTime());
-        textYmdPanel3.setID(strWk);
+        textYmdKian.setID(strWk);
         SimpleDateFormat dfY = new SimpleDateFormat("yyyy");
         SimpleDateFormat dfM = new SimpleDateFormat("MM");
         SimpleDateFormat dfD = new SimpleDateFormat("dd");
@@ -85,19 +91,28 @@ private static SetaiPanel[] sp ;
         }
         strWk = df.format(cal.getTime());
         textYmdNintei.setID(strWk);
+        setNinteiYMD(strWk);
         
-        //コンボボックス
+        //コンボボックス デフォルト値を設定
         //comboIDNinzuu.setDefaultID1("1");  //人数のデフォルト
         comboIDKyuti.setDefaultID1(11);
         comboIDTouki.setDefaultID1(6);
-        
+        comboIDSeikatuKeitai.setDefaultID1(1);
+        //初期化
         comboIDNinzuu.setSelectedIndexID1(0);
         comboIDKyuti.setSelectedIndexID1(0);
         comboIDTouki.setSelectedIndexID1(0);
-        logDebug("GetID1 !!!!! " + comboIDTouki.getID1());
+        comboIDSeikatuKeitai.setSelectedIndexID1(0);
+        
     }
     public static SetaiPanel getSetaiPanel(int idx) {
         return sp[idx];
+    }
+    public static void setNinteiYMD(String ymd_ID) {
+        ninteiYMD = ymd_ID;
+    }
+    public static String getNinteiYMD() {
+        return ninteiYMD;
     }
 
     /**
@@ -124,11 +139,12 @@ private static SetaiPanel[] sp ;
         textMyoujiKana = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         comboIDNinzuu = new OpenSeiho.comboID();
+        jCheckBox11 = new javax.swing.JCheckBox();
         textYmdNintei = new OpenSeiho.textYmdPanel();
-        textYmdPanel3 = new OpenSeiho.textYmdPanel();
+        textYmdKian = new OpenSeiho.textYmdPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jPanelkojin = new javax.swing.JPanel();
-        comboID1 = new OpenSeiho.comboID();
+        comboIDSeikatuKeitai = new OpenSeiho.comboID();
         jComboBoxKojin = new javax.swing.JComboBox();
         setaiInPanel = new openseihonintei.SetaiPanel();
         jCheckBox1 = new javax.swing.JCheckBox();
@@ -170,6 +186,10 @@ private static SetaiPanel[] sp ;
         jPanel3 = new javax.swing.JPanel();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenuItem1 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("生活保護認定");
@@ -206,7 +226,7 @@ private static SetaiPanel[] sp ;
         });
 
         jButton7.setText("自動採番");
-        jButton7.setToolTipText("構成員チェックした行のみ苗字が反映されます。\nこの機能は無理に使う必要はありません。");
+        jButton7.setToolTipText("");
         jButton7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton7ActionPerformed(evt);
@@ -286,9 +306,19 @@ private static SetaiPanel[] sp ;
                 .addContainerGap())
         );
 
-        textYmdNintei.setCaption("認定日");
+        jCheckBox11.setText("職権保護");
+        jCheckBox11.setFocusable(false);
 
-        textYmdPanel3.setCaption("起案日");
+        textYmdNintei.setCaption("認定日");
+        textYmdNintei.setDebugGraphicsOptions(0);
+        textYmdNintei.setTextYmdErr(false);
+        textYmdNintei.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                textYmdNinteiPropertyChange(evt);
+            }
+        });
+
+        textYmdKian.setCaption("起案日");
 
         org.jdesktop.layout.GroupLayout panelSetaiBaseLayout = new org.jdesktop.layout.GroupLayout(panelSetaiBase);
         panelSetaiBase.setLayout(panelSetaiBaseLayout);
@@ -299,15 +329,18 @@ private static SetaiPanel[] sp ;
                 .add(panelSetaiBaseLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(panelSetaiBaseLayout.createSequentialGroup()
-                        .add(jLabel6)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(textMyouji1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 94, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jButton7)
+                        .add(panelSetaiBaseLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(panelSetaiBaseLayout.createSequentialGroup()
+                                .add(jLabel6)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(textMyouji1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 94, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(jButton7))
+                            .add(jCheckBox11))
                         .add(18, 18, 18)
-                        .add(panelSetaiBaseLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                            .add(textYmdPanel3, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
-                            .add(textYmdNintei, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .add(panelSetaiBaseLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(textYmdNintei, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 252, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(textYmdKian, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 252, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .add(jButton2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 129, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .add(147, 147, 147))
@@ -324,11 +357,16 @@ private static SetaiPanel[] sp ;
                         .add(panelSetaiBaseLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(panelSetaiBaseLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                                 .add(jLabel6)
-                                .add(textMyouji1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 17, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                .add(textMyouji1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                                 .add(jButton7))
                             .add(textYmdNintei, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(textYmdPanel3, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(panelSetaiBaseLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(panelSetaiBaseLayout.createSequentialGroup()
+                                .add(8, 8, 8)
+                                .add(jCheckBox11))
+                            .add(panelSetaiBaseLayout.createSequentialGroup()
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(textYmdKian, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
                         .add(7, 7, 7)
                         .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
@@ -336,14 +374,16 @@ private static SetaiPanel[] sp ;
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        textYmdNintei.getAccessibleContext().setAccessibleParent(this);
+
         jScrollPane1.setViewportView(panelSetaiBase);
 
         jTabbedPane1.addTab("世帯一覧", jScrollPane1);
 
-        comboID1.setCaption("生活形態 ");
-        comboID1.setComboWidth(new java.lang.Integer(150));
-        comboID1.setId0(new java.lang.Integer(4));
-        comboID1.setPostCap("");
+        comboIDSeikatuKeitai.setCaption("生活形態 ");
+        comboIDSeikatuKeitai.setComboWidth(new java.lang.Integer(150));
+        comboIDSeikatuKeitai.setId0(new java.lang.Integer(4));
+        comboIDSeikatuKeitai.setPostCap("");
 
         jComboBoxKojin.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBoxKojin.addActionListener(new java.awt.event.ActionListener() {
@@ -665,7 +705,7 @@ private static SetaiPanel[] sp ;
                             .add(jPanelkojinLayout.createSequentialGroup()
                                 .add(jCheckBox1)
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                                .add(comboID1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 216, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                .add(comboIDSeikatuKeitai, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 216, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                                 .add(comboIDKyuti, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 104, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
@@ -683,7 +723,7 @@ private static SetaiPanel[] sp ;
             .add(jPanelkojinLayout.createSequentialGroup()
                 .addContainerGap()
                 .add(jPanelkojinLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                    .add(comboID1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(comboIDSeikatuKeitai, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(jPanelkojinLayout.createSequentialGroup()
                         .add(jComboBoxKojin, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
@@ -738,6 +778,28 @@ private static SetaiPanel[] sp ;
         jScrollPane3.setViewportView(jPanel3);
 
         jTabbedPane1.addTab("認定", jScrollPane3);
+
+        jMenu1.setText("Help");
+
+        jMenuItem2.setText("バージョン情報");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem2);
+
+        jMenuItem1.setText("ヘルプ");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem1);
+
+        jMenuBar1.add(jMenu1);
+
+        setJMenuBar(jMenuBar1);
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -817,6 +879,7 @@ private static SetaiPanel[] sp ;
         if (jComboBoxKojin.getSelectedIndex() < 0) {
             return;
         }
+        setaiInPanel.setChecked(sp[jComboBoxKojin.getSelectedIndex()].isChecked());
         setaiInPanel.setNameKj(sp[jComboBoxKojin.getSelectedIndex()].getNameKj());
         setaiInPanel.setNameKn(sp[jComboBoxKojin.getSelectedIndex()].getNameKn());
         setaiInPanel.setSeibetu(sp[jComboBoxKojin.getSelectedIndex()].getSeibetu());
@@ -858,6 +921,37 @@ private static SetaiPanel[] sp ;
         // TODO add your handling code here:
     }//GEN-LAST:event_jCheckBox4ActionPerformed
 
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(this, "OpenSeiho 認定画面\nVer " + OpenSeihoNintei.version + "\n\n作者：田中 秀宗\nAuthor : TANAKA Hidemune", "バージョン情報", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        File file = null;
+        URI uri = null;
+        try {
+            Desktop desktop = Desktop.getDesktop();
+            String jarPath = System.getProperty("java.class.path");
+            String dirPath = jarPath.substring(0, jarPath.lastIndexOf(File.separator)+1);
+            //props.load(new FileInputStream(dirPath + "hoge.properties"));
+            file = new File(dirPath + "/OS_NinteiHelp/index.html");
+            uri = file.toURI();
+            desktop.browse(uri);
+        }catch (Exception e) {
+            //e.printStackTrace();
+//            JOptionPane.showMessageDialog(this, "ヘルプファイルがみつかりません。\n" + uri.getPath(), "ヘルプ", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "ヘルプファイルがみつかりません。\n" + file.getAbsolutePath(), "ヘルプ", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void textYmdNinteiPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_textYmdNinteiPropertyChange
+        // TODO add your handling code here:
+        DebugMode = true;
+        logDebug("textYmdNinteiPropertyChange");
+        setNinteiYMD(textYmdNintei.getID());
+    }//GEN-LAST:event_textYmdNinteiPropertyChange
+
     /**
      * @param args the command line arguments
      */
@@ -894,7 +988,6 @@ private static SetaiPanel[] sp ;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private OpenSeiho.comboID comboID1;
     private OpenSeiho.comboID comboIDHousyasen;
     private OpenSeiho.comboID comboIDKasanBoshi;
     private OpenSeiho.comboID comboIDKasanJidouYouiku;
@@ -903,6 +996,7 @@ private static SetaiPanel[] sp ;
     private OpenSeiho.comboID comboIDKasanSyougai;
     private OpenSeiho.comboID comboIDKyuti;
     private OpenSeiho.comboID comboIDNinzuu;
+    private OpenSeiho.comboID comboIDSeikatuKeitai;
     private OpenSeiho.comboID comboIDTouki;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
@@ -911,6 +1005,7 @@ private static SetaiPanel[] sp ;
     private javax.swing.JButton jButton7;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JCheckBox jCheckBox10;
+    private javax.swing.JCheckBox jCheckBox11;
     private javax.swing.JCheckBox jCheckBox2;
     private javax.swing.JCheckBox jCheckBox3;
     private javax.swing.JCheckBox jCheckBox4;
@@ -926,6 +1021,10 @@ private static SetaiPanel[] sp ;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
@@ -953,7 +1052,8 @@ private static SetaiPanel[] sp ;
     private javax.swing.JTextField textMyouji1;
     private javax.swing.JTextField textMyoujiKana;
     private OpenSeiho.textYmdPanel textSyussanYmd;
+    private OpenSeiho.textYmdPanel textYmdKian;
     private OpenSeiho.textYmdPanel textYmdNintei;
-    private OpenSeiho.textYmdPanel textYmdPanel3;
     // End of variables declaration//GEN-END:variables
+
 }

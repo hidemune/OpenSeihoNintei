@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
  * @author hdm
  */
 public class OpenSeihoNintei {
+public static final String version = "0.01";
 public static int MaxSetaiIn = 14;
 
     /**

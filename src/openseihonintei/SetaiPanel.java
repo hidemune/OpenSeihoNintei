@@ -18,8 +18,8 @@
 
 package openseihonintei;
 
+import OpenSeiho.classYMD;
 import com.ibm.icu.text.Transliterator;
-import java.awt.Color;
 
 /**
  *
@@ -34,13 +34,17 @@ public class SetaiPanel extends javax.swing.JPanel {
         }
     }
     
+    MainFrame frame = null;
     /**
      * Creates new form SetaiPanel
      */
     public SetaiPanel() {
         initComponents();
     }
-
+    public SetaiPanel(MainFrame frm) {
+        frame = frm;
+        initComponents();
+    }
     
     public void setEditable(boolean editable) {
         textName.setEditable(editable);
@@ -48,6 +52,7 @@ public class SetaiPanel extends javax.swing.JPanel {
         textYmd.setEditable(editable);
         comboID1.setEnabled(editable);
         comboID2.setEnabled(editable);
+        checked.setEnabled(editable);
     }
     public void setNameKj(String str) {
         textName.setText(str);
@@ -110,6 +115,18 @@ public class SetaiPanel extends javax.swing.JPanel {
             return;
         }
         textKana.setText(Myouji + "　" + wk);
+    }
+    
+    /**
+     * 認定年齢を算出：4月1日時点の年齢、ただし、マイナスになる場合は０とする。
+     * @param ninteiYMD : YmdID
+     */
+    public void setNenreiCalc(String ninteiYMD) {
+        if (!classYMD.isNumeric(ninteiYMD)) {
+            return;
+        }
+        int nendo = classYMD.getNendo(ninteiYMD);
+        setNenrei(nendo);
     }
     /**
      * 認定年齢を算出：4月1日時点の年齢、ただし、マイナスになる場合は０とする。
@@ -185,6 +202,11 @@ public class SetaiPanel extends javax.swing.JPanel {
 
         org.openide.awt.Mnemonics.setLocalizedText(checked, org.openide.util.NbBundle.getMessage(SetaiPanel.class, "SetaiPanel.checked.text")); // NOI18N
         checked.setToolTipText(org.openide.util.NbBundle.getMessage(SetaiPanel.class, "SetaiPanel.checked.toolTipText")); // NOI18N
+        checked.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkedActionPerformed(evt);
+            }
+        });
 
         textName.setText(org.openide.util.NbBundle.getMessage(SetaiPanel.class, "SetaiPanel.textName.text")); // NOI18N
         textName.addActionListener(new java.awt.event.ActionListener() {
@@ -209,6 +231,11 @@ public class SetaiPanel extends javax.swing.JPanel {
 
         textYmd.setCaption(org.openide.util.NbBundle.getMessage(SetaiPanel.class, "SetaiPanel.textYmd.caption")); // NOI18N
         textYmd.setDebugGraphicsOptions(0);
+        textYmd.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                textYmdPropertyChange(evt);
+            }
+        });
 
         comboID1.setCaption(org.openide.util.NbBundle.getMessage(SetaiPanel.class, "SetaiPanel.comboID1.caption")); // NOI18N
         comboID1.setComboWidth(new java.lang.Integer(50));
@@ -302,6 +329,20 @@ public class SetaiPanel extends javax.swing.JPanel {
                 */
     }//GEN-LAST:event_textNameActionPerformed
 
+    private void checkedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkedActionPerformed
+        // TODO add your handling code here:
+        //this.setChecked(!(this.isChecked()));
+    }//GEN-LAST:event_checkedActionPerformed
+
+    private void textYmdPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_textYmdPropertyChange
+        // TODO add your handling code here:
+        DebugMode = true;
+        logDebug("textYmdPropertyChange:" + evt.getPropertyName());
+        logDebug("ninteiYMD:" + frame.getNinteiYMD());
+        logDebug("BirthYMD:" + textYmd.getID());
+        setNenreiCalc(frame.getNinteiYMD());
+    }//GEN-LAST:event_textYmdPropertyChange
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox checked;
     private OpenSeiho.comboID comboID1;
@@ -314,4 +355,5 @@ public class SetaiPanel extends javax.swing.JPanel {
     private javax.swing.JTextField textNenrei;
     private OpenSeiho.textYmdPanel textYmd;
     // End of variables declaration//GEN-END:variables
+
 }
