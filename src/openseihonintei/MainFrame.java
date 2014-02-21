@@ -6,7 +6,6 @@
 
 package openseihonintei;
 
-import OpenSeiho.JyusyoPanel;
 import OpenSeiho.classYMD;
 import com.ibm.icu.text.SimpleDateFormat;
 import com.ibm.icu.text.Transliterator;
@@ -22,13 +21,16 @@ import javax.swing.JTabbedPane;
 
 /**
  *
- * @author hdm
+ * @author TANAKA Hidemune <auau@kne.biglobe.ne.jp>
  */
 public class MainFrame extends javax.swing.JFrame {
 private static SetaiPanel[] sp ;
 private static String ninteiYMD;
 private DbSetai dbSetai = new DbSetai();
+private DbKojin dbKojin = new DbKojin();
 private String[][] rsSetaiPre;
+private String[][] rsKojin;
+private ArrayList<String> arrField = new ArrayList<String>();
 
     //共通部分
     public static boolean DebugMode = false;
@@ -158,6 +160,36 @@ private String[][] rsSetaiPre;
         //更新時のために退避しておく
         rsSetaiPre = rs;
         
+        //起案選択
+        KianSentakuDialog kian = new KianSentakuDialog(this, true);
+        //kian.setVisible(true);
+        kian.show(caseNo);// このタイミングで表示・ストップする。
+        String[] kianRet = kian.getReturn();
+        DebugMode = true;
+        logDebug("認定日：" + kianRet[0]);
+        logDebug("起案日：" + kianRet[1]);
+        String ninteiYmd = kian.getReturn()[0];
+        String kianYmd = kian.getReturn()[1];
+        
+        if (DbAccessOS.getValueI(ninteiYmd) <= 0) {
+            //新規登録
+            return;
+        }
+        
+        //個人状況を取得・退避
+        rsKojin = dbKojin.getResultSetTable("WHERE kianYmd = '" + kianYmd + "' AND ninteiYmd = '" + ninteiYmd + "' AND caseNo = '" + caseNo + "'");
+        
+        //構成員チェック付け直し
+        for (int i = 0; i < OpenSeihoNintei.MaxSetaiIn; i++) {
+            sp[i].setChecked(false);
+        }
+        for (int i = 1; i < rsKojin[0].length; i++) {
+            int inNo = dbKojin.getValueI(rsKojin, "inNo", i);
+            sp[inNo - 1].setChecked(true);
+        }
+        
+        //認定情報を取得・退避
+        
     }
     public static SetaiPanel getSetaiPanel(int idx) {
         return sp[idx];
@@ -169,6 +201,12 @@ private String[][] rsSetaiPre;
         return ninteiYMD;
     }
     public void insertSetai(){
+        //更新前の確認
+        if ((JOptionPane.showConfirmDialog(this, "更新しますか？", "確認", JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION)) {
+            JOptionPane.showMessageDialog(this, "処理を中止しました。");
+            return;
+        };
+        
         //世帯インサート処理
         String valuePre = "";
         ArrayList lst = new ArrayList();
@@ -252,12 +290,6 @@ private String[][] rsSetaiPre;
         panelJyusyo = new OpenSeiho.JyusyoPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jPanelkojin = new javax.swing.JPanel();
-        comboIDSeikatuKeitai = new OpenSeiho.comboID();
-        jComboBoxKojin = new javax.swing.JComboBox();
-        setaiInPanel = new openseihonintei.SetaiPanel();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        comboIDKyuti = new OpenSeiho.comboID();
-        comboIDTouki = new OpenSeiho.comboID();
         jLabel3 = new javax.swing.JLabel();
         jPanelKasan = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
@@ -290,7 +322,15 @@ private String[][] rsSetaiPre;
         textKasanBoshiNinzuu = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         chkTyouhuku = new javax.swing.JCheckBox();
+        jPanel2 = new javax.swing.JPanel();
+        comboIDSeikatuKeitai = new OpenSeiho.comboID();
+        jComboBoxKojin = new javax.swing.JComboBox();
+        jCheckBox1 = new javax.swing.JCheckBox();
+        comboIDKyuti = new OpenSeiho.comboID();
+        comboIDTouki = new OpenSeiho.comboID();
+        jButtonKojinCheck = new javax.swing.JButton();
         jButtonKojinInst = new javax.swing.JButton();
+        setaiInPanel = new openseihonintei.SetaiPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         jPanel3 = new javax.swing.JPanel();
         jButton5 = new javax.swing.JButton();
@@ -322,7 +362,7 @@ private String[][] rsSetaiPre;
         panelSetai.setMinimumSize(new java.awt.Dimension(0, 896));
         panelSetai.setLayout(new java.awt.GridLayout(0, 1));
 
-        jButton2.setText("チェック及び確定");
+        jButton2.setText("チェック及び更新");
         jButton2.setFocusable(false);
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -379,7 +419,6 @@ private String[][] rsSetaiPre;
 
         comboIDNinzuu.setCaption("");
         comboIDNinzuu.setComboWidth(new java.lang.Integer(70));
-        comboIDNinzuu.setDefaultID1("");
         comboIDNinzuu.setId0(new java.lang.Integer(3));
         comboIDNinzuu.setPostCap("人世帯");
 
@@ -400,7 +439,7 @@ private String[][] rsSetaiPre;
                 .add(comboIDNinzuu, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 121, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jButton1)
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(54, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -437,28 +476,31 @@ private String[][] rsSetaiPre;
         panelSetaiBase.setLayout(panelSetaiBaseLayout);
         panelSetaiBaseLayout.setHorizontalGroup(
             panelSetaiBaseLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(panelSetai, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .add(panelSetaiBaseLayout.createSequentialGroup()
                 .addContainerGap()
-                .add(panelSetaiBaseLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
-                    .add(jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(org.jdesktop.layout.GroupLayout.LEADING, panelSetaiBaseLayout.createSequentialGroup()
-                        .add(panelSetaiBaseLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(panelSetaiBaseLayout.createSequentialGroup()
-                                .add(jLabel6)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(textCaseNo, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 94, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(jButton7))
-                            .add(checkBoxSyokken))
-                        .add(18, 18, 18)
-                        .add(panelSetaiBaseLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(textYmdNintei, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 252, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                            .add(textYmdKian, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 252, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-                    .add(panelJyusyo, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .add(panelSetaiBaseLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(panelSetaiBaseLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                        .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(org.jdesktop.layout.GroupLayout.LEADING, panelSetaiBaseLayout.createSequentialGroup()
+                            .add(panelSetaiBaseLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                .add(panelSetaiBaseLayout.createSequentialGroup()
+                                    .add(jLabel6)
+                                    .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                    .add(textCaseNo, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 94, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                    .add(jButton7))
+                                .add(checkBoxSyokken))
+                            .add(18, 18, 18)
+                            .add(panelSetaiBaseLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                .add(textYmdNintei, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 252, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                .add(textYmdKian, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 252, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))))
+                    .add(panelJyusyo, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .add(jButton2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 129, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .add(147, 147, 147))
+            .add(panelSetaiBaseLayout.createSequentialGroup()
+                .add(panelSetai, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 814, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(0, 0, Short.MAX_VALUE))
         );
         panelSetaiBaseLayout.setVerticalGroup(
             panelSetaiBaseLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -495,37 +537,6 @@ private String[][] rsSetaiPre;
         jScrollPaneSetai.setViewportView(panelSetaiBase);
 
         jTabbedPane1.addTab("世帯一覧", jScrollPaneSetai);
-
-        comboIDSeikatuKeitai.setCaption("生活形態 ");
-        comboIDSeikatuKeitai.setComboWidth(new java.lang.Integer(150));
-        comboIDSeikatuKeitai.setId0(new java.lang.Integer(4));
-        comboIDSeikatuKeitai.setPostCap("");
-
-        jComboBoxKojin.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jComboBoxKojin.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBoxKojinActionPerformed(evt);
-            }
-        });
-
-        jCheckBox1.setText("世帯主");
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
-            }
-        });
-
-        comboIDKyuti.setCaption("級地");
-        comboIDKyuti.setComboWidth(new java.lang.Integer(70));
-        comboIDKyuti.setDefaultID1("0");
-        comboIDKyuti.setId0(new java.lang.Integer(5));
-        comboIDKyuti.setPostCap("");
-
-        comboIDTouki.setCaption("冬季区分");
-        comboIDTouki.setComboWidth(new java.lang.Integer(100));
-        comboIDTouki.setDefaultID1("0");
-        comboIDTouki.setId0(new java.lang.Integer(6));
-        comboIDTouki.setPostCap("");
 
         jLabel3.setText("加算");
 
@@ -583,7 +594,6 @@ private String[][] rsSetaiPre;
 
         comboIDKasanSyougai.setCaption("");
         comboIDKasanSyougai.setComboWidth(new java.lang.Integer(250));
-        comboIDKasanSyougai.setDefaultID1("0");
         comboIDKasanSyougai.setId0(new java.lang.Integer(13));
         comboIDKasanSyougai.setPostCap("");
 
@@ -805,72 +815,121 @@ private String[][] rsSetaiPre;
 
         jPanelKasan.add(jPanel13);
 
-        jButtonKojinInst.setText("個人毎に更新して下さい");
-        jButtonKojinInst.addActionListener(new java.awt.event.ActionListener() {
+        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        comboIDSeikatuKeitai.setCaption("生活形態 ");
+        comboIDSeikatuKeitai.setComboWidth(new java.lang.Integer(200));
+        comboIDSeikatuKeitai.setId0(new java.lang.Integer(4));
+        comboIDSeikatuKeitai.setPostCap("");
+
+        jComboBoxKojin.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboBoxKojin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonKojinInstActionPerformed(evt);
+                jComboBoxKojinActionPerformed(evt);
             }
         });
+
+        jCheckBox1.setText("世帯主");
+        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox1ActionPerformed(evt);
+            }
+        });
+
+        comboIDKyuti.setCaption("級地");
+        comboIDKyuti.setComboWidth(new java.lang.Integer(70));
+        comboIDKyuti.setId0(new java.lang.Integer(5));
+        comboIDKyuti.setPostCap("");
+
+        comboIDTouki.setCaption("冬季区分");
+        comboIDTouki.setComboWidth(new java.lang.Integer(100));
+        comboIDTouki.setId0(new java.lang.Integer(6));
+        comboIDTouki.setPostCap("");
+
+        jButtonKojinCheck.setText("整合性チェック（個人毎）");
+        jButtonKojinCheck.setToolTipText("整合性チェック後、他の世帯員を選択し直して下さい。");
+        jButtonKojinCheck.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonKojinCheckActionPerformed(evt);
+            }
+        });
+
+        jButtonKojinInst.setText("更新");
+
+        setaiInPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        org.jdesktop.layout.GroupLayout jPanel2Layout = new org.jdesktop.layout.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(jPanel2Layout.createSequentialGroup()
+                        .add(jCheckBox1)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                        .add(comboIDSeikatuKeitai, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 269, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(comboIDKyuti, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 104, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(comboIDTouki, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 160, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(jPanel2Layout.createSequentialGroup()
+                        .add(jComboBoxKojin, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 167, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(37, 37, 37)
+                        .add(jButtonKojinCheck)
+                        .add(18, 18, 18)
+                        .add(jButtonKojinInst, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 135, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .add(setaiInPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 709, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(16, 16, 16))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+            .add(jPanel2Layout.createSequentialGroup()
+                .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                            .add(jComboBoxKojin, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(jButtonKojinCheck)
+                            .add(jButtonKojinInst))
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                            .add(jCheckBox1)
+                            .add(comboIDSeikatuKeitai, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, comboIDKyuti, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, comboIDTouki, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                .add(setaiInPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
 
         org.jdesktop.layout.GroupLayout jPanelkojinLayout = new org.jdesktop.layout.GroupLayout(jPanelkojin);
         jPanelkojin.setLayout(jPanelkojinLayout);
         jPanelkojinLayout.setHorizontalGroup(
             jPanelkojinLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanelkojinLayout.createSequentialGroup()
-                .add(jPanelkojinLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                .add(jPanelkojinLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                    .add(jPanelkojinLayout.createSequentialGroup()
+                        .add(13, 13, 13)
+                        .add(jPanelKasan, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                     .add(jPanelkojinLayout.createSequentialGroup()
                         .addContainerGap()
-                        .add(jPanelkojinLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jPanelkojinLayout.createSequentialGroup()
-                                .add(jCheckBox1)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                                .add(comboIDSeikatuKeitai, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 216, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(comboIDKyuti, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 104, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(comboIDTouki, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 159, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                            .add(jLabel3)))
-                    .add(jPanelkojinLayout.createSequentialGroup()
-                        .add(21, 21, 21)
-                        .add(jComboBoxKojin, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 177, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .add(351, 351, 351)
-                        .add(jButtonKojinInst))
-                    .add(setaiInPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 717, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .add(403, 532, Short.MAX_VALUE))
-            .add(jPanelkojinLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                .add(jPanelkojinLayout.createSequentialGroup()
-                    .add(50, 50, 50)
-                    .add(jPanelKasan, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 728, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(471, Short.MAX_VALUE)))
+                        .add(jLabel3))
+                    .add(jPanel2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .add(30, 30, 30))
         );
         jPanelkojinLayout.setVerticalGroup(
             jPanelkojinLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanelkojinLayout.createSequentialGroup()
-                .addContainerGap()
-                .add(jPanelkojinLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                    .add(comboIDSeikatuKeitai, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jPanelkojinLayout.createSequentialGroup()
-                        .add(jPanelkojinLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                            .add(jComboBoxKojin, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                            .add(jButtonKojinInst))
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(setaiInPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .add(jPanelkojinLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jPanelkojinLayout.createSequentialGroup()
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(jCheckBox1))
-                            .add(jPanelkojinLayout.createSequentialGroup()
-                                .add(1, 1, 1)
-                                .add(comboIDTouki, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))))
-                    .add(comboIDKyuti, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .add(18, 18, 18)
+                .add(jPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jLabel3)
-                .addContainerGap(4675, Short.MAX_VALUE))
-            .add(jPanelkojinLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                .add(jPanelkojinLayout.createSequentialGroup()
-                    .add(146, 146, 146)
-                    .add(jPanelKasan, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 265, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(4423, Short.MAX_VALUE)))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jPanelKasan, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(43, Short.MAX_VALUE))
         );
 
         jScrollPane2.setViewportView(jPanelkojin);
@@ -944,11 +1003,11 @@ private String[][] rsSetaiPre;
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jTabbedPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 820, Short.MAX_VALUE)
+            .add(jTabbedPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 828, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jTabbedPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 451, Short.MAX_VALUE)
+            .add(jTabbedPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE)
         );
 
         pack();
@@ -976,15 +1035,50 @@ private String[][] rsSetaiPre;
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // TODO add your handling code here:
         //チェック及び確定
+        String msg = "";
+        
         //年齢算出
         int nendo = classYMD.getNendo(textYmdNintei.getID());
         for (int i = 0; i < OpenSeihoNintei.MaxSetaiIn; i++) {
             sp[i].setNenrei(nendo);
             if ((sp[i].isChecked()) && !(sp[i].isDate())) {
                 sp[i].setTextYmdErr(true);
+                msg = msg + "生年月日を確認してください。\n";
             } else {
                 sp[i].setTextYmdErr(false);
             }
+        }
+        
+        //必須チェック
+        msg = msg + DbAccessOS.hissuChkText(textCaseNo.getText(), "ケースNo");
+        msg = msg + DbAccessOS.hissuChkYmd(textYmdNintei.getID(), "認定日");
+        msg = msg + DbAccessOS.hissuChkYmd(textYmdKian.getID(), "起案日");
+        msg = msg + DbAccessOS.hissuChkText(panelJyusyo.getYubinNo(), "郵便番号");
+        msg = msg + DbAccessOS.hissuChkText(panelJyusyo.getJyusyo1(), "住所１");
+        boolean flg = false;
+        for (int i = 0; i < sp.length; i++) {
+            if (sp[i].isChecked()) {
+                //項目入ってないとエラー
+                msg = msg + DbAccessOS.hissuChkText(sp[i].getNameKj(), "氏名" + (i + 1));
+                msg = msg + DbAccessOS.hissuChkText(sp[i].getNameKn(), "氏名カナ" + (i + 1));
+                msg = msg + DbAccessOS.hissuChkNum(sp[i].getSeibetu(), "性別" + (i + 1));
+                msg = msg + DbAccessOS.hissuChkYmd(sp[i].getBirthYmd(), "生年月日" + (i + 1));
+                msg = msg + DbAccessOS.hissuChkNum(sp[i].getZokugara(), "続柄" + (i + 1));
+            } else {
+                //項目は入っててもOKだが、世帯員漢字氏名が空の場合、以降の更新が走らない仕様。チェックを行う。
+                if (sp[i].getNameKj().equals("")) {
+                    flg = true;
+                }
+                if ((flg) && (!(sp[i].getNameKj().equals("")))) {
+                    //名前なしの後に名前有りの場合、エラーとする
+                    msg = msg + "氏名が空欄ならば、それ以降は登録されません。確認して下さい。" + (i + 1) + "\n";
+                }
+            }
+        }
+        
+        if (!(msg.equals(""))) {
+            JOptionPane.showMessageDialog(this, msg);
+            return;
         }
         
         //更新処理
@@ -1028,7 +1122,9 @@ private String[][] rsSetaiPre;
         setaiInPanel.setZokugara(sp[jComboBoxKojin.getSelectedIndex()].getZokugara());
         setaiInPanel.setBirthYmd(sp[jComboBoxKojin.getSelectedIndex()].getBirthYmd());
         setaiInPanel.setNenrei(sp[jComboBoxKojin.getSelectedIndex()].getNenrei());
-        
+        //チェックが終わるまで選択不可能にする
+        jComboBoxKojin.setEnabled(false);
+        jButtonKojinInst.setEnabled(false);
     }//GEN-LAST:event_jComboBoxKojinActionPerformed
 
     private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
@@ -1102,7 +1198,7 @@ private String[][] rsSetaiPre;
         admin.setVisible(true);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
-    private void jButtonKojinInstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonKojinInstActionPerformed
+    private void jButtonKojinCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonKojinCheckActionPerformed
         // TODO add your handling code here:
         //個人状況更新
         //個人毎に更新するものとする
@@ -1113,35 +1209,142 @@ private String[][] rsSetaiPre;
 //        {"kasanSanpu", "TEXT"},
 //        {"kasanSyussanYmd", "TEXT"},
         if (chkNinsanpu.isSelected()) {
-            if (comboIDKasanNinpu.getID1().equals("")) {
-                if (comboIDKasanSanpu.getID1().equals("")) {
+            if (!(DbAccessOS.isNumeric(comboIDKasanNinpu.getID1()))) {
+                if (!(DbAccessOS.isNumeric(comboIDKasanSanpu.getID1()))) {
                     msg = msg + "妊産婦加算がチェックされているのに項目が選択されていません。\n";
                 }
             }
         } else {
-            if (!(comboIDKasanNinpu.getID1().equals(""))) {
-                if (!(comboIDKasanSanpu.getID1().equals(""))) {
+            if ((DbAccessOS.isNumeric(comboIDKasanNinpu.getID1())) || (DbAccessOS.isNumeric(comboIDKasanSanpu.getID1()))) {
                     msg = msg + "妊産婦加算がチェックされていないのに項目が選択されています。\n";
-                }
             }
         }
 //        {"kasanSyougai", "TEXT"},
-        zzzzz 今日はここまで
 //        {"kasanKaigoHiyou", "INTEGER"},
+        if (chkSyougai.isSelected()) {
+            if (!(DbAccessOS.isNumeric(comboIDKasanSyougai.getID1()))) {
+                msg = msg + "障害者加算がチェックされているのに項目が選択されていません。\n";
+            }
+        } else {
+            if ((DbAccessOS.isNumeric(comboIDKasanSyougai.getID1()))) {
+                msg = msg + "障害者加算がチェックされていないのに項目が選択されています。\n";
+            }
+            if ((DbAccessOS.getValueI(textKaigoHi.getText())) != 0) {
+                msg = msg + "障害者加算がチェックされていないのに介護費用が入力されています。\n";
+            }
+        }
 //        {"kasanKaigoNyusyo", "INTEGER"},
+        if (chkKaigoSisetu.isSelected()) {
+            if ((DbAccessOS.getValueI(textKaigoSisetu.getText())) == 0) {
+                msg = msg + "介護施設入所者加算がチェックされているのに金額が入力されていません。\n";
+            }
+        } else {
+            if ((DbAccessOS.getValueI(textKaigoSisetu.getText())) != 0) {
+                msg = msg + "介護施設入所者加算がチェックされていないのに金額が入力されています。\n";
+            }
+        }
 //        {"kasanZaitakuFlg", "INTEGER"},
+        //チェック項目なし
 //        {"kasanHousyasen", "TEXT"},
+        if (chkHousya.isSelected()) {
+            if (!(DbAccessOS.isNumeric(comboIDHousyasen.getID1()))) {
+                msg = msg + "放射線障害者加算がチェックされているのに項目が選択されていません。\n";
+            }
+        } else {
+            if ((DbAccessOS.isNumeric(comboIDHousyasen.getID1()))) {
+                msg = msg + "放射線障害者加算がチェックされていないのに項目が選択されています。\n";
+            }
+        }
 //        {"kasanJidouYouiku", "TEXT"},
+        if (chkJidouYouiku.isSelected()) {
+            if (!(DbAccessOS.isNumeric(comboIDKasanJidouYouiku.getID1()))) {
+                msg = msg + "児童養育加算がチェックされているのに項目が選択されていません。\n";
+            }
+        } else {
+            if ((DbAccessOS.isNumeric(comboIDKasanJidouYouiku.getID1()))) {
+                msg = msg + "児童養育加算がチェックされていないのに項目が選択されています。\n";
+            }
+        }
 //        {"kasanKaigoHokenRyou", "INTEGER"},
+        if (chkKaigoHokenRyou.isSelected()) {
+            if ((DbAccessOS.getValueI(textKasanKaigoHokenRyou.getText())) == 0) {
+                msg = msg + "介護保険料加算がチェックされているのに金額が入力されていません。\n";
+            }
+        } else {
+            if ((DbAccessOS.getValueI(textKasanKaigoHokenRyou.getText())) != 0) {
+                msg = msg + "介護保険料加算がチェックされていないのに金額が入力されています。\n";
+            }
+        }
 //        {"kasanBoshi", "TEXT"},
 //        {"kasanBoshiNinzu", "INTEGER"},
+        if (chkBoshi.isSelected()) {
+            if (!(DbAccessOS.isNumeric(comboIDKasanBoshi.getID1()))) {
+                msg = msg + "母子加算がチェックされているのに項目が選択されていません。\n";
+            }
+            if ((DbAccessOS.getValueI(textKasanBoshiNinzuu.getText())) == 0) {
+                msg = msg + "母子加算がチェックされているのに人数が入力されていません。\n";
+            }
+        } else {
+            if ((DbAccessOS.isNumeric(comboIDKasanBoshi.getID1()))) {
+                msg = msg + "母子加算がチェックされていないのに項目が選択されています。\n";
+            }
+            if ((DbAccessOS.getValueI(textKasanBoshiNinzuu.getText())) != 0) {
+                msg = msg + "母子加算がチェックされていないのに人数が入力されています。\n";
+            }
+        }
 //        {"kasanTyohukuFlg", "INTEGER"}
-        
+        if (chkTyouhuku.isSelected()) {
+            if (chkSyougai.isSelected() && chkBoshi.isSelected()) {
+                //OK
+            } else {
+                msg = msg + "重複調整は、障害者加算と母子加算の両方にチェックが入っていないと指定できません。\n";
+            }
+        }
         //できれば、「前回の起案から変わっていない場合」エラーメッセージを出したい
-        //検討中
+        //→個人単位では無意味。ここではやらない。
         
+        if (!(msg.equals(""))) {
+            JOptionPane.showMessageDialog(this, msg);
+            return;
+        }
         
-    }//GEN-LAST:event_jButtonKojinInstActionPerformed
+        //チェック完了：OK
+        //画面の内容を保存用配列にセット
+        String valueBefore = "";
+        String valueAfter = "";
+        
+String[][] field = {
+    {"caseNo", valueBefore, valueAfter},		//TEXT
+    {"inNo", valueBefore, valueAfter},		//INTEGER
+    {"kianYmd", valueBefore, valueAfter},		//TEXT
+    {"ninteiYmd", valueBefore, valueAfter},		//TEXT
+    {"seikatuKeitai", valueBefore, valueAfter},		//TEXT
+    {"kyuti", valueBefore, valueAfter},		//TEXT
+    {"touki", valueBefore, valueAfter},		//TEXT
+    {"nameKj", valueBefore, valueAfter},		//TEXT
+    {"nameKn", valueBefore, valueAfter},		//TEXT
+    {"zokuCd", valueBefore, valueAfter},		//TEXT
+    {"ninteiNenrei", valueBefore, valueAfter},		//TEXT
+    {"kasanNinpu", valueBefore, valueAfter},		//TEXT
+    {"kasanSanpu", valueBefore, valueAfter},		//TEXT
+    {"kasanSyussanYmd", valueBefore, valueAfter},		//TEXT
+    {"kasanSyougai", valueBefore, valueAfter},		//TEXT
+    {"kasanKaigoHiyou", valueBefore, valueAfter},		//INTEGER
+    {"kasanKaigoNyusyo", valueBefore, valueAfter},		//INTEGER
+    {"kasanZaitakuFlg", valueBefore, valueAfter},		//INTEGER
+    {"kasanHousyasen", valueBefore, valueAfter},		//TEXT
+    {"kasanJidouYouiku", valueBefore, valueAfter},		//TEXT
+    {"kasanKaigoHokenRyou", valueBefore, valueAfter},		//INTEGER
+    {"kasanBoshi", valueBefore, valueAfter},		//TEXT
+    {"kasanBoshiNinzu", valueBefore, valueAfter},		//INTEGER
+    {"kasanTyohukuFlg", valueBefore, valueAfter}		//INTEGER
+};
+        
+        //チェックが終わって、初めて選択可能にする
+        jComboBoxKojin.setEnabled(true);
+        jButtonKojinInst.setEnabled(true);
+        JOptionPane.showMessageDialog(this, "チェックが完了しました。\n別の世帯員を設定できます。");
+    }//GEN-LAST:event_jButtonKojinCheckActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1204,6 +1407,7 @@ private String[][] rsSetaiPre;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
+    private javax.swing.JButton jButtonKojinCheck;
     private javax.swing.JButton jButtonKojinInst;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JComboBox jComboBoxKojin;
@@ -1224,6 +1428,7 @@ private String[][] rsSetaiPre;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;

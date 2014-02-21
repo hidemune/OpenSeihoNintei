@@ -18,6 +18,7 @@
 
 package openseihonintei;
 
+import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
 /**
@@ -60,6 +61,10 @@ public class AdminFrame extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         textPG = new javax.swing.JTextArea();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        textRS = new javax.swing.JTextArea();
+        jLabel2 = new javax.swing.JLabel();
+        textCols = new javax.swing.JTextField();
 
         setTitle("データベース管理");
 
@@ -67,7 +72,7 @@ public class AdminFrame extends javax.swing.JFrame {
 
         comboDB.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "テーブルを選択", "setai", "kojin", "nintei", "ichiji" }));
 
-        comboAction.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "操作を選択", "create", "edit", "drop", "program" }));
+        comboAction.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "操作を選択", "create", "edit", "drop", "program", "SQL Test" }));
 
         jButton1.setText("実行");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -77,26 +82,44 @@ public class AdminFrame extends javax.swing.JFrame {
         });
 
         textPG.setColumns(20);
+        textPG.setLineWrap(true);
         textPG.setRows(5);
         jScrollPane1.setViewportView(textPG);
+
+        textRS.setColumns(20);
+        textRS.setLineWrap(true);
+        textRS.setRows(5);
+        jScrollPane2.setViewportView(textRS);
+
+        jLabel2.setText("Cols");
+
+        textCols.setText("1");
 
         org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .add(jLabel1)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                    .add(comboAction, 0, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(comboDB, 0, 137, Short.MAX_VALUE))
-                .add(18, 18, 18)
-                .add(jButton1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 109, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .add(jPanel1Layout.createSequentialGroup()
-                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 483, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
+                    .add(jScrollPane2)
+                    .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 483, Short.MAX_VALUE))
                 .add(0, 0, Short.MAX_VALUE))
+            .add(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(jPanel1Layout.createSequentialGroup()
+                        .add(jLabel1)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                            .add(comboAction, 0, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .add(comboDB, 0, 137, Short.MAX_VALUE))
+                        .add(18, 18, 18)
+                        .add(jButton1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 109, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(jPanel1Layout.createSequentialGroup()
+                        .add(jLabel2)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(textCols, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 107, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -110,9 +133,14 @@ public class AdminFrame extends javax.swing.JFrame {
                             .add(comboDB, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(comboAction, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 179, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .add(3, 3, 3)
+                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(jLabel2)
+                    .add(textCols, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 79, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jScrollPane2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE))
         );
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(getContentPane());
@@ -122,14 +150,14 @@ public class AdminFrame extends javax.swing.JFrame {
             .add(layout.createSequentialGroup()
                 .addContainerGap()
                 .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(66, Short.MAX_VALUE))
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(58, 58, 58))
+                .add(13, 13, 13))
         );
 
         pack();
@@ -161,10 +189,14 @@ public class AdminFrame extends javax.swing.JFrame {
         }
         
         //DBアクセサーを選択
-        DbSetai accesser = null;
+        DbAccessOS accesser = null;
         if (table.equals("setai")) {
             DbAccessOS.DebugMode = true;
             accesser = new DbSetai();            
+        }
+        if (table.equals("kojin")) {
+            DbAccessOS.DebugMode = true;
+            accesser = new DbKojin();            
         }
         if (accesser == null) {
             JOptionPane.showMessageDialog(this, "実装されていない操作です。");
@@ -195,6 +227,26 @@ public class AdminFrame extends javax.swing.JFrame {
             textPG.setText(str);
             //不要なメッセージを回避
             return;
+        }
+        if (action.equals("SQL Test")) {
+            flg = true;
+            String SQL = textPG.getText();
+            int cols = DbAccessOS.getValueI(textCols.getText());
+            ArrayList rs = accesser.getResultSetTableBySQL(cols, SQL);
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < rs.size(); i++) {
+                for (int j = 0; j < ((ArrayList)rs.get(i)).size(); j++) {
+                    sb.append("rs[");
+                    sb.append("" + i);
+                    sb.append("]");
+                    sb.append("[");
+                    sb.append("" + j);
+                    sb.append("]");
+                    sb.append(((ArrayList)rs.get(i)).get(j));
+                    sb.append("\n");
+                }
+            }
+            textRS.setText(sb.toString());
         }
         
         if (!(msg.equals(""))) {
@@ -249,8 +301,12 @@ public class AdminFrame extends javax.swing.JFrame {
     private javax.swing.JComboBox comboDB;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextField textCols;
     private javax.swing.JTextArea textPG;
+    private javax.swing.JTextArea textRS;
     // End of variables declaration//GEN-END:variables
 }

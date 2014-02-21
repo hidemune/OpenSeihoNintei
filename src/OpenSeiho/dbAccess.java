@@ -4,9 +4,8 @@
  * and open the template in the editor.
  */
 
-package openseihonintei;
+package OpenSeiho;
 
-import OpenSeiho.classYMD;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -17,7 +16,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Properties;
 import java.util.TreeSet;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -25,7 +23,7 @@ import javax.swing.JOptionPane;
  * DBアクセス機能（スーパークラス）
  * 
  */
-public class DbAccessOS {
+public class dbAccess {
     String host = "localhost";
     String port = "5432";
     String dbname = "OpenSeiho";
@@ -46,187 +44,6 @@ public class DbAccessOS {
     private String[] tablePrimarySup;
     private String[][] tableFieldSup ;
     
-    public static String hissuChkYmd(String value, String koumokuName) {
-        if (value == null) {
-            return koumokuName + "が入力されていません。\n";
-        }
-        if (!(classYMD.isNumeric(value))) {
-            return koumokuName + "の値が不正です。\n";
-        }
-        long ret = 0;
-        try {
-            ret = Long.parseLong(value);
-        } catch (Exception e) {
-            return koumokuName + "の値が不正です。\n";
-        }
-        //Low, Hi チェックはいずれ
-        if (ret == 0) {
-            return koumokuName + "が入力されていません。\n";
-        }
-        if (ret == 99999999) {
-            return koumokuName + "が入力されていません。\n";
-        }
-        return "";
-    }
-    public static String hissuChkNum(String value, String koumokuName) {
-        if (value == null) {
-            return koumokuName + "が入力されていません。\n";
-        }
-        long ret = 0;
-        try {
-            ret = Long.parseLong(value);
-        } catch (Exception e) {
-            return koumokuName + "の値が不正です。\n";
-        }
-        if (ret == 0) {
-            return koumokuName + "が入力されていません。\n";
-        }
-        return "";
-    }
-    public static String hissuChkText(String value, String koumokuName) {
-        if (value == null) {
-            return koumokuName + "が入力されていません。\n";
-        }
-        if (value.trim().equals("")) {
-            return koumokuName + "が入力されていません。\n";
-        }
-        return "";
-    }
-    public static boolean isNumeric(String str) {
-        try {
-            Long.parseLong(str);
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
-    }
-    public static String isBoolean(boolean flg) {
-        if (flg) {
-            return "1";
-        } else {
-            return "0";
-        }
-    }
-    /**
-     * 0以外ならTrueを返す仕様。数値の場合はエラー。
-     * @param flg
-     * @return 
-     */
-    public static boolean isBoolean(String flg) {
-        int ret = 0;
-        try {
-            ret = Integer.parseInt(flg);
-        } catch (Exception e) {
-            System.err.println("エラーの出た値：" + flg);
-            e.printStackTrace();
-        }
-        if (ret == 0) {
-            return false;
-        } else {
-            return true;        //0以外なら
-        }
-    }
-    /**
-     * 取得済のレザルトセット配列から、値を名前を指定して取得します。
-     * @param rs
-     * @param name
-     * @param row
-     * @return 
-     */
-    public String getValue(String[][] rs, String name, int row) {
-        logDebug(name);
-        for (int i = 0; i < rs.length; i++) {
-            if (rs[i][0].equals(name)) {
-                //列発見
-                try {
-                    return rs[i][row];
-                } catch (Exception e) {
-                    //e.printStackTrace();
-                    return "";
-                }
-            }
-        }
-        //見つからなかった場合
-        return "";
-    }
-    public static int getValueI(String source) {
-        //列発見
-        int ret = 0;
-        try {
-            ret = Integer.parseInt(source);
-        } catch (Exception e) {
-            //e.printStackTrace();
-            return 0;
-        }
-        return ret;
-    }
-
-    /**
-     * 取得済のレザルトセット配列から、値を名前を指定して取得します。
-     * @param rs
-     * @param name
-     * @param row       //1から始まることに注意（０はカラム名）
-     * @return
-     */
-    public boolean getValueB(String[][] rs, String name, int row) {
-        for (int i = 0; i < rs.length; i++) {       //カラム名で探す
-            if (rs[i][0].equals(name)) {
-                //列発見
-                try {
-                    return  isBoolean(rs[i][row]);
-                } catch (Exception e) {
-                    //e.printStackTrace();
-                    return false;
-                }
-            }
-        }
-        //見つからなかった場合
-        return false;
-    }
-    /**
-     * 取得済のレザルトセット配列から、値を名前を指定して取得します。
-     * @param rs
-     * @param name
-     * @param row
-     * @return 初期値が０であることに注意。業務データ側に０が有効値として入らないようにする。
-     */
-    public int getValueI(String[][] rs, String name, int row) {
-        for (int i = 0; i < rs.length; i++) {
-            if (rs[i][0].equals(name)) {
-                //列発見
-                int ret = 0;
-                try {
-                    ret = Integer.parseInt(rs[i][row]);
-                } catch (Exception e) {
-                    //e.printStackTrace();
-                    return 0;
-                }
-                return ret;
-            }
-        }
-        //見つからなかった場合
-        return 0;
-    }
-    public String getProgram() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("String[][] field = {");
-        sb.append("\n");
-        for (int i = 0; i < tableFieldSup.length; i++) {
-            sb.append("    {\"");
-            sb.append(tableFieldSup[i][0]);
-            sb.append("\", valueBefore, valueAfter}");
-            if (i != (tableFieldSup.length - 1)) {
-                sb.append(",");
-            }
-            sb.append("\t\t//");
-            sb.append(tableFieldSup[i][1]);
-            sb.append("\n");
-        }
-        sb.append("};");
-        sb.append("\n");
-        
-        return sb.toString();
-    }
     public void setTableName(String str){
         tableNameSup = str;
         logDebug("テーブル名:" + tableNameSup);
@@ -249,8 +66,8 @@ public class DbAccessOS {
     }
 
     //Edit by Sheet
-    public void editTable(DbAccessOS dbA, String where) {
-        DbSheetFrameOS frm = new DbSheetFrameOS(dbA);
+    public void editTable(dbAccess dbA, String where) {
+        dbSheetFrame frm = new dbSheetFrame(dbA);
         frm.setVisible(true);
         //テーブルのレザルトセットを取得
         String[][] str = getResultSetTable(where);
@@ -259,20 +76,13 @@ public class DbAccessOS {
     }
     
     //ExecSQL
-    /**
-     * 更新SQL実行処理：複数の更新処理を、まとめて１行で済ませる。
-     * 多数の更新の場合は確認ダイアログを出す。
-     * @param SQL ：複数の更新SQLを配列で受け渡しとする。
-     * @return 
-     */
-    public String execSQLUpdate(String SQL[]){
+    private String execSQLUpdate(String SQL){
         System.out.println("execSQLUpdate" + tableNameSup);
         Properties props = new Properties();
         props.setProperty("user", rolename);
         props.setProperty("password", password);
         Connection con = null;
         String msg = "";
-        int UpdateCount = 0;        //更新件数
         
         try {
             Class.forName("org.postgresql.Driver");
@@ -287,15 +97,8 @@ public class DbAccessOS {
             Statement stmt = con.createStatement();
             
             //SQLの実行
-            for (int i = 0; i < SQL.length; i++) {
-                int rows = stmt.executeUpdate(SQL[i]);
-                System.out.println("Update:" + rows);
-                //1度の更新で複数レコードが書き換わった場合はエラー扱い
-                if (rows > 1) {
-                    msg = "一度の更新で複数レコードが更新されようとしました。\n中止します。\n" + SQL[i];
-                    break;
-                }
-            }
+            int rows = stmt.executeUpdate(SQL);
+            System.out.println("Update:" + rows);
             
             //ステートメントのクローズ
             stmt.close();
@@ -333,87 +136,6 @@ public class DbAccessOS {
     
     /**
      * デフォルトソート版：強制的に、先頭カラムから順にソートされます。
-     * @param SQL
-     * @return 
-     */
-    public ArrayList getResultSetTableBySQL(int cols, String SQL) {
-        System.out.println("getResultSetTableBySQL:" + tableNameSup);
-        Properties props = new Properties();
-        props.setProperty("user", rolename);
-        props.setProperty("password", password);
-        Connection con = null;
-        ArrayList<ArrayList> arrField = new ArrayList<ArrayList>();
-        
-        try {
-            Class.forName("org.postgresql.Driver");
-            
-            con = DriverManager.getConnection(url, props);
-            System.out.println("データベースに接続しました。");
-            
-            //自動コミットを無効にする
-            //con.setAutoCommit(false);
-            
-            //ステートメント作成
-            Statement stmt = con.createStatement();
-            
-            //SQLの実行
-            logDebug(SQL);
-            ResultSet rs = stmt.executeQuery(SQL);
-            
-            //int cols = tableFieldSup.length;
-            System.out.println("cols:" + cols);
-            
-            //Title
-//            for (int i = 0; i < cols; i++) {
-//                logDebug("Title" + i + ":" + tableFieldSup[i][0]);
-//                ret[i][0] = tableFieldSup[i][0];
-//            }
-            
-            //Data
-            int idx = 0;
-            while (rs.next()) {
-                idx = idx + 1;
-                ArrayList<String> arrRow = new ArrayList<String>();
-                for (int j = 0; j < cols; j++) {
-                    String wk = rs.getString(j + 1);
-                    arrRow.add(wk);
-                    logDebug("Data" + idx + "," + j + ":" + wk);
-                }
-                arrField.add(arrRow);
-            }
-            
-            rs.close();
-            
-            //ステートメントのクローズ
-            stmt.close();
-            
-            //コミットする
-            //con.commit();
-        } catch (ClassNotFoundException e) {
-            System.err.println("JDBCドライバが見つかりませんでした。");
-        } catch (SQLException e) {
-            System.err.println("エラーコード　　: " + e.getSQLState());
-            System.err.println("エラーメッセージ: " + e.getMessage());
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(null, e.getSQLState() + "/" + e.getMessage());
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (con != null) {
-                    con.close();
-                    System.out.println("データベースとの接続を切断しました。");
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        //ret = sortArray(ret);
-        return arrField;
-    }
-    
-    /**
-     * デフォルトソート版：強制的に、先頭カラムから順にソートされます。
      * @param where
      * @return 
      */
@@ -444,18 +166,14 @@ public class DbAccessOS {
 //            System.out.println(rows);
             
             //行数取得
-            String SQL = "SELECT COUNT(*) FROM " + tableNameSup + " " + where;
-            System.out.println(SQL);
-            ResultSet rs = stmt.executeQuery(SQL);
+            ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM " + tableNameSup + " " + where);
             rs.next();
             int rows = rs.getInt("COUNT");
             System.out.println("rows:" + rows);
             rs.close();
             
             //SQLの実行
-            SQL = "SELECT * FROM " + tableNameSup + " " + where;
-            System.out.println(SQL);
-            rs = stmt.executeQuery(SQL);
+            rs = stmt.executeQuery("SELECT * FROM " + tableNameSup + " " + where);
             
             int cols = tableFieldSup.length;
             System.out.println("cols:" + cols);
@@ -557,22 +275,8 @@ public class DbAccessOS {
         return desc;
     }
 
-    //DROP TABLE
-    public String dropTable(){
-        logDebug("Drop/テーブル名:" + tableNameSup);
-        StringBuilder sb = new StringBuilder();
-        sb.append("DROP TABLE ");
-        sb.append(tableNameSup);
-        sb.append(" ;");
-        
-        logDebug(sb.toString());
-        //DB Access
-        String[] SQL = {sb.toString()};
-        return execSQLUpdate(SQL);
-    }
-
     //CREATE TABLE
-    public String createTable(){
+    public void createTable(){
         logDebug("Create/テーブル名:" + tableNameSup);
         StringBuilder sb = new StringBuilder();
         sb.append("CREATE TABLE ");
@@ -616,18 +320,16 @@ public class DbAccessOS {
         
         logDebug(sb.toString());
         //DB Access
-        String[] SQL = {sb.toString()};
-        return execSQLUpdate(SQL);
+        execSQLUpdate(sb.toString());
     }
     //INSERT
     /**
-     * 追加SQLを返す
-     * @param field
-    *   field[colNo][0:name, 1:before, 2:after]
-     * @return 
-     *  SQLを返す
+    *   fieldは、2次元配列でフィールド名・値の順とする。
+    *       id0     value
+    *       id1     value
+    *       text    value
     */
-    public String insertSQL(String[][] field) {
+    public String insert(ArrayList field[]) {
         /*設計方針：
             ・名前との対応を必ず行い、列番号に頼らない
             　（パッケージのバージョンアップに伴い、データが壊れなければOK）
@@ -641,44 +343,43 @@ public class DbAccessOS {
         sb.append(tableNameSup);
         sb.append("(");
         String sep = "";
-        for (int i = 0; i < field.length; i++) {
+        for (int i = 0; i < field[0].size(); i++) {
             sb.append(sep);
-            sb.append(field[i][0]);
+            sb.append(field[0].get(i));
             sep = ",";
         }
         sb.append(") VALUES (");
         sep = "";
-        for (int i = 0; i < field.length; i++) {
+        for (int i = 0; i < field[1].size(); i++) {
             sb.append(sep);
             sb.append("'");
-            sb.append(field[i][2]);
+            sb.append(field[2].get(i));
             sb.append("'");
             sep = ",";
         }
         
-        sb.append(")  WITH NULL AS ''");
+        sb.append(")");
         
-        return sb.toString();
+        //Exec
+        msg = execSQLUpdate(sb.toString());
+        
+        return msg;
     }
     
     //UPDATE
     /**
-     * 更新SQLを返す
     *   fieldは、2次元配列でフィールド名・値の順とする。
     *       id0     value
     *       id1     value
     *       text    value
-     * @param field
-     * 　field[colNo][0:name, 1:before, 2:after]
-     * @return 
-     *  SQLを返す
     */
-    public String updateSQL(String[][] field) {
+    public String update(ArrayList field[]) {
         /*設計方針：
             ・名前との対応を必ず行い、列番号に頼らない
             　（パッケージのバージョンアップに伴い、データが壊れなければOK）
             ・エラー情報を画面で確認可能とする
         */
+        String msg ="";
         
         //tableFieldSup[][] スーパークラスで管理するカラム名    チェック可能
         StringBuilder sb = new StringBuilder();
@@ -686,12 +387,12 @@ public class DbAccessOS {
         sb.append(tableNameSup);
         sb.append(" SET ");
         String sep = "";
-        for (int i = 0; i < field.length; i++) {
+        for (int i = 0; i < field[0].size(); i++) {
             sb.append(sep);
-            sb.append(field[i][0]);
+            sb.append(field[0].get(i));
             sb.append(" = ");
             sb.append("'");
-            sb.append(field[i][2]);
+            sb.append(field[2].get(i));
             sb.append("'");
             sep = ",";
         }
@@ -703,11 +404,11 @@ public class DbAccessOS {
             sb.append(tableUniqueSup[i]);
             sb.append(" = ");
             //キーの値を取得
-            for (int j = 0; j < field.length; j++) {
-                if (field[j][0].equals(tableUniqueSup[i])) {
+            for (int j = 0; j < field[0].size(); j++) {
+                if (field[0].get(i).equals(tableUniqueSup[i])) {
                     //同じの！
                     sb.append("'");
-                    sb.append(field[j][1]);
+                    sb.append(field[1].get(i));
                     sb.append("'");
                     
                     sep = " AND ";
@@ -715,24 +416,24 @@ public class DbAccessOS {
                 }
             }
         }
+
         
-        return sb.toString();
+        //Exec
+        msg = execSQLUpdate(sb.toString());
+        
+        return msg;
     }
     
     //DELETE
     /**
-     * 削除SQLを返す
     *   fieldは、2次元配列でフィールド名・値の順とする。
     *       id0     value
     *       id1     value
     *       text    value
     *   UNIQ のみをWHERE句に設定
-     * @param field
-     *  field[colNo][0:name, 1:before, 2:after]
-     * @return 
-     *  SQLを返す
     */
-    public String deleteSQL(String[][] field) {
+    public String delete(ArrayList field[]) {
+        String msg = "";
         
         StringBuilder sb = new StringBuilder();
         sb.append("DELETE FROM ");
@@ -744,11 +445,11 @@ public class DbAccessOS {
             sb.append(tableUniqueSup[i]);
             sb.append(" = ");
             //キーの値を取得
-            for (int j = 0; j < field.length; j++) {
-                if (field[j][0].equals(tableUniqueSup[i])) {
+            for (int j = 0; j < field[0].size(); j++) {
+                if (field[0].get(i).equals(tableUniqueSup[i])) {
                     //同じの！
                     sb.append("'");
-                    sb.append(field[j][1]);
+                    sb.append(field[1].get(i));
                     sb.append("'");
                     
                     sep = " AND ";
@@ -758,7 +459,8 @@ public class DbAccessOS {
         }
         
         logDebug(sb.toString());
+        msg = execSQLUpdate(sb.toString());
         
-        return sb.toString();
+        return msg;
     }
 }

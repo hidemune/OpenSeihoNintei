@@ -31,26 +31,16 @@ dist.javadoc.dir=${dist.dir}/javadoc
 endorsed.classpath=
 excludes=
 file.reference.icu4j-52_1.jar=/home/hdm/git/suiteOpenSeiho/textYMD/lib/icu4j-52_1.jar
-file.reference.icu4j-52_1.jar-1=lib/icu4j-52_1.jar
 file.reference.OpenSeiho.jar=/home/hdm/git/suiteOpenSeiho/build/cluster/modules/OpenSeiho.jar
-file.reference.org-openide-awt.jar=lib/org-openide-awt.jar
-file.reference.org-openide-util-lookup.jar=lib/org-openide-util-lookup.jar
-file.reference.org-openide-util.jar=lib/org-openide-util.jar
 file.reference.postgresql-9.3-1100.jdbc41.jar=/home/hdm/git/suiteOpenSeiho/textYMD/lib/postgresql-9.3-1100.jdbc41.jar
-file.reference.postgresql-9.3-1100.jdbc41.jar-1=lib/postgresql-9.3-1100.jdbc41.jar
 includes=**
 jar.compress=false
 javac.classpath=\
     ${file.reference.OpenSeiho.jar}:\
-    ${file.reference.icu4j-52_1.jar-1}:\
     ${file.reference.icu4j-52_1.jar}:\
-    ${file.reference.org-openide-awt.jar}:\
-    ${file.reference.org-openide-util.jar}:\
-    ${file.reference.postgresql-9.3-1100.jdbc41.jar-1}:\
     ${file.reference.postgresql-9.3-1100.jdbc41.jar}:\
     ${libs.MyLibrary.classpath}:\
-    ${libs.swing-layout.classpath}:\
-    ${file.reference.org-openide-util-lookup.jar}
+    ${libs.swing-layout.classpath}
 # Space-separated list of extra javac options
 javac.compilerargs=
 javac.deprecation=false

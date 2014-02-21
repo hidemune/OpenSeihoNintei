@@ -16,14 +16,14 @@ package openseihonintei;
 public class DbKojin extends DbAccessOS{
     //個別部分 : テーブル定義
     private static final String tableName = "kojin";
-    private static final String[] tableUnique = {"kianYmd", "ninteiYmd", "caseNo", "inNo"};
-    private static final String[] tablePrimary = {"kianYmd", "ninteiYmd", "caseNo", "inNo"};
+    private static final String[] tableUnique = {"caseNo", "inNo", "kianYmd", "ninteiYmd"};
+    private static final String[] tablePrimary = {"caseNo", "inNo", "kianYmd", "ninteiYmd"};
     private static final String[][] tableField = {
         //列名, データ型(, 制約)
-        {"kianYmd", "TEXT"}, 
-        {"ninteiYmd", "TEXT"}, 
         {"caseNo", "TEXT"}, 
         {"inNo", "INTEGER"},
+        {"kianYmd", "TEXT"}, 
+        {"ninteiYmd", "TEXT"}, 
         {"seikatuKeitai", "TEXT"},
         {"kyuti", "TEXT"},
         {"touki", "TEXT"},
