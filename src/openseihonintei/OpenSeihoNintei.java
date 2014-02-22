@@ -6,8 +6,6 @@
 
 package openseihonintei;
 
-import javax.swing.JOptionPane;
-
 /**
  *
  * @author hdm

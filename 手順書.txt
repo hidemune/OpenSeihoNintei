@@ -1,0 +1,72 @@
+セットアップ手順書
+
+■pgAdmin III のインストール
+
+
+■コンパイル
+・PostgreSQL の、最新版のソースコードを落として来る。
+
+
+./configure --without-zlib --without-readline
+make world
+make check
+
+sudo su
+
+
+make install-world
+
+
+
+
+sudo su
+mkdir /usr/local/pgsql/data
+chown postgres:postgres /usr/local/pgsql/data
+exit
+
+
+su postgres
+nano .bash_profile
+#----------------------------------------------------
+export PATH=/usr/local/pgsql/bin:$PATH
+export MANPATH=/usr/local/pgsql/share/man:$PATH
+export LD_LIBRARY_PATH=/usr/local/pgsql/lib:$LD_LIBRARY_PATH
+export PGDATA=/usr/local/pgsql/data
+#----------------------------------------------------
+source .bash_profile
+
+initdb -E UTF8 --no-locale
+
+nano $PGDATA/postgresql.conf
+
+nano $PGDATA/pg_hba.conf
+
+
+■Ubuntuのデーモン登録
+root@Usb-Linux:#
+
+cd postgresql-9.3.2/contrib/start-scripts
+
+cp linux /etc/rcS.d/S98postgresql-9.3
+chmod +x /etc/rcS.d/S98postgresql-9.3 
+
+nano /etc/rcS.d/S98postgresql-9.3 
+特に変更不要
+
+/etc/rcS.d/S98postgresql-9.3 start
+
+
+■DBユーザ作成
+postgres@Usb-Linux:~$ 
+
+createuser testuser
+
+createdb -O testuser testdb
+
+■確認
+psql -l
+
+
+
+
+
