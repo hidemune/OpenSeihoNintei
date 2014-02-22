@@ -6,7 +6,7 @@
 
 package openseihonintei;
 
-import OpenSeiho.classYMD;
+import openseiho.classYMD;
 import com.ibm.icu.text.SimpleDateFormat;
 import com.ibm.icu.text.Transliterator;
 import java.awt.Desktop;
@@ -283,23 +283,23 @@ private ArrayList<String> arrField = new ArrayList<String>();
         jLabel2 = new javax.swing.JLabel();
         textMyoujiKana = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        comboIDNinzuu = new OpenSeiho.comboID();
+        comboIDNinzuu = new openseiho.comboID();
         checkBoxSyokken = new javax.swing.JCheckBox();
-        textYmdNintei = new OpenSeiho.textYmdPanel();
-        textYmdKian = new OpenSeiho.textYmdPanel();
-        panelJyusyo = new OpenSeiho.JyusyoPanel();
+        textYmdNintei = new openseiho.textYmdPanel();
+        textYmdKian = new openseiho.textYmdPanel();
+        panelJyusyo = new openseiho.JyusyoPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jPanelkojin = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jPanelKasan = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         chkNinsanpu = new javax.swing.JCheckBox();
-        comboIDKasanNinpu = new OpenSeiho.comboID();
-        comboIDKasanSanpu = new OpenSeiho.comboID();
-        textSyussanYmd = new OpenSeiho.textYmdPanel();
+        comboIDKasanNinpu = new openseiho.comboID();
+        comboIDKasanSanpu = new openseiho.comboID();
+        textSyussanYmd = new openseiho.textYmdPanel();
         jPanel7 = new javax.swing.JPanel();
         chkSyougai = new javax.swing.JCheckBox();
-        comboIDKasanSyougai = new OpenSeiho.comboID();
+        comboIDKasanSyougai = new openseiho.comboID();
         jLabel4 = new javax.swing.JLabel();
         textKaigoHi = new javax.swing.JTextField();
         jPanel8 = new javax.swing.JPanel();
@@ -309,25 +309,25 @@ private ArrayList<String> arrField = new ArrayList<String>();
         chkZaitaku = new javax.swing.JCheckBox();
         jPanel10 = new javax.swing.JPanel();
         chkHousya = new javax.swing.JCheckBox();
-        comboIDHousyasen = new OpenSeiho.comboID();
+        comboIDHousyasen = new openseiho.comboID();
         jPanel11 = new javax.swing.JPanel();
         chkJidouYouiku = new javax.swing.JCheckBox();
-        comboIDKasanJidouYouiku = new OpenSeiho.comboID();
+        comboIDKasanJidouYouiku = new openseiho.comboID();
         jPanel12 = new javax.swing.JPanel();
         chkKaigoHokenRyou = new javax.swing.JCheckBox();
         textKasanKaigoHokenRyou = new javax.swing.JTextField();
         jPanel13 = new javax.swing.JPanel();
         chkBoshi = new javax.swing.JCheckBox();
-        comboIDKasanBoshi = new OpenSeiho.comboID();
+        comboIDKasanBoshi = new openseiho.comboID();
         textKasanBoshiNinzuu = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         chkTyouhuku = new javax.swing.JCheckBox();
         jPanel2 = new javax.swing.JPanel();
-        comboIDSeikatuKeitai = new OpenSeiho.comboID();
+        comboIDSeikatuKeitai = new openseiho.comboID();
         jComboBoxKojin = new javax.swing.JComboBox();
         jCheckBox1 = new javax.swing.JCheckBox();
-        comboIDKyuti = new OpenSeiho.comboID();
-        comboIDTouki = new OpenSeiho.comboID();
+        comboIDKyuti = new openseiho.comboID();
+        comboIDTouki = new openseiho.comboID();
         jButtonKojinCheck = new javax.swing.JButton();
         jButtonKojinInst = new javax.swing.JButton();
         setaiInPanel = new openseihonintei.SetaiPanel();
@@ -1162,7 +1162,7 @@ private ArrayList<String> arrField = new ArrayList<String>();
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, "OpenSeiho 認定画面\nVer " + OpenSeihoNintei.version + "\n\n作者：田中 秀宗\nAuthor : TANAKA Hidemune", "バージョン情報", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(this, "openseiho 認定画面\nVer " + OpenSeihoNintei.version + "\n\n作者：田中 秀宗\nAuthor : TANAKA Hidemune", "バージョン情報", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
@@ -1392,16 +1392,16 @@ String[][] field = {
     private javax.swing.JCheckBox chkSyougai;
     private javax.swing.JCheckBox chkTyouhuku;
     private javax.swing.JCheckBox chkZaitaku;
-    private OpenSeiho.comboID comboIDHousyasen;
-    private OpenSeiho.comboID comboIDKasanBoshi;
-    private OpenSeiho.comboID comboIDKasanJidouYouiku;
-    private OpenSeiho.comboID comboIDKasanNinpu;
-    private OpenSeiho.comboID comboIDKasanSanpu;
-    private OpenSeiho.comboID comboIDKasanSyougai;
-    private OpenSeiho.comboID comboIDKyuti;
-    private OpenSeiho.comboID comboIDNinzuu;
-    private OpenSeiho.comboID comboIDSeikatuKeitai;
-    private OpenSeiho.comboID comboIDTouki;
+    private openseiho.comboID comboIDHousyasen;
+    private openseiho.comboID comboIDKasanBoshi;
+    private openseiho.comboID comboIDKasanJidouYouiku;
+    private openseiho.comboID comboIDKasanNinpu;
+    private openseiho.comboID comboIDKasanSanpu;
+    private openseiho.comboID comboIDKasanSyougai;
+    private openseiho.comboID comboIDKyuti;
+    private openseiho.comboID comboIDNinzuu;
+    private openseiho.comboID comboIDSeikatuKeitai;
+    private openseiho.comboID comboIDTouki;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton5;
@@ -1440,7 +1440,7 @@ String[][] field = {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPaneSetai;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private OpenSeiho.JyusyoPanel panelJyusyo;
+    private openseiho.JyusyoPanel panelJyusyo;
     private javax.swing.JPanel panelSetai;
     private javax.swing.JPanel panelSetaiBase;
     private openseihonintei.SetaiPanel setaiInPanel;
@@ -1451,9 +1451,9 @@ String[][] field = {
     private javax.swing.JTextField textKasanKaigoHokenRyou;
     private javax.swing.JTextField textMyouji;
     private javax.swing.JTextField textMyoujiKana;
-    private OpenSeiho.textYmdPanel textSyussanYmd;
-    private OpenSeiho.textYmdPanel textYmdKian;
-    private OpenSeiho.textYmdPanel textYmdNintei;
+    private openseiho.textYmdPanel textSyussanYmd;
+    private openseiho.textYmdPanel textYmdKian;
+    private openseiho.textYmdPanel textYmdNintei;
     // End of variables declaration//GEN-END:variables
 
 }

@@ -18,7 +18,7 @@
 
 package openseihonintei;
 
-import OpenSeiho.classYMD;
+import openseiho.classYMD;
 import com.ibm.icu.text.Transliterator;
 
 /**
@@ -190,9 +190,9 @@ public class SetaiPanel extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         textNenrei = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        textYmd = new OpenSeiho.textYmdPanel();
-        comboID1 = new OpenSeiho.comboID();
-        comboID2 = new OpenSeiho.comboID();
+        textYmd = new openseiho.textYmdPanel();
+        comboID1 = new openseiho.comboID();
+        comboID2 = new openseiho.comboID();
         textKana = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
 
@@ -345,15 +345,15 @@ public class SetaiPanel extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox checked;
-    private OpenSeiho.comboID comboID1;
-    private OpenSeiho.comboID comboID2;
+    private openseiho.comboID comboID1;
+    private openseiho.comboID comboID2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JTextField textKana;
     private javax.swing.JTextField textName;
     private javax.swing.JTextField textNenrei;
-    private OpenSeiho.textYmdPanel textYmd;
+    private openseiho.textYmdPanel textYmd;
     // End of variables declaration//GEN-END:variables
 
 }

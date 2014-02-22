@@ -6,7 +6,7 @@
 
 package openseihonintei;
 
-import OpenSeiho.classYMD;
+import openseiho.classYMD;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
