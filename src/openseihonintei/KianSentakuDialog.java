@@ -83,11 +83,11 @@ private String ninteiYmd;
         listSelect = new javax.swing.JList();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        setTitle(org.openide.util.NbBundle.getMessage(KianSentakuDialog.class, "KianSentakuDialog.title")); // NOI18N
+        setTitle("認定日・起案日選択");
 
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(KianSentakuDialog.class, "KianSentakuDialog.jLabel1.text")); // NOI18N
+        jLabel1.setText("今日付けで起案するか、履歴を選択して下さい。");
 
-        org.openide.awt.Mnemonics.setLocalizedText(jButton1, org.openide.util.NbBundle.getMessage(KianSentakuDialog.class, "KianSentakuDialog.jButton1.text")); // NOI18N
+        jButton1.setText("決定");
 
         listSelect.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "■今日付けで起案■", "認定日 H26/04/01  起案日 H26/03/20" };

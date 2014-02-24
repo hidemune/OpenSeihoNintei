@@ -1,7 +1,15 @@
-/OpenSeihoNintei/lib$ ls
-icu4j-52_1.jar               org-openide-util.jar
-org-openide-awt.jar          postgresql-9.3-1100.jdbc41.jar
-org-openide-util-lookup.jar  このフォルダには.txt
+$ find *
+
+beans-binding
+beans-binding/beansbinding-1.2.1-doc.zip
+beans-binding/beansbinding-1.2.1.jar
+icu4j-52_1.jar
+nblibraries.properties
+postgresql-9.3-1100.jdbc41.jar
+swing-layout
+swing-layout/swing-layout-1.0.4.jar
+swing-layout/swing-layout-1.0.4-src.zip
+swing-layout/swing-layout-1.0.4-doc.zip
+このフォルダには.txt
 
 
-NetBeansで、ライブラリ登録が必要です。

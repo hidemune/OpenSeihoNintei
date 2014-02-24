@@ -74,7 +74,10 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jTabbedPane1" alignment="0" pref="470" max="32767" attributes="0"/>
+          <Group type="102" alignment="0" attributes="0">
+              <Component id="jTabbedPane1" min="-2" pref="461" max="-2" attributes="0"/>
+              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+          </Group>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -144,8 +147,8 @@
                               <Component id="panelJyusyo" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
-                          <Component id="jButton2" min="-2" pref="129" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="147" max="-2" attributes="0"/>
+                          <Component id="jButton2" min="-2" pref="164" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="112" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="panelSetai" min="-2" pref="814" max="-2" attributes="0"/>
@@ -323,7 +326,7 @@
                         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="jButton1KeyPressed"/>
                       </Events>
                     </Component>
-                    <Component class="OpenSeiho.comboID" name="comboIDNinzuu">
+                    <Component class="openseiho.comboID" name="comboIDNinzuu">
                       <Properties>
                         <Property name="caption" type="java.lang.String" value=""/>
                         <Property name="comboWidth" type="java.lang.Integer" value="70"/>
@@ -339,7 +342,7 @@
                     <Property name="focusable" type="boolean" value="false"/>
                   </Properties>
                 </Component>
-                <Component class="OpenSeiho.textYmdPanel" name="textYmdNintei">
+                <Component class="openseiho.textYmdPanel" name="textYmdNintei">
                   <Properties>
                     <Property name="caption" type="java.lang.String" value="&#x8a8d;&#x5b9a;&#x65e5;"/>
                     <Property name="debugGraphicsOptions" type="int" value="0"/>
@@ -354,12 +357,12 @@
                     <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="textYmdNinteiPropertyChange"/>
                   </Events>
                 </Component>
-                <Component class="OpenSeiho.textYmdPanel" name="textYmdKian">
+                <Component class="openseiho.textYmdPanel" name="textYmdKian">
                   <Properties>
                     <Property name="caption" type="java.lang.String" value="&#x8d77;&#x6848;&#x65e5;"/>
                   </Properties>
                 </Component>
-                <Component class="OpenSeiho.JyusyoPanel" name="panelJyusyo">
+                <Component class="openseiho.JyusyoPanel" name="panelJyusyo">
                 </Component>
               </SubComponents>
             </Container>
@@ -403,9 +406,9 @@
                           <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" max="-2" attributes="0"/>
-                          <Component id="jPanelKasan" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace pref="43" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jPanelKasan" min="-2" pref="227" max="-2" attributes="0"/>
+                          <EmptySpace pref="67" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -457,7 +460,7 @@
                                       <Component id="comboIDKasanSanpu" min="-2" max="-2" attributes="0"/>
                                       <Component id="textSyussanYmd" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace min="0" pref="9" max="32767" attributes="0"/>
+                                  <EmptySpace min="0" pref="4" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -468,7 +471,7 @@
                             <Property name="text" type="java.lang.String" value="&#x598a;&#x7523;&#x5a66;"/>
                           </Properties>
                         </Component>
-                        <Component class="OpenSeiho.comboID" name="comboIDKasanNinpu">
+                        <Component class="openseiho.comboID" name="comboIDKasanNinpu">
                           <Properties>
                             <Property name="caption" type="java.lang.String" value="&#x598a;&#x5a66;"/>
                             <Property name="comboWidth" type="java.lang.Integer" value="120"/>
@@ -476,7 +479,7 @@
                             <Property name="postCap" type="java.lang.String" value=""/>
                           </Properties>
                         </Component>
-                        <Component class="OpenSeiho.comboID" name="comboIDKasanSanpu">
+                        <Component class="openseiho.comboID" name="comboIDKasanSanpu">
                           <Properties>
                             <Property name="caption" type="java.lang.String" value="&#x7523;&#x5a66;"/>
                             <Property name="comboWidth" type="java.lang.Integer" value="150"/>
@@ -484,7 +487,7 @@
                             <Property name="postCap" type="java.lang.String" value=""/>
                           </Properties>
                         </Component>
-                        <Component class="OpenSeiho.textYmdPanel" name="textSyussanYmd">
+                        <Component class="openseiho.textYmdPanel" name="textSyussanYmd">
                           <Properties>
                             <Property name="caption" type="java.lang.String" value="&#x51fa;&#x7523;(&#x4e88;&#x5b9a;)&#x65e5;"/>
                           </Properties>
@@ -520,7 +523,7 @@
                                           <Component id="textKaigoHi" alignment="3" min="-2" pref="19" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
-                                  <EmptySpace min="0" pref="10" max="32767" attributes="0"/>
+                                  <EmptySpace min="0" pref="5" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -534,7 +537,7 @@
                             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chkSyougaiActionPerformed"/>
                           </Events>
                         </Component>
-                        <Component class="OpenSeiho.comboID" name="comboIDKasanSyougai">
+                        <Component class="openseiho.comboID" name="comboIDKasanSyougai">
                           <Properties>
                             <Property name="caption" type="java.lang.String" value=""/>
                             <Property name="comboWidth" type="java.lang.Integer" value="250"/>
@@ -576,7 +579,7 @@
                                       <Component id="chkKaigoSisetu" alignment="3" min="-2" pref="21" max="-2" attributes="0"/>
                                       <Component id="textKaigoSisetu" alignment="3" min="-2" pref="19" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace min="0" pref="11" max="32767" attributes="0"/>
+                                  <EmptySpace min="0" pref="6" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -611,7 +614,7 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="chkZaitaku" min="-2" pref="21" max="-2" attributes="0"/>
-                                  <EmptySpace min="0" pref="11" max="32767" attributes="0"/>
+                                  <EmptySpace min="0" pref="6" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -648,7 +651,7 @@
                                       </Group>
                                       <Component id="comboIDHousyasen" alignment="1" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace min="0" pref="10" max="32767" attributes="0"/>
+                                  <EmptySpace min="0" pref="5" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -662,7 +665,7 @@
                             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="chkHousyaActionPerformed"/>
                           </Events>
                         </Component>
-                        <Component class="OpenSeiho.comboID" name="comboIDHousyasen">
+                        <Component class="openseiho.comboID" name="comboIDHousyasen">
                           <Properties>
                             <Property name="caption" type="java.lang.String" value=""/>
                             <Property name="id0" type="java.lang.Integer" value="16"/>
@@ -692,7 +695,7 @@
                                       <Component id="comboIDKasanJidouYouiku" alignment="0" pref="0" max="32767" attributes="0"/>
                                       <Component id="chkJidouYouiku" alignment="0" max="32767" attributes="0"/>
                                   </Group>
-                                  <EmptySpace min="0" pref="11" max="32767" attributes="0"/>
+                                  <EmptySpace min="0" pref="3" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -703,7 +706,7 @@
                             <Property name="text" type="java.lang.String" value="&#x5150;&#x7ae5;&#x990a;&#x80b2;"/>
                           </Properties>
                         </Component>
-                        <Component class="OpenSeiho.comboID" name="comboIDKasanJidouYouiku">
+                        <Component class="openseiho.comboID" name="comboIDKasanJidouYouiku">
                           <Properties>
                             <Property name="caption" type="java.lang.String" value=""/>
                             <Property name="comboWidth" type="java.lang.Integer" value="150"/>
@@ -734,7 +737,7 @@
                                       <Component id="chkKaigoHokenRyou" alignment="3" min="-2" pref="21" max="-2" attributes="0"/>
                                       <Component id="textKasanKaigoHokenRyou" alignment="3" min="-2" pref="19" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace min="0" pref="11" max="32767" attributes="0"/>
+                                  <EmptySpace min="0" pref="6" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -787,7 +790,7 @@
                                           <Component id="chkTyouhuku" alignment="3" min="-2" pref="21" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
-                                  <EmptySpace min="0" pref="10" max="32767" attributes="0"/>
+                                  <EmptySpace min="0" pref="5" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -798,7 +801,7 @@
                             <Property name="text" type="java.lang.String" value="&#x6bcd;&#x5b50;"/>
                           </Properties>
                         </Component>
-                        <Component class="OpenSeiho.comboID" name="comboIDKasanBoshi">
+                        <Component class="openseiho.comboID" name="comboIDKasanBoshi">
                           <Properties>
                             <Property name="caption" type="java.lang.String" value=""/>
                             <Property name="id0" type="java.lang.Integer" value="19"/>
@@ -894,7 +897,7 @@
                     </DimensionLayout>
                   </Layout>
                   <SubComponents>
-                    <Component class="OpenSeiho.comboID" name="comboIDSeikatuKeitai">
+                    <Component class="openseiho.comboID" name="comboIDSeikatuKeitai">
                       <Properties>
                         <Property name="caption" type="java.lang.String" value="&#x751f;&#x6d3b;&#x5f62;&#x614b; "/>
                         <Property name="comboWidth" type="java.lang.Integer" value="200"/>
@@ -925,7 +928,7 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBox1ActionPerformed"/>
                       </Events>
                     </Component>
-                    <Component class="OpenSeiho.comboID" name="comboIDKyuti">
+                    <Component class="openseiho.comboID" name="comboIDKyuti">
                       <Properties>
                         <Property name="caption" type="java.lang.String" value="&#x7d1a;&#x5730;"/>
                         <Property name="comboWidth" type="java.lang.Integer" value="70"/>
@@ -933,7 +936,7 @@
                         <Property name="postCap" type="java.lang.String" value=""/>
                       </Properties>
                     </Component>
-                    <Component class="OpenSeiho.comboID" name="comboIDTouki">
+                    <Component class="openseiho.comboID" name="comboIDTouki">
                       <Properties>
                         <Property name="caption" type="java.lang.String" value="&#x51ac;&#x5b63;&#x533a;&#x5206;"/>
                         <Property name="comboWidth" type="java.lang.Integer" value="100"/>

@@ -19,8 +19,11 @@ public static int MaxSetaiIn = 14;
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        SplashFrame sp = new SplashFrame();
+        sp.setVisible(true);
         MainFrame frm = new MainFrame();
         frm.setVisible(true);
+        sp.setVisible(false);
         //frm.init();
     }
     

@@ -656,7 +656,7 @@ public class DbAccessOS {
             sep = ",";
         }
         
-        sb.append(")  WITH NULL AS ''");
+        sb.append(") ");
         
         return sb.toString();
     }

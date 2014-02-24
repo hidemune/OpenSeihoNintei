@@ -205,7 +205,7 @@ private DbAccessOS dbAc;
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
 
-        setTitle(org.openide.util.NbBundle.getMessage(DbSheetFrameOS.class, "dbSheetFrame.title")); // NOI18N
+//        setTitle(org.openide.util.NbBundle.getMessage(DbSheetFrameOS.class, "dbSheetFrame.title_1")); // NOI18N
 
         jSplitPane1.setDividerLocation(25);
         jSplitPane1.setDividerSize(5);
@@ -213,7 +213,7 @@ private DbAccessOS dbAc;
 
         jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "00001 Page" }));
 
-        org.openide.awt.Mnemonics.setLocalizedText(labelTableName, org.openide.util.NbBundle.getMessage(DbSheetFrameOS.class, "DbSheetFrameOS.labelTableName.text")); // NOI18N
+        labelTableName.setText("テーブル名");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -231,7 +231,7 @@ private DbAccessOS dbAc;
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelTableName))
-                .addGap(0, 2, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jSplitPane1.setTopComponent(jPanel1);
@@ -246,23 +246,23 @@ private DbAccessOS dbAc;
 
         jSplitPane1.setRightComponent(jPanelSheet);
 
-        jTabbedPaneSheet.addTab(org.openide.util.NbBundle.getMessage(DbSheetFrameOS.class, "DbSheetFrameOS.jSplitPane1.TabConstraints.tabTitle"), jSplitPane1); // NOI18N
+        jTabbedPaneSheet.addTab("一覧", jSplitPane1);
 
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(DbSheetFrameOS.class, "DbSheetFrameOS.jLabel1.text")); // NOI18N
+        jLabel1.setText("テーブル名");
 
         jTextFieldTableName.setEditable(false);
-        jTextFieldTableName.setText(org.openide.util.NbBundle.getMessage(DbSheetFrameOS.class, "DbSheetFrameOS.jTextFieldTableName.text")); // NOI18N
+        jTextFieldTableName.setText("jTextFieldTableName");
 
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel2, org.openide.util.NbBundle.getMessage(DbSheetFrameOS.class, "DbSheetFrameOS.jLabel2.text")); // NOI18N
+        jLabel2.setText("WHERE句");
 
         jTextFieldWhere.setEditable(false);
-        jTextFieldWhere.setText(org.openide.util.NbBundle.getMessage(DbSheetFrameOS.class, "DbSheetFrameOS.jTextFieldWhere.text")); // NOI18N
+        jTextFieldWhere.setText("jTextFieldWhere");
 
-        org.openide.awt.Mnemonics.setLocalizedText(jLabelPosision, org.openide.util.NbBundle.getMessage(DbSheetFrameOS.class, "DbSheetFrameOS.jLabelPosision.text")); // NOI18N
+        jLabelPosision.setText("+");
 
         jButtonUpdt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/OpenSeiho/checkbox.png"))); // NOI18N
-        org.openide.awt.Mnemonics.setLocalizedText(jButtonUpdt, org.openide.util.NbBundle.getMessage(DbSheetFrameOS.class, "DbSheetFrameOS.jButtonUpdt.text")); // NOI18N
-        jButtonUpdt.setToolTipText(org.openide.util.NbBundle.getMessage(DbSheetFrameOS.class, "DbSheetFrameOS.jButtonUpdt.toolTipText")); // NOI18N
+        jButtonUpdt.setText("更新");
+        jButtonUpdt.setToolTipText("一番上の行を選択しておけば、新規登録になります。");
         jButtonUpdt.setEnabled(false);
         jButtonUpdt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -271,8 +271,8 @@ private DbAccessOS dbAc;
         });
 
         jButtonDel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/OpenSeiho/document-close.png"))); // NOI18N
-        org.openide.awt.Mnemonics.setLocalizedText(jButtonDel, org.openide.util.NbBundle.getMessage(DbSheetFrameOS.class, "DbSheetFrameOS.jButtonDel.text")); // NOI18N
-        jButtonDel.setToolTipText(org.openide.util.NbBundle.getMessage(DbSheetFrameOS.class, "DbSheetFrameOS.jButtonDel.toolTipText")); // NOI18N
+        jButtonDel.setText("削除");
+        jButtonDel.setToolTipText("削除したい場合は、有効な列を選択しておいて下さい。");
         jButtonDel.setEnabled(false);
         jButtonDel.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -280,9 +280,9 @@ private DbAccessOS dbAc;
             }
         });
 
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel3, org.openide.util.NbBundle.getMessage(DbSheetFrameOS.class, "DbSheetFrameOS.jLabel3.text")); // NOI18N
+        jLabel3.setText("変更前");
 
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel4, org.openide.util.NbBundle.getMessage(DbSheetFrameOS.class, "DbSheetFrameOS.jLabel4.text")); // NOI18N
+        jLabel4.setText("変更後");
 
         javax.swing.GroupLayout jPanelEditLayout = new javax.swing.GroupLayout(jPanelEdit);
         jPanelEdit.setLayout(jPanelEditLayout);
@@ -342,7 +342,7 @@ private DbAccessOS dbAc;
 
         jScrollPaneEdit.setViewportView(jPanelEdit);
 
-        jTabbedPaneSheet.addTab(org.openide.util.NbBundle.getMessage(DbSheetFrameOS.class, "DbSheetFrameOS.jScrollPaneEdit.TabConstraints.tabTitle"), jScrollPaneEdit); // NOI18N
+        jTabbedPaneSheet.addTab("編集", jScrollPaneEdit);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

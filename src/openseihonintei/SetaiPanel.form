@@ -11,11 +11,11 @@
     </Property>
   </Properties>
   <AuxValues>
-    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="1"/>
+    <AuxValue name="FormSettings_autoResourcing" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_autoSetComponentName" type="java.lang.Boolean" value="false"/>
     <AuxValue name="FormSettings_generateFQN" type="java.lang.Boolean" value="true"/>
-    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="true"/>
-    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="true"/>
+    <AuxValue name="FormSettings_generateMnemonicsCode" type="java.lang.Boolean" value="false"/>
+    <AuxValue name="FormSettings_i18nAutoMode" type="java.lang.Boolean" value="false"/>
     <AuxValue name="FormSettings_layoutCodeTarget" type="java.lang.Integer" value="2"/>
     <AuxValue name="FormSettings_listenerGenerationStyle" type="java.lang.Integer" value="0"/>
     <AuxValue name="FormSettings_variablesLocal" type="java.lang.Boolean" value="false"/>
@@ -51,7 +51,7 @@
                       <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="194" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -85,23 +85,14 @@
   <SubComponents>
     <Component class="javax.swing.JCheckBox" name="checked">
       <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="openseihonintei/Bundle.properties" key="SetaiPanel.checked.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
-        </Property>
-        <Property name="toolTipText" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="openseihonintei/Bundle.properties" key="SetaiPanel.checked.toolTipText" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
-        </Property>
+        <Property name="text" type="java.lang.String" value="&#x69cb;&#x6210;&#x54e1;"/>
+        <Property name="toolTipText" type="java.lang.String" value="&#x4e00;&#x756a;&#x4e0a;&#x306e;&#x69cb;&#x6210;&#x54e1;&#x304c;&#x4e16;&#x5e2f;&#x4e3b;&#x306b;&#x306a;&#x308a;&#x307e;&#x3059;"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="checkedActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="textName">
-      <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="openseihonintei/Bundle.properties" key="SetaiPanel.textName.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
-        </Property>
-      </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textNameActionPerformed"/>
         <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="textNameKeyPressed"/>
@@ -109,78 +100,54 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="openseihonintei/Bundle.properties" key="SetaiPanel.jLabel1.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
-        </Property>
+        <Property name="text" type="java.lang.String" value="&#x8a8d;&#x5b9a;&#x5e74;&#x9f62;"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="textNenrei">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
         <Property name="horizontalAlignment" type="int" value="4"/>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="openseihonintei/Bundle.properties" key="SetaiPanel.textNenrei.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
-        </Property>
         <Property name="focusable" type="boolean" value="false"/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="openseihonintei/Bundle.properties" key="SetaiPanel.jLabel2.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
-        </Property>
+        <Property name="text" type="java.lang.String" value="&#x6b73;"/>
       </Properties>
     </Component>
-    <Component class="OpenSeiho.textYmdPanel" name="textYmd">
+    <Component class="openseiho.textYmdPanel" name="textYmd">
       <Properties>
-        <Property name="caption" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="openseihonintei/Bundle.properties" key="SetaiPanel.textYmd.caption" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
-        </Property>
+        <Property name="caption" type="java.lang.String" value="&#x751f;&#x5e74;&#x6708;&#x65e5;"/>
         <Property name="debugGraphicsOptions" type="int" value="0"/>
       </Properties>
       <Events>
         <EventHandler event="propertyChange" listener="java.beans.PropertyChangeListener" parameters="java.beans.PropertyChangeEvent" handler="textYmdPropertyChange"/>
       </Events>
     </Component>
-    <Component class="OpenSeiho.comboID" name="comboID1">
+    <Component class="openseiho.comboID" name="comboID1">
       <Properties>
-        <Property name="caption" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="openseihonintei/Bundle.properties" key="SetaiPanel.comboID1.caption" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
-        </Property>
+        <Property name="caption" type="java.lang.String" value="&#x6027;&#x5225; "/>
         <Property name="comboWidth" type="java.lang.Integer" value="50"/>
         <Property name="id0" type="java.lang.Integer" value="1"/>
-        <Property name="postCap" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="openseihonintei/Bundle.properties" key="SetaiPanel.comboID1.postCap" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
-        </Property>
+        <Property name="postCap" type="java.lang.String" value=""/>
       </Properties>
     </Component>
-    <Component class="OpenSeiho.comboID" name="comboID2">
+    <Component class="openseiho.comboID" name="comboID2">
       <Properties>
-        <Property name="caption" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="openseihonintei/Bundle.properties" key="SetaiPanel.comboID2.caption" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
-        </Property>
+        <Property name="caption" type="java.lang.String" value="&#x7d9a;&#x67c4;"/>
         <Property name="comboWidth" type="java.lang.Integer" value="100"/>
         <Property name="id0" type="java.lang.Integer" value="2"/>
-        <Property name="postCap" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="openseihonintei/Bundle.properties" key="SetaiPanel.comboID2.postCap" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
-        </Property>
+        <Property name="postCap" type="java.lang.String" value=""/>
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="textKana">
-      <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="openseihonintei/Bundle.properties" key="SetaiPanel.textKana.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
-        </Property>
-      </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textKanaActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
-        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
-          <ResourceString bundle="openseihonintei/Bundle.properties" key="SetaiPanel.jLabel3.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
-        </Property>
+        <Property name="text" type="java.lang.String" value="&#x30ab;&#x30ca;&#x6c0f;&#x540d;"/>
       </Properties>
     </Component>
   </SubComponents>

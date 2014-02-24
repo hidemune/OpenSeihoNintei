@@ -19,6 +19,7 @@
 package openseihonintei;
 
 import openseiho.classYMD;
+import openseiho.comboID;
 import com.ibm.icu.text.Transliterator;
 
 /**
@@ -200,15 +201,14 @@ public class SetaiPanel extends javax.swing.JPanel {
         setMinimumSize(new java.awt.Dimension(0, 64));
         setPreferredSize(new java.awt.Dimension(686, 64));
 
-        org.openide.awt.Mnemonics.setLocalizedText(checked, org.openide.util.NbBundle.getMessage(SetaiPanel.class, "SetaiPanel.checked.text")); // NOI18N
-        checked.setToolTipText(org.openide.util.NbBundle.getMessage(SetaiPanel.class, "SetaiPanel.checked.toolTipText")); // NOI18N
+        checked.setText("構成員");
+        checked.setToolTipText("一番上の構成員が世帯主になります");
         checked.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 checkedActionPerformed(evt);
             }
         });
 
-        textName.setText(org.openide.util.NbBundle.getMessage(SetaiPanel.class, "SetaiPanel.textName.text")); // NOI18N
         textName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 textNameActionPerformed(evt);
@@ -220,16 +220,15 @@ public class SetaiPanel extends javax.swing.JPanel {
             }
         });
 
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(SetaiPanel.class, "SetaiPanel.jLabel1.text")); // NOI18N
+        jLabel1.setText("認定年齢");
 
         textNenrei.setEditable(false);
         textNenrei.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        textNenrei.setText(org.openide.util.NbBundle.getMessage(SetaiPanel.class, "SetaiPanel.textNenrei.text")); // NOI18N
         textNenrei.setFocusable(false);
 
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel2, org.openide.util.NbBundle.getMessage(SetaiPanel.class, "SetaiPanel.jLabel2.text")); // NOI18N
+        jLabel2.setText("歳");
 
-        textYmd.setCaption(org.openide.util.NbBundle.getMessage(SetaiPanel.class, "SetaiPanel.textYmd.caption")); // NOI18N
+        textYmd.setCaption("生年月日");
         textYmd.setDebugGraphicsOptions(0);
         textYmd.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
@@ -237,24 +236,23 @@ public class SetaiPanel extends javax.swing.JPanel {
             }
         });
 
-        comboID1.setCaption(org.openide.util.NbBundle.getMessage(SetaiPanel.class, "SetaiPanel.comboID1.caption")); // NOI18N
+        comboID1.setCaption("性別 ");
         comboID1.setComboWidth(new java.lang.Integer(50));
         comboID1.setId0(new java.lang.Integer(1));
-        comboID1.setPostCap(org.openide.util.NbBundle.getMessage(SetaiPanel.class, "SetaiPanel.comboID1.postCap")); // NOI18N
+        comboID1.setPostCap("");
 
-        comboID2.setCaption(org.openide.util.NbBundle.getMessage(SetaiPanel.class, "SetaiPanel.comboID2.caption")); // NOI18N
+        comboID2.setCaption("続柄");
         comboID2.setComboWidth(new java.lang.Integer(100));
         comboID2.setId0(new java.lang.Integer(2));
-        comboID2.setPostCap(org.openide.util.NbBundle.getMessage(SetaiPanel.class, "SetaiPanel.comboID2.postCap")); // NOI18N
+        comboID2.setPostCap("");
 
-        textKana.setText(org.openide.util.NbBundle.getMessage(SetaiPanel.class, "SetaiPanel.textKana.text")); // NOI18N
         textKana.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 textKanaActionPerformed(evt);
             }
         });
 
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel3, org.openide.util.NbBundle.getMessage(SetaiPanel.class, "SetaiPanel.jLabel3.text")); // NOI18N
+        jLabel3.setText("カナ氏名");
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
@@ -283,7 +281,7 @@ public class SetaiPanel extends javax.swing.JPanel {
                         .add(textNenrei, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 41, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jLabel2)))
-                .addContainerGap(194, Short.MAX_VALUE))
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
