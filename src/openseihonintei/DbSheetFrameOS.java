@@ -25,7 +25,7 @@ private javax.swing.JList[] lists;
 //private javax.swing.JSplitPane[] split;
 private String tableNameWk;
 private DefaultListModel ModelL[];
-private final int maxCols = 26;
+private final int maxCols = 100;
 private javax.swing.JTextField[] editPre;
 private javax.swing.JTextField[] edit;
 private javax.swing.JLabel[] name;
@@ -159,8 +159,8 @@ private DbAccessOS dbAc;
             //データが選択されていない：新規作成
             jButtonUpdt.setEnabled(true);
             jButtonDel.setEnabled(false);
-            for (int i = 0; i < strRS.length; i++) {
-                name[i].setText(strRS[i][0]);
+            for (int i = 0; i < strRS[0].length; i++) {
+                name[i].setText(strRS[0][i]);
                 editPre[i].setText("");
                 edit[i].setText("");
             }
@@ -168,8 +168,8 @@ private DbAccessOS dbAc;
             //データを選択している場合
             jButtonUpdt.setEnabled(true);
             jButtonDel.setEnabled(true);
-            for (int i = 0; i < strRS.length; i++) {
-                name[i].setText(strRS[i][0]);
+            for (int i = 0; i < strRS[0].length; i++) {
+                name[i].setText(strRS[0][i]);
                 editPre[i].setText((String)lists[i].getSelectedValue());
                 edit[i].setText((String)lists[i].getSelectedValue());
             }

@@ -30,7 +30,7 @@ private DbSetai dbSetai = new DbSetai();
 private DbKojin dbKojin = new DbKojin();
 private String[][] rsSetaiPre;
 private String[][] rsKojin;
-private ArrayList<String[][]> arrField = new ArrayList<String[][]>();
+private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
 
     //共通部分
     public static boolean DebugMode = false;
@@ -84,6 +84,7 @@ private ArrayList<String[][]> arrField = new ArrayList<String[][]>();
         
         //画面クリア
         init();
+        
     }
 
     public void init() {
@@ -128,8 +129,11 @@ private ArrayList<String[][]> arrField = new ArrayList<String[][]>();
             sp[i].setZokugara("");
         }
         
+        initKojin();
+        
         rsSetaiPre = null;
-        arrField.clear();
+        rsKojin = null;
+        arrFieldKojin.clear();
     }
     
     public void findSetai(String caseNo) {
@@ -174,8 +178,9 @@ private ArrayList<String[][]> arrField = new ArrayList<String[][]>();
         String ninteiYmd = kian.getReturn()[0];
         String kianYmd = kian.getReturn()[1];
         
-        if (DbAccessOS.getValueI(ninteiYmd) <= 0) {
+        if (DbAccessOS.getValueI(ninteiYmd) == 0) {
             //新規登録
+            logDebug("個人状況：新規登録");
             return;
         }
         
@@ -186,7 +191,8 @@ private ArrayList<String[][]> arrField = new ArrayList<String[][]>();
         for (int i = 0; i < OpenSeihoNintei.MaxSetaiIn; i++) {
             sp[i].setChecked(false);
         }
-        for (int i = 1; i < rsKojin[0].length; i++) {
+        //DBに存在するか
+        for (int i = 1; i < rsKojin.length; i++) {
             int inNo = dbKojin.getValueI(rsKojin, "inNo", i);
             sp[inNo - 1].setChecked(true);
         }
@@ -205,6 +211,12 @@ private ArrayList<String[][]> arrField = new ArrayList<String[][]>();
     }
     
     public void insertKojin(){
+        //全員チェック済か？
+        if (jComboBoxKojin.getItemCount() != arrFieldKojin.size()) {
+            JOptionPane.showMessageDialog(this, "全員チェックする必要があります。");
+            return;
+        }
+        
         //更新前の確認
         if ((JOptionPane.showConfirmDialog(this, "更新しますか？", "確認", JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION)) {
             JOptionPane.showMessageDialog(this, "処理を中止しました。");
@@ -212,26 +224,27 @@ private ArrayList<String[][]> arrField = new ArrayList<String[][]>();
         };
         
         //個人インサート処理
-        String valuePre = "";
         ArrayList lst = new ArrayList();
-        /*
+        
         //インサート前にデリート(1件ずつ全件：１つのSQLで複数件削除はエラーとなることに注意)
-        if (rsSetaiPre != null) {
-            for (int i = 1; i < rsSetaiPre.length; i++) {
+        if (rsKojin != null) {
+            for (int i = 1; i < rsKojin.length; i++) {
                 String[][] field = {
-                    {"caseNo", dbSetai.getValue(rsSetaiPre, "caseNo", i), ""},		//TEXT
-                    {"inNo", dbSetai.getValue(rsSetaiPre, "inNo", i), ""},		//INTEGER
+                    {"caseNo", dbKojin.getValue(rsKojin, "caseNo", i), ""},		//TEXT
+                    {"inNo", dbKojin.getValue(rsKojin, "inNo", i), ""},		//INTEGER
+                    {"kianYmd", dbKojin.getValue(rsKojin, "kianYmd", i), ""},		//INTEGER
+                    {"ninteiYmd", dbKojin.getValue(rsKojin, "ninteiYmd", i), ""},		//INTEGER
                 };
                 //前レコードが見つかったため削除しておく
-                String wk = dbSetai.deleteSQL(field);
+                String wk = dbKojin.deleteSQL(field);
                 lst.add(wk);
                 logDebug(wk);
             }
         }
-        */
-        for (int i = 0; i < arrField.size(); i++) {
+        
+        for (int i = 0; i < arrFieldKojin.size(); i++) {
             //インサート処理
-            String wk = dbKojin.insertSQL(arrField.get(i));
+            String wk = dbKojin.insertSQL(arrFieldKojin.get(i));
             lst.add(wk);
             logDebug(wk);
         }
@@ -373,7 +386,7 @@ private ArrayList<String[][]> arrField = new ArrayList<String[][]>();
         jPanel2 = new javax.swing.JPanel();
         comboIDSeikatuKeitai = new openseiho.comboID();
         jComboBoxKojin = new javax.swing.JComboBox();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        chkNushi = new javax.swing.JCheckBox();
         comboIDKyuti = new openseiho.comboID();
         comboIDTouki = new openseiho.comboID();
         jButtonKojinCheck = new javax.swing.JButton();
@@ -384,6 +397,8 @@ private ArrayList<String[][]> arrField = new ArrayList<String[][]>();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu3 = new javax.swing.JMenu();
+        jMenuItem4 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
@@ -892,10 +907,10 @@ private ArrayList<String[][]> arrField = new ArrayList<String[][]>();
             }
         });
 
-        jCheckBox1.setText("世帯主");
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+        chkNushi.setText("世帯主");
+        chkNushi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
+                chkNushiActionPerformed(evt);
             }
         });
 
@@ -934,7 +949,7 @@ private ArrayList<String[][]> arrField = new ArrayList<String[][]>();
                 .addContainerGap()
                 .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jPanel2Layout.createSequentialGroup()
-                        .add(jCheckBox1)
+                        .add(chkNushi)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                         .add(comboIDSeikatuKeitai, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 269, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
@@ -963,7 +978,7 @@ private ArrayList<String[][]> arrField = new ArrayList<String[][]>();
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                 .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                        .add(jCheckBox1)
+                        .add(chkNushi)
                         .add(comboIDSeikatuKeitai, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, comboIDKyuti, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, comboIDTouki, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
@@ -1028,6 +1043,18 @@ private ArrayList<String[][]> arrField = new ArrayList<String[][]>();
         jScrollPane3.setViewportView(jPanel3);
 
         jTabbedPane1.addTab("認定", jScrollPane3);
+
+        jMenu3.setText("ファイル");
+
+        jMenuItem4.setText("閉じる");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem4);
+
+        jMenuBar1.add(jMenu3);
 
         jMenu2.setText("管理者メニュー");
 
@@ -1176,11 +1203,13 @@ private ArrayList<String[][]> arrField = new ArrayList<String[][]>();
     }//GEN-LAST:event_jTabbedPane1StateChanged
 
     private void jComboBoxKojinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxKojinActionPerformed
-        // TODO add your handling code here:
         //世帯員選択
-        if (jComboBoxKojin.getSelectedIndex() < 0) {
+        int inNo = jComboBoxKojin.getSelectedIndex();
+        if (inNo < 0) {
             return;
         }
+        
+        initKojin();
         setaiInPanel.setChecked(sp[jComboBoxKojin.getSelectedIndex()].isChecked());
         setaiInPanel.setNameKj(sp[jComboBoxKojin.getSelectedIndex()].getNameKj());
         setaiInPanel.setNameKn(sp[jComboBoxKojin.getSelectedIndex()].getNameKn());
@@ -1191,11 +1220,111 @@ private ArrayList<String[][]> arrField = new ArrayList<String[][]>();
         //チェックが終わるまで選択不可能にする
         jComboBoxKojin.setEnabled(false);
         jButtonKojinInst.setEnabled(false);
-    }//GEN-LAST:event_jComboBoxKojinActionPerformed
+        
+        //DBに存在するか
+        if (rsKojin == null) {
+            return;
+        }
+        
+        for (int i = 1; i < rsKojin.length; i++) {
+            if (inNo == (dbKojin.getValueI(rsKojin, "inNo", i) - 1)) {
+                setKojin(i);
+                break;
+            }
+        }
 
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+    }//GEN-LAST:event_jComboBoxKojinActionPerformed
+    private void initKojin() {
+        setaiInPanel.setChecked(false);
+        setaiInPanel.setNameKj("");
+        setaiInPanel.setNameKn("");
+        setaiInPanel.setSeibetu("");
+        setaiInPanel.setZokugara("");
+        setaiInPanel.setBirthYmd("");
+        setaiInPanel.setNenrei("");
+        
+        chkNushi.setSelected(false);
+        //加算画面初期化
+        chkHousya.setSelected(false);
+        chkBoshi.setSelected(false);
+        chkJidouYouiku.setSelected(false);
+        chkKaigoHokenRyou.setSelected(false);
+        chkKaigoSisetu.setSelected(false);
+        chkNinsanpu.setSelected(false);
+        chkSyougai.setSelected(false);
+        chkTyouhuku.setSelected(false);
+        chkZaitaku.setSelected(false);
+        comboIDHousyasen.setID1("");
+        comboIDKasanBoshi.setID1("");
+        comboIDKasanJidouYouiku.setID1("");
+        comboIDKasanNinpu.setID1("");
+        comboIDKasanSanpu.setID1("");
+        comboIDKasanSyougai.setID1("");
+        textKaigoHi.setText("0");
+        textKaigoSisetu.setText("0");
+        textKasanBoshiNinzuu.setText("0");
+        textKasanKaigoHokenRyou.setText("0");
+        textSyussanYmd.setID("00000000");
+    }
+    private void setKojin(int idx) {
+        chkNushi.setSelected(dbKojin.getValueB(rsKojin, "nushiFlg", idx));
+//        {"kasanNinpu", "TEXT"},
+        comboIDKasanNinpu.setID1(dbKojin.getValueI(rsKojin, "kasanNinpu", idx));
+//        {"kasanSanpu", "TEXT"},
+        comboIDKasanSanpu.setID1(dbKojin.getValueI(rsKojin, "kasanSanpu", idx));
+//        {"kasanSyussanYmd", "TEXT"},
+        textSyussanYmd.setID(dbKojin.getValue(rsKojin, "kasanSyussanYmd", idx));
+//        {"kasanSyougai", "TEXT"},
+        comboIDKasanSyougai.setID1(dbKojin.getValueI(rsKojin, "kasanSyougai", idx));
+//        {"kasanKaigoHiyou", "INTEGER"},
+        textKaigoHi.setText("" + dbKojin.getValueI(rsKojin, "kasanKaigoHiyou", idx));
+//        {"kasanKaigoNyusyo", "INTEGER"},
+        textKaigoSisetu.setText("" + dbKojin.getValueI(rsKojin, "kasanKaigoNyusyo", idx));
+//        {"kasanZaitakuFlg", "INTEGER"},
+        chkZaitaku.setSelected(dbKojin.getValueB(rsKojin, "kasanZaitakuFlg", idx));
+//        {"kasanHousyasen", "TEXT"},
+        comboIDHousyasen.setID1(dbKojin.getValueI(rsKojin, "kasanHousyasen", idx));
+//        {"kasanJidouYouiku", "TEXT"},
+        comboIDKasanJidouYouiku.setID1(dbKojin.getValueI(rsKojin, "kasanJidouYouiku", idx));
+//        {"kasanKaigoHokenRyou", "INTEGER"},
+        textKasanKaigoHokenRyou.setText("" + dbKojin.getValueI(rsKojin, "kasanKaigoHokenRyou", idx));
+//        {"kasanBoshi", "TEXT"},
+        comboIDKasanBoshi.setID1(dbKojin.getValueI(rsKojin, "kasanBoshi", idx));
+//        {"kasanBoshiNinzu", "INTEGER"},
+        textKasanBoshiNinzuu.setText("" + dbKojin.getValueI(rsKojin, "kasanBoshiNinzu", idx));
+//        {"kasanTyohukuFlg", "INTEGER"}
+        chkTyouhuku.setSelected(dbKojin.getValueB(rsKojin, "kasanTyohukuFlg", idx));
+        //チェック付け直し
+        if (DbAccessOS.isNumeric(comboIDKasanNinpu.getID1())) {
+            chkNinsanpu.setSelected(true);
+        }
+        if (DbAccessOS.isNumeric(comboIDKasanSanpu.getID1())) {
+            chkNinsanpu.setSelected(true);
+        }
+        if (DbAccessOS.isNumeric(comboIDKasanSyougai.getID1())) {
+            chkSyougai.setSelected(true);
+        }
+        if (DbAccessOS.getValueI(textKaigoSisetu.getText()) > 0) {
+            chkKaigoSisetu.setSelected(true);
+        }
+        if (DbAccessOS.isNumeric(comboIDHousyasen.getID1())) {
+            chkHousya.setSelected(true);
+        }
+        if (DbAccessOS.isNumeric(comboIDKasanJidouYouiku.getID1())) {
+            chkJidouYouiku.setSelected(true);
+        }
+        if (DbAccessOS.getValueI(textKasanKaigoHokenRyou.getText()) > 0) {
+            chkKaigoHokenRyou.setSelected(true);
+        }
+        if (DbAccessOS.isNumeric(comboIDKasanBoshi.getID1())) {
+            chkBoshi.setSelected(true);
+        }
+        
+    }
+    
+    private void chkNushiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkNushiActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
+    }//GEN-LAST:event_chkNushiActionPerformed
 
     private void jButton1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton1KeyPressed
         // TODO add your handling code here:
@@ -1406,6 +1535,7 @@ String[][] field = {
     {"inNo", valueBefore, "" + inNo},		//INTEGER
     {"kianYmd", valueBefore, textYmdKian.getID()},		//TEXT
     {"ninteiYmd", valueBefore, textYmdNintei.getID()},		//TEXT
+    {"nushiFlg", valueBefore, DbAccessOS.isBoolean(chkNushi.isSelected())},		//INTEGER
     {"seikatuKeitai", valueBefore, comboIDSeikatuKeitai.getID1()},		//TEXT
     {"kyuti", valueBefore, comboIDKyuti.getID1()},		//TEXT
     {"touki", valueBefore, comboIDTouki.getID1()},		//TEXT
@@ -1429,14 +1559,14 @@ String[][] field = {
 };
         //メモリ上に退避
         //既に同じのがないか確認し、あれば削除しておく
-        for (int i = 0; i < arrField.size(); i++) {
+        for (int i = 0; i < arrFieldKojin.size(); i++) {
             //Fieldの２行目の３列目([1][2])で比較（世帯員番号）
             
-            if (DbAccessOS.getValueI(arrField.get(i)[1][2]) == inNo) {
-                arrField.remove(i);
+            if (DbAccessOS.getValueI(arrFieldKojin.get(i)[1][2]) == inNo) {
+                arrFieldKojin.remove(i);
             }
         }
-        arrField.add(field);
+        arrFieldKojin.add(field);
         
         //チェックが終わって、初めて選択可能にする
         jComboBoxKojin.setEnabled(true);
@@ -1447,6 +1577,11 @@ String[][] field = {
     private void jButtonKojinInstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonKojinInstActionPerformed
         insertKojin();
     }//GEN-LAST:event_jButtonKojinInstActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // Close
+        System.exit(0);
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1491,6 +1626,7 @@ String[][] field = {
     private javax.swing.JCheckBox chkKaigoHokenRyou;
     private javax.swing.JCheckBox chkKaigoSisetu;
     private javax.swing.JCheckBox chkNinsanpu;
+    private javax.swing.JCheckBox chkNushi;
     private javax.swing.JCheckBox chkSyougai;
     private javax.swing.JCheckBox chkTyouhuku;
     private javax.swing.JCheckBox chkZaitaku;
@@ -1511,7 +1647,6 @@ String[][] field = {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButtonKojinCheck;
     private javax.swing.JButton jButtonKojinInst;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JComboBox jComboBoxKojin;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -1524,10 +1659,12 @@ String[][] field = {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;

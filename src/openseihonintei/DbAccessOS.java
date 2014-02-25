@@ -153,11 +153,19 @@ public class DbAccessOS {
         //見つからなかった場合
         return "";
     }
+    /**
+     * カラ文字の場合は０，エラーの場合はデフォルトエラー値９９９９９９９９が入ります
+     * @param source
+     * @return 
+     */
     public static int getValueI(String source) {
         int ret = 0;
         try {
             ret = Integer.parseInt(source);
         } catch (Exception e) {
+            if (source == null) {
+                ret = defaultErrorIntValue;
+            }
             if (source.equals("")) {
                 return 0;
             } else {
@@ -212,7 +220,7 @@ public class DbAccessOS {
             }
         }
         //見つからなかった場合
-        return 0;
+        return defaultErrorIntValue;
     }
     public String getProgram() {
         StringBuilder sb = new StringBuilder();
@@ -279,7 +287,7 @@ public class DbAccessOS {
         props.setProperty("password", password);
         Connection con = null;
         String msg = "";
-        int UpdateCount = 0;        //更新件数
+        int idx = 0;
         
         try {
             Class.forName("org.postgresql.Driver");
@@ -295,7 +303,8 @@ public class DbAccessOS {
             
             //SQLの実行
             for (int i = 0; i < SQL.length; i++) {
-                int rows = stmt.executeUpdate(SQL[i]);
+                idx = i;
+                int rows = stmt.executeUpdate(SQL[idx]);
                 System.out.println("Update:" + rows);
                 //1度の更新で複数レコードが書き換わった場合はエラー扱い
                 if (rows > 1) {
@@ -315,6 +324,7 @@ public class DbAccessOS {
         } catch (SQLException e) {
             System.err.println("エラーコード　　: " + e.getSQLState());
             System.err.println("エラーメッセージ: " + e.getMessage());
+            System.err.println(SQL[idx]);
             msg = msg + "エラーコード　　: " + e.getSQLState() + "\n";
             msg = msg + "エラーメッセージ: " + e.getMessage() + "\n";
             e.printStackTrace();
@@ -642,7 +652,7 @@ public class DbAccessOS {
             sb.append(" = ");
             //キーの値を取得
             for (int j = 0; j < field.length; j++) {
-                if (field[j][0].equals(tableUniqueSup[i])) {
+                if (field[j][0].toLowerCase().equals(tableUniqueSup[i].toLowerCase())) {
                     //同じの！
                     sb.append("'");
                     sb.append(field[j][1]);
@@ -683,7 +693,7 @@ public class DbAccessOS {
             sb.append(" = ");
             //キーの値を取得
             for (int j = 0; j < field.length; j++) {
-                if (field[j][0].equals(tableUniqueSup[i])) {
+                if (field[j][0].toLowerCase().equals(tableUniqueSup[i].toLowerCase())) {
                     //同じの！
                     sb.append("'");
                     sb.append(field[j][1]);

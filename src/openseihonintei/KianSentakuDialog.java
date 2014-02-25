@@ -21,6 +21,7 @@ package openseihonintei;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.ListModel;
+import openseiho.classYMD;
 
 /**
  *
@@ -59,8 +60,9 @@ private String ninteiYmd;
         lstM.clear();
         lstM.addElement("■今日付けで起案■");
         
-        for (int i = 0; i < rs.length; i++) {
-            lstM.addElement(rs[i][0] + "/" + rs[i][1] + "/" + rs[i][2]);
+        for (int i = 1; i < rs.length; i++) {
+            String wk = "認定日：" + classYMD.YmdIdToStr(rs[i][2]) + " 起案日：" + classYMD.YmdIdToStr(rs[i][1]) + "                |" + rs[i][0] + "|" + rs[i][1] + "|" + rs[i][2];
+            lstM.addElement(wk);
         }
         
         this.setVisible(true);
@@ -90,6 +92,11 @@ private String ninteiYmd;
         jLabel1.setText("今日付けで起案するか、履歴を選択して下さい。");
 
         jButton1.setText("決定");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         listSelect.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "■今日付けで起案■", "認定日 H26/04/01  起案日 H26/03/20" };
@@ -126,6 +133,19 @@ private String ninteiYmd;
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        String arr[] = lstM.get(listSelect.getSelectedIndex()).split("\\|");
+        if (arr.length > 1) {
+            kianYmd = arr[2];
+            ninteiYmd = arr[3];
+        } else {
+            kianYmd = "";
+            ninteiYmd = "";
+        }
+        this.setVisible(false);
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments

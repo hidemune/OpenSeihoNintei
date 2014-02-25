@@ -24,6 +24,7 @@ public class DbKojin extends DbAccessOS{
         {"inNo", "INTEGER"},
         {"kianYmd", "TEXT"}, 
         {"ninteiYmd", "TEXT"}, 
+        {"nushiFlg", "INTEGER"},
         {"seikatuKeitai", "TEXT"},
         {"kyuti", "TEXT"},
         {"touki", "TEXT"},
