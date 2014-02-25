@@ -164,7 +164,7 @@ public class DbAccessOS {
             ret = Integer.parseInt(source);
         } catch (Exception e) {
             if (source == null) {
-                ret = defaultErrorIntValue;
+                return defaultErrorIntValue;
             }
             if (source.equals("")) {
                 return 0;
@@ -434,6 +434,7 @@ public class DbAccessOS {
             }
         }
         ret = sortArray(ret);
+        /*
         System.err.println("Debug!!!!!!!!!");
         for (int i = 0; i < ret.length; i++) {
             for (int j = 0; j < ret[0].length; j++) {
@@ -441,7 +442,7 @@ public class DbAccessOS {
             }
             System.err.println("");
         }
-        
+        */
         return ret;
     }
     

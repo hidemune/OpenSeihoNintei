@@ -145,7 +145,7 @@ public class SetaiPanel extends javax.swing.JPanel {
         String m = ymdID.substring(4, 6);
         String d = ymdID.substring(6, 8);
         //指定年度4月1日時点の年齢を算出
-        DebugMode = true;
+        //DebugMode = true;
         logDebug(y + "//" + m + "//" + d);
         String y41 = "" + nendo;
         //当年度の誕生日を算出
@@ -334,7 +334,7 @@ public class SetaiPanel extends javax.swing.JPanel {
 
     private void textYmdPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_textYmdPropertyChange
         // TODO add your handling code here:
-        DebugMode = true;
+        //DebugMode = true;
         logDebug("textYmdPropertyChange:" + evt.getPropertyName());
         logDebug("ninteiYMD:" + frame.getNinteiYMD());
         logDebug("BirthYMD:" + textYmd.getID());

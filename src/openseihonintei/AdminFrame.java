@@ -175,11 +175,11 @@ public class AdminFrame extends javax.swing.JFrame {
         //DBアクセサーを選択
         DbAccessOS accesser = null;
         if (table.equals("setai")) {
-            DbAccessOS.DebugMode = true;
+            //DbAccessOS.DebugMode = true;
             accesser = new DbSetai();            
         }
         if (table.equals("kojin")) {
-            DbAccessOS.DebugMode = true;
+            //DbAccessOS.DebugMode = true;
             accesser = new DbKojin();            
         }
         if (accesser == null) {
