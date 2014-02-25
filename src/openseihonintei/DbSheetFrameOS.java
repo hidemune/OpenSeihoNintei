@@ -126,17 +126,17 @@ private DbAccessOS dbAc;
         jTextFieldWhere.setText(where);
         strRS = rs;
         String ttl = "";
-        for (int i = 0; i < rs.length; i++) {
-            ModelL[i].clear();
-            for (int j = 0; j < rs[i].length; j++) {
-                if (j == 0) {
+        for (int col = 0; col < rs[0].length; col++) {
+            ModelL[col].clear();
+            for (int row = 0; row < rs.length; row++) {
+                if (row == 0) {
                     ttl = "■";
                 } else {
                     ttl = "";
                 }
-                ModelL[i].addElement(ttl + rs[i][j] + ttl);;
+                ModelL[col].addElement(ttl + rs[row][col] + ttl);;
             }
-            lists[i].setModel(ModelL[i]);
+            lists[col].setModel(ModelL[col]);
         }
         //1列目を選択
         lists[0].setSelectedIndex(0);
@@ -206,6 +206,7 @@ private DbAccessOS dbAc;
         jLabel4 = new javax.swing.JLabel();
 
 //        setTitle(org.openide.util.NbBundle.getMessage(DbSheetFrameOS.class, "dbSheetFrame.title_1")); // NOI18N
+        setIconImages(null);
 
         jSplitPane1.setDividerLocation(25);
         jSplitPane1.setDividerSize(5);
@@ -260,7 +261,7 @@ private DbAccessOS dbAc;
 
         jLabelPosision.setText("+");
 
-        jButtonUpdt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/OpenSeiho/checkbox.png"))); // NOI18N
+        jButtonUpdt.setIcon(new javax.swing.ImageIcon(getClass().getResource("/openseiho/checkbox.png"))); // NOI18N
         jButtonUpdt.setText("更新");
         jButtonUpdt.setToolTipText("一番上の行を選択しておけば、新規登録になります。");
         jButtonUpdt.setEnabled(false);
@@ -270,7 +271,7 @@ private DbAccessOS dbAc;
             }
         });
 
-        jButtonDel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/OpenSeiho/document-close.png"))); // NOI18N
+        jButtonDel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/openseiho/document-close.png"))); // NOI18N
         jButtonDel.setText("削除");
         jButtonDel.setToolTipText("削除したい場合は、有効な列を選択しておいて下さい。");
         jButtonDel.setEnabled(false);

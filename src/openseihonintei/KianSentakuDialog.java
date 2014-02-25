@@ -27,7 +27,7 @@ import javax.swing.ListModel;
  * @author hdm
  */
 public class KianSentakuDialog extends javax.swing.JDialog {
-private ArrayList rs;
+private String[][] rs;
 private DefaultListModel<String> lstM;
 private String kianYmd;
 private String ninteiYmd;
@@ -54,13 +54,15 @@ private String ninteiYmd;
         //個人状況を取得
         String SQL = "SELECT caseNo, kianYmd, ninteiYmd FROM kojin WHERE caseNo = '" + caseNo + "' GROUP BY caseNo, kianYmd, ninteiYmd ";
         DbKojin dbK = new DbKojin();
-        rs = dbK.getResultSetTableBySQL(3, SQL);
+        rs = dbK.getResultSetTableBySQL(SQL);
         //画面に表示
         lstM.clear();
         lstM.addElement("■今日付けで起案■");
-        for (int i = 0; i < rs.size(); i++) {
-            lstM.addElement(((ArrayList)rs.get(i)).get(0) + "/" + ((ArrayList)rs.get(i)).get(1) + "/" + ((ArrayList)rs.get(i)).get(2));
+        
+        for (int i = 0; i < rs.length; i++) {
+            lstM.addElement(rs[i][0] + "/" + rs[i][1] + "/" + rs[i][2]);
         }
+        
         this.setVisible(true);
     }
     public String[] getReturn() {

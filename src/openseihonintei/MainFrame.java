@@ -30,7 +30,7 @@ private DbSetai dbSetai = new DbSetai();
 private DbKojin dbKojin = new DbKojin();
 private String[][] rsSetaiPre;
 private String[][] rsKojin;
-private ArrayList<String> arrField = new ArrayList<String>();
+private ArrayList<String[][]> arrField = new ArrayList<String[][]>();
 
     //共通部分
     public static boolean DebugMode = false;
@@ -129,14 +129,17 @@ private ArrayList<String> arrField = new ArrayList<String>();
         }
         
         rsSetaiPre = null;
+        arrField.clear();
     }
     
     public void findSetai(String caseNo) {
         init();
-        String[][] rs = dbSetai.getResultSetTable("WHERE caseNo = '" + caseNo + "'");
+//        String[][] rs = dbSetai.getResultSetTable("WHERE caseNo = '" + caseNo + "'");
+        String SQL = "SELECT * FROM setai WHERE caseNo = '" + caseNo + "'";
+        String[][] rs = dbSetai.getResultSetTableBySQL(SQL);
         dbSetai.DebugMode = true;
         //世帯共通部分
-        if (rs[0].length <= 1) {
+        if (rs.length <= 1) {
             //Not found.
             textCaseNo.setText(caseNo);
             JOptionPane.showMessageDialog(this, "レコードが見つかりません。");
@@ -146,7 +149,7 @@ private ArrayList<String> arrField = new ArrayList<String>();
         textCaseNo.setText(dbSetai.getValue(rs, "caseNo", 1));
         checkBoxSyokken.setSelected(dbSetai.getValueB(rs, "syokkenFlg", 1));
         panelJyusyo.setAddress(dbSetai.getValue(rs, "yubinNo", 1), dbSetai.getValue(rs, "Address1", 1), dbSetai.getValue(rs, "Address2", 1));
-        for (int i = 1; i < rs[0].length; i++) {        //長さ１つ少ないのに注意（0行目はカラム名となる）
+        for (int i = 1; i < rs.length; i++) {        //長さ１つ少ないのに注意（0行目はカラム名となる）
             //世帯員個別部分
             int idx = dbSetai.getValueI(rs, "inNo", i) - 1; //員番号は１から始まる
             sp[idx].setChecked(dbSetai.getValueB(rs, "kouseiIn", i));
@@ -200,6 +203,48 @@ private ArrayList<String> arrField = new ArrayList<String>();
     public static String getNinteiYMD() {
         return ninteiYMD;
     }
+    
+    public void insertKojin(){
+        //更新前の確認
+        if ((JOptionPane.showConfirmDialog(this, "更新しますか？", "確認", JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION)) {
+            JOptionPane.showMessageDialog(this, "処理を中止しました。");
+            return;
+        };
+        
+        //個人インサート処理
+        String valuePre = "";
+        ArrayList lst = new ArrayList();
+        /*
+        //インサート前にデリート(1件ずつ全件：１つのSQLで複数件削除はエラーとなることに注意)
+        if (rsSetaiPre != null) {
+            for (int i = 1; i < rsSetaiPre.length; i++) {
+                String[][] field = {
+                    {"caseNo", dbSetai.getValue(rsSetaiPre, "caseNo", i), ""},		//TEXT
+                    {"inNo", dbSetai.getValue(rsSetaiPre, "inNo", i), ""},		//INTEGER
+                };
+                //前レコードが見つかったため削除しておく
+                String wk = dbSetai.deleteSQL(field);
+                lst.add(wk);
+                logDebug(wk);
+            }
+        }
+        */
+        for (int i = 0; i < arrField.size(); i++) {
+            //インサート処理
+            String wk = dbKojin.insertSQL(arrField.get(i));
+            lst.add(wk);
+            logDebug(wk);
+        }
+        //更新処理
+        String[] SQL=(String[])lst.toArray(new String[0]);
+        String msg = dbSetai.execSQLUpdate(SQL);
+        if (msg.equals("")) {
+            JOptionPane.showMessageDialog(this, "更新しました。");
+        } else {
+            JOptionPane.showMessageDialog(this, msg);
+        }
+    }
+    
     public void insertSetai(){
         //更新前の確認
         if ((JOptionPane.showConfirmDialog(this, "更新しますか？", "確認", JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION)) {
@@ -213,7 +258,7 @@ private ArrayList<String> arrField = new ArrayList<String>();
         
         //インサート前にデリート(1件ずつ全件：１つのSQLで複数件削除はエラーとなることに注意)
         if (rsSetaiPre != null) {
-            for (int i = 1; i < rsSetaiPre[0].length; i++) {
+            for (int i = 1; i < rsSetaiPre.length; i++) {
                 String[][] field = {
                     {"caseNo", dbSetai.getValue(rsSetaiPre, "caseNo", i), ""},		//TEXT
                     {"inNo", dbSetai.getValue(rsSetaiPre, "inNo", i), ""},		//INTEGER
@@ -302,9 +347,11 @@ private ArrayList<String> arrField = new ArrayList<String>();
         comboIDKasanSyougai = new openseiho.comboID();
         jLabel4 = new javax.swing.JLabel();
         textKaigoHi = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         chkKaigoSisetu = new javax.swing.JCheckBox();
         textKaigoSisetu = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         chkZaitaku = new javax.swing.JCheckBox();
         jPanel10 = new javax.swing.JPanel();
@@ -316,6 +363,7 @@ private ArrayList<String> arrField = new ArrayList<String>();
         jPanel12 = new javax.swing.JPanel();
         chkKaigoHokenRyou = new javax.swing.JCheckBox();
         textKasanKaigoHokenRyou = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
         jPanel13 = new javax.swing.JPanel();
         chkBoshi = new javax.swing.JCheckBox();
         comboIDKasanBoshi = new openseiho.comboID();
@@ -439,7 +487,7 @@ private ArrayList<String> arrField = new ArrayList<String>();
                 .add(comboIDNinzuu, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 121, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jButton1)
-                .addContainerGap(54, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -496,8 +544,8 @@ private ArrayList<String> arrField = new ArrayList<String>();
                                 .add(textYmdKian, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 252, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))))
                     .add(panelJyusyo, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .add(jButton2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 164, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(112, 112, 112))
+                .add(jButton2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 150, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(126, 126, 126))
             .add(panelSetaiBaseLayout.createSequentialGroup()
                 .add(panelSetai, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 814, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .add(0, 0, Short.MAX_VALUE))
@@ -569,8 +617,8 @@ private ArrayList<String> arrField = new ArrayList<String>();
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(comboIDKasanSanpu, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 178, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(textSyussanYmd, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 266, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .add(textSyussanYmd, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -602,6 +650,8 @@ private ArrayList<String> arrField = new ArrayList<String>();
         textKaigoHi.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         textKaigoHi.setText("\\0");
 
+        jLabel7.setText("円");
+
         org.jdesktop.layout.GroupLayout jPanel7Layout = new org.jdesktop.layout.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
         jPanel7Layout.setHorizontalGroup(
@@ -615,7 +665,9 @@ private ArrayList<String> arrField = new ArrayList<String>();
                 .add(jLabel4)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(textKaigoHi, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 108, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(154, Short.MAX_VALUE))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jLabel7)
+                .addContainerGap(158, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -625,7 +677,8 @@ private ArrayList<String> arrField = new ArrayList<String>();
                     .add(comboIDKasanSyougai, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(jPanel7Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                         .add(jLabel4)
-                        .add(textKaigoHi, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 19, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                        .add(textKaigoHi, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 19, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(jLabel7)))
                 .add(0, 5, Short.MAX_VALUE))
         );
 
@@ -636,6 +689,8 @@ private ArrayList<String> arrField = new ArrayList<String>();
         textKaigoSisetu.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         textKaigoSisetu.setText("\\0");
 
+        jLabel8.setText("円");
+
         org.jdesktop.layout.GroupLayout jPanel8Layout = new org.jdesktop.layout.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
@@ -645,14 +700,17 @@ private ArrayList<String> arrField = new ArrayList<String>();
                 .add(chkKaigoSisetu)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                 .add(textKaigoSisetu, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 108, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(484, Short.MAX_VALUE))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jLabel8)
+                .addContainerGap(488, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel8Layout.createSequentialGroup()
                 .add(jPanel8Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(chkKaigoSisetu, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 21, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(textKaigoSisetu, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 19, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(textKaigoSisetu, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 19, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jLabel8))
                 .add(0, 6, Short.MAX_VALUE))
         );
 
@@ -667,7 +725,7 @@ private ArrayList<String> arrField = new ArrayList<String>();
             .add(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
                 .add(chkZaitaku)
-                .addContainerGap(639, Short.MAX_VALUE))
+                .addContainerGap(668, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -698,7 +756,7 @@ private ArrayList<String> arrField = new ArrayList<String>();
                 .add(chkHousya)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                 .add(comboIDHousyasen, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 105, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(500, Short.MAX_VALUE))
+                .addContainerGap(529, Short.MAX_VALUE))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -729,7 +787,7 @@ private ArrayList<String> arrField = new ArrayList<String>();
                 .add(chkJidouYouiku)
                 .add(33, 33, 33)
                 .add(comboIDKasanJidouYouiku, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 163, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(443, Short.MAX_VALUE))
+                .addContainerGap(472, Short.MAX_VALUE))
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -747,6 +805,8 @@ private ArrayList<String> arrField = new ArrayList<String>();
         textKasanKaigoHokenRyou.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         textKasanKaigoHokenRyou.setText("\\0");
 
+        jLabel9.setText("円");
+
         org.jdesktop.layout.GroupLayout jPanel12Layout = new org.jdesktop.layout.GroupLayout(jPanel12);
         jPanel12.setLayout(jPanel12Layout);
         jPanel12Layout.setHorizontalGroup(
@@ -756,14 +816,17 @@ private ArrayList<String> arrField = new ArrayList<String>();
                 .add(chkKaigoHokenRyou)
                 .add(21, 21, 21)
                 .add(textKasanKaigoHokenRyou, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 100, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(505, Short.MAX_VALUE))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jLabel9)
+                .addContainerGap(509, Short.MAX_VALUE))
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel12Layout.createSequentialGroup()
                 .add(jPanel12Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(chkKaigoHokenRyou, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 21, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(textKasanKaigoHokenRyou, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 19, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(textKasanKaigoHokenRyou, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 19, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jLabel9))
                 .add(0, 6, Short.MAX_VALUE))
         );
 
@@ -797,7 +860,7 @@ private ArrayList<String> arrField = new ArrayList<String>();
                 .add(jLabel5)
                 .add(86, 86, 86)
                 .add(chkTyouhuku)
-                .add(0, 279, Short.MAX_VALUE))
+                .add(0, 308, Short.MAX_VALUE))
         );
         jPanel13Layout.setVerticalGroup(
             jPanel13Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -855,6 +918,11 @@ private ArrayList<String> arrField = new ArrayList<String>();
         });
 
         jButtonKojinInst.setText("更新");
+        jButtonKojinInst.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonKojinInstActionPerformed(evt);
+            }
+        });
 
         setaiInPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -878,32 +946,28 @@ private ArrayList<String> arrField = new ArrayList<String>();
                         .add(37, 37, 37)
                         .add(jButtonKojinCheck)
                         .add(18, 18, 18)
-                        .add(jButtonKojinInst, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 135, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                        .add(jButtonKojinInst, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 135, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(setaiInPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 709, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .add(setaiInPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 709, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(16, 16, 16))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(jComboBoxKojin, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jButtonKojinCheck)
+                    .add(jButtonKojinInst))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .add(setaiInPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                 .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                            .add(jComboBoxKojin, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                            .add(jButtonKojinCheck)
-                            .add(jButtonKojinInst))
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                            .add(jCheckBox1)
-                            .add(comboIDSeikatuKeitai, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                    .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                        .add(jCheckBox1)
+                        .add(comboIDSeikatuKeitai, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, comboIDKyuti, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, comboIDTouki, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                .add(setaiInPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         org.jdesktop.layout.GroupLayout jPanelkojinLayout = new org.jdesktop.layout.GroupLayout(jPanelkojin);
@@ -913,13 +977,13 @@ private ArrayList<String> arrField = new ArrayList<String>();
             .add(jPanelkojinLayout.createSequentialGroup()
                 .add(jPanelkojinLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
                     .add(jPanelkojinLayout.createSequentialGroup()
-                        .add(13, 13, 13)
-                        .add(jPanelKasan, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                    .add(jPanelkojinLayout.createSequentialGroup()
                         .addContainerGap()
                         .add(jLabel3))
+                    .add(jPanelkojinLayout.createSequentialGroup()
+                        .add(13, 13, 13)
+                        .add(jPanelKasan, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 757, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                     .add(jPanel2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .add(30, 30, 30))
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanelkojinLayout.setVerticalGroup(
             jPanelkojinLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -929,7 +993,7 @@ private ArrayList<String> arrField = new ArrayList<String>();
                 .add(jLabel3)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanelKasan, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 227, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(67, Short.MAX_VALUE))
+                .addContainerGap(64, Short.MAX_VALUE))
         );
 
         jScrollPane2.setViewportView(jPanelkojin);
@@ -1003,7 +1067,7 @@ private ArrayList<String> arrField = new ArrayList<String>();
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jTabbedPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 828, Short.MAX_VALUE)
+            .add(jTabbedPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 808, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -1203,7 +1267,7 @@ private ArrayList<String> arrField = new ArrayList<String>();
     private void jButtonKojinCheckActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonKojinCheckActionPerformed
         // TODO add your handling code here:
         //個人状況更新
-        //個人毎に更新するものとする
+        //更新は、世帯分まとめて、後で行うものとする
         
         //画面項目チェック
         String msg = "";
@@ -1305,6 +1369,26 @@ private ArrayList<String> arrField = new ArrayList<String>();
         //できれば、「前回の起案から変わっていない場合」エラーメッセージを出したい
         //→個人単位では無意味。ここではやらない。
         
+        //数値項目チェック
+        int inNo = jComboBoxKojin.getSelectedIndex() + 1;
+        int kaigoHiyou = DbAccessOS.getValueI(textKaigoHi.getText());
+        int kaigoNyusyo = DbAccessOS.getValueI(textKaigoSisetu.getText());
+        int kaigoHokenRyou = DbAccessOS.getValueI(textKasanKaigoHokenRyou.getText());
+        int boshiNinzuu = DbAccessOS.getValueI(textKasanBoshiNinzuu.getText());
+        
+        if (kaigoHiyou == DbAccessOS.defaultErrorIntValue) {
+            msg = msg + "介護人費用の入力が数値ではありません。\n";
+        }
+        if (kaigoNyusyo == DbAccessOS.defaultErrorIntValue) {
+            msg = msg + "介護施設入所者の入力が数値ではありません。\n";
+        }
+        if (kaigoHokenRyou == DbAccessOS.defaultErrorIntValue) {
+            msg = msg + "介護保険料の入力が数値ではありません。\n";
+        }
+        if (boshiNinzuu == DbAccessOS.defaultErrorIntValue) {
+            msg = msg + "母子加算人数の入力が数値ではありません。\n";
+        }
+        
         if (!(msg.equals(""))) {
             JOptionPane.showMessageDialog(this, msg);
             return;
@@ -1315,38 +1399,54 @@ private ArrayList<String> arrField = new ArrayList<String>();
         String valueBefore = "";
         String valueAfter = "";
         
+
+        
 String[][] field = {
-    {"caseNo", valueBefore, valueAfter},		//TEXT
-    {"inNo", valueBefore, valueAfter},		//INTEGER
-    {"kianYmd", valueBefore, valueAfter},		//TEXT
-    {"ninteiYmd", valueBefore, valueAfter},		//TEXT
-    {"seikatuKeitai", valueBefore, valueAfter},		//TEXT
-    {"kyuti", valueBefore, valueAfter},		//TEXT
-    {"touki", valueBefore, valueAfter},		//TEXT
-    {"nameKj", valueBefore, valueAfter},		//TEXT
-    {"nameKn", valueBefore, valueAfter},		//TEXT
-    {"zokuCd", valueBefore, valueAfter},		//TEXT
-    {"ninteiNenrei", valueBefore, valueAfter},		//TEXT
-    {"kasanNinpu", valueBefore, valueAfter},		//TEXT
-    {"kasanSanpu", valueBefore, valueAfter},		//TEXT
-    {"kasanSyussanYmd", valueBefore, valueAfter},		//TEXT
-    {"kasanSyougai", valueBefore, valueAfter},		//TEXT
-    {"kasanKaigoHiyou", valueBefore, valueAfter},		//INTEGER
-    {"kasanKaigoNyusyo", valueBefore, valueAfter},		//INTEGER
-    {"kasanZaitakuFlg", valueBefore, valueAfter},		//INTEGER
-    {"kasanHousyasen", valueBefore, valueAfter},		//TEXT
-    {"kasanJidouYouiku", valueBefore, valueAfter},		//TEXT
-    {"kasanKaigoHokenRyou", valueBefore, valueAfter},		//INTEGER
-    {"kasanBoshi", valueBefore, valueAfter},		//TEXT
-    {"kasanBoshiNinzu", valueBefore, valueAfter},		//INTEGER
-    {"kasanTyohukuFlg", valueBefore, valueAfter}		//INTEGER
+    {"caseNo", valueBefore, textCaseNo.getText()},		//TEXT
+    {"inNo", valueBefore, "" + inNo},		//INTEGER
+    {"kianYmd", valueBefore, textYmdKian.getID()},		//TEXT
+    {"ninteiYmd", valueBefore, textYmdNintei.getID()},		//TEXT
+    {"seikatuKeitai", valueBefore, comboIDSeikatuKeitai.getID1()},		//TEXT
+    {"kyuti", valueBefore, comboIDKyuti.getID1()},		//TEXT
+    {"touki", valueBefore, comboIDTouki.getID1()},		//TEXT
+    {"nameKj", valueBefore, setaiInPanel.getNameKj()},		//TEXT
+    {"nameKn", valueBefore, setaiInPanel.getNameKn()},		//TEXT
+    {"zokuCd", valueBefore, setaiInPanel.getZokugara()},		//TEXT
+    {"ninteiNenrei", valueBefore, setaiInPanel.getNenrei()},		//TEXT
+    {"kasanNinpu", valueBefore, comboIDKasanNinpu.getID1()},		//TEXT
+    {"kasanSanpu", valueBefore, comboIDKasanSanpu.getID1()},		//TEXT
+    {"kasanSyussanYmd", valueBefore, textSyussanYmd.getID()},		//TEXT
+    {"kasanSyougai", valueBefore, comboIDKasanSyougai.getID1()},		//TEXT
+    {"kasanKaigoHiyou", valueBefore, "" + kaigoHiyou},		//INTEGER
+    {"kasanKaigoNyusyo", valueBefore, "" + kaigoNyusyo},		//INTEGER
+    {"kasanZaitakuFlg", valueBefore, DbAccessOS.isBoolean(chkZaitaku.isSelected())},		//INTEGER
+    {"kasanHousyasen", valueBefore, comboIDHousyasen.getID1()},		//TEXT
+    {"kasanJidouYouiku", valueBefore, comboIDKasanJidouYouiku.getID1()},		//TEXT
+    {"kasanKaigoHokenRyou", valueBefore, "" + kaigoHokenRyou},		//INTEGER
+    {"kasanBoshi", valueBefore, comboIDKasanBoshi.getID1()},		//TEXT
+    {"kasanBoshiNinzu", valueBefore, "" + boshiNinzuu},		//INTEGER
+    {"kasanTyohukuFlg", valueBefore, DbAccessOS.isBoolean(chkTyouhuku.isSelected())}		//INTEGER
 };
+        //メモリ上に退避
+        //既に同じのがないか確認し、あれば削除しておく
+        for (int i = 0; i < arrField.size(); i++) {
+            //Fieldの２行目の３列目([1][2])で比較（世帯員番号）
+            
+            if (DbAccessOS.getValueI(arrField.get(i)[1][2]) == inNo) {
+                arrField.remove(i);
+            }
+        }
+        arrField.add(field);
         
         //チェックが終わって、初めて選択可能にする
         jComboBoxKojin.setEnabled(true);
         jButtonKojinInst.setEnabled(true);
         JOptionPane.showMessageDialog(this, "チェックが完了しました。\n別の世帯員を設定できます。");
     }//GEN-LAST:event_jButtonKojinCheckActionPerformed
+
+    private void jButtonKojinInstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonKojinInstActionPerformed
+        insertKojin();
+    }//GEN-LAST:event_jButtonKojinInstActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1419,6 +1519,9 @@ String[][] field = {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;

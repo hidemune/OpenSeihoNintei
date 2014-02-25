@@ -10,11 +10,13 @@ import openseiho.classYMD;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Properties;
 import java.util.TreeSet;
 import javax.swing.JOptionPane;
@@ -32,6 +34,8 @@ public class DbAccessOS {
     String rolename = "postgres";
     String password = "xxxxxxxx";
     String url = "jdbc:postgresql://" + host + ":" + port + "/" + dbname;
+    
+    public static final int defaultErrorIntValue = 99999999; 
     
     //共通部分
     public static boolean DebugMode = false;
@@ -135,11 +139,11 @@ public class DbAccessOS {
      */
     public String getValue(String[][] rs, String name, int row) {
         logDebug(name);
-        for (int i = 0; i < rs.length; i++) {
-            if (rs[i][0].equals(name)) {
+        for (int i = 0; i < rs[0].length; i++) {
+            if (rs[0][i].toLowerCase().equals(name.toLowerCase())) {
                 //列発見
                 try {
-                    return rs[i][row];
+                    return rs[row][i];
                 } catch (Exception e) {
                     //e.printStackTrace();
                     return "";
@@ -150,13 +154,15 @@ public class DbAccessOS {
         return "";
     }
     public static int getValueI(String source) {
-        //列発見
         int ret = 0;
         try {
             ret = Integer.parseInt(source);
         } catch (Exception e) {
-            //e.printStackTrace();
-            return 0;
+            if (source.equals("")) {
+                return 0;
+            } else {
+                ret = defaultErrorIntValue;
+            }
         }
         return ret;
     }
@@ -169,11 +175,12 @@ public class DbAccessOS {
      * @return
      */
     public boolean getValueB(String[][] rs, String name, int row) {
-        for (int i = 0; i < rs.length; i++) {       //カラム名で探す
-            if (rs[i][0].equals(name)) {
+        for (int i = 0; i < rs[0].length; i++) {       //カラム名で探す
+//            if (rs[i][0].equals(name)) {
+            if (rs[0][i].toLowerCase().equals(name.toLowerCase())) {
                 //列発見
                 try {
-                    return  isBoolean(rs[i][row]);
+                    return  isBoolean(rs[row][i]);
                 } catch (Exception e) {
                     //e.printStackTrace();
                     return false;
@@ -191,12 +198,12 @@ public class DbAccessOS {
      * @return 初期値が０であることに注意。業務データ側に０が有効値として入らないようにする。
      */
     public int getValueI(String[][] rs, String name, int row) {
-        for (int i = 0; i < rs.length; i++) {
-            if (rs[i][0].equals(name)) {
+        for (int col = 0; col < rs[0].length; col++) {
+            if (rs[0][col].toLowerCase().equals(name.toLowerCase())) {
                 //列発見
                 int ret = 0;
                 try {
-                    ret = Integer.parseInt(rs[i][row]);
+                    ret = Integer.parseInt(rs[row][col]);
                 } catch (Exception e) {
                     //e.printStackTrace();
                     return 0;
@@ -336,13 +343,15 @@ public class DbAccessOS {
      * @param SQL
      * @return 
      */
-    public ArrayList getResultSetTableBySQL(int cols, String SQL) {
-        System.out.println("getResultSetTableBySQL:" + tableNameSup);
+    public String[][] getResultSetTableBySQL(String SQL) {
+        System.out.println("getResultSetTableBySQL : " + SQL);
         Properties props = new Properties();
         props.setProperty("user", rolename);
         props.setProperty("password", password);
         Connection con = null;
-        ArrayList<ArrayList> arrField = new ArrayList<ArrayList>();
+        //ArrayList<ArrayList> arrField = new ArrayList<ArrayList>();
+        String[][] ret = null;
+        List listRs = new ArrayList();
         
         try {
             Class.forName("org.postgresql.Driver");
@@ -359,29 +368,35 @@ public class DbAccessOS {
             //SQLの実行
             logDebug(SQL);
             ResultSet rs = stmt.executeQuery(SQL);
+            ResultSetMetaData rsmd= rs.getMetaData();
             
-            //int cols = tableFieldSup.length;
-            System.out.println("cols:" + cols);
-            
-            //Title
-//            for (int i = 0; i < cols; i++) {
-//                logDebug("Title" + i + ":" + tableFieldSup[i][0]);
-//                ret[i][0] = tableFieldSup[i][0];
-//            }
+            //配列の枠を作成
+            String[] wk = new String[rsmd.getColumnCount()];
+            for (int i = 1; i <= rsmd.getColumnCount(); i++) {      //列の数は１から
+                logDebug("取得RSカラム名：" + rsmd.getColumnName(i));
+                wk[i - 1] = rsmd.getColumnName(i);
+            }
+            listRs.add(wk);
             
             //Data
             int idx = 0;
             while (rs.next()) {
-                idx = idx + 1;
-                ArrayList<String> arrRow = new ArrayList<String>();
-                for (int j = 0; j < cols; j++) {
-                    String wk = rs.getString(j + 1);
-                    arrRow.add(wk);
-                    logDebug("Data" + idx + "," + j + ":" + wk);
+                wk = new String[rsmd.getColumnCount()];
+                for (int j = 0; j < rsmd.getColumnCount(); j++) {
+                    wk[j] = rs.getString(j + 1);
                 }
-                arrField.add(arrRow);
+                listRs.add(wk);
             }
             
+            //ArrayListから２次元配列を作成
+            ret = (String[][])listRs.toArray(new String[0][0]);
+            if (DebugMode) {
+                for (int i = 0; i < ret.length; i++) {
+                    for (int j = 0; j < ret[0].length; j++) {
+                        System.err.println(ret[i][j]);
+                    }
+                }
+            }
             rs.close();
             
             //ステートメントのクローズ
@@ -408,8 +423,16 @@ public class DbAccessOS {
                 e.printStackTrace();
             }
         }
-        //ret = sortArray(ret);
-        return arrField;
+        ret = sortArray(ret);
+        System.err.println("Debug!!!!!!!!!");
+        for (int i = 0; i < ret.length; i++) {
+            for (int j = 0; j < ret[0].length; j++) {
+                System.err.print("," + ret[i][j]);
+            }
+            System.err.println("");
+        }
+        
+        return ret;
     }
     
     /**
@@ -418,94 +441,9 @@ public class DbAccessOS {
      * @return 
      */
     public String[][] getResultSetTable(String where) {
-        System.out.println("getResultSetTable" + tableNameSup);
-        String[][] ret = new String[tableFieldSup.length][1]; //col,rowの順
-        Properties props = new Properties();
-        props.setProperty("user", rolename);
-        props.setProperty("password", password);
-        Connection con = null;
-        
-        try {
-            Class.forName("org.postgresql.Driver");
-            
-            con = DriverManager.getConnection(url, props);
-            System.out.println("データベースに接続しました。");
-            
-            //自動コミットを無効にする
-            //con.setAutoCommit(false);
-            
-            //ステートメント作成
-            Statement stmt = con.createStatement();
-            
-            //列数取得
-//            ResultSet rs = stmt.executeQuery("SELECT COUNT(*) FROM " + tableNameSup);
- //           rs.next();
- //           int rows = rs.getInt("COUNT");
-//            System.out.println(rows);
-            
-            //行数取得
-            String SQL = "SELECT COUNT(*) FROM " + tableNameSup + " " + where;
-            System.out.println(SQL);
-            ResultSet rs = stmt.executeQuery(SQL);
-            rs.next();
-            int rows = rs.getInt("COUNT");
-            System.out.println("rows:" + rows);
-            rs.close();
-            
-            //SQLの実行
-            SQL = "SELECT * FROM " + tableNameSup + " " + where;
-            System.out.println(SQL);
-            rs = stmt.executeQuery(SQL);
-            
-            int cols = tableFieldSup.length;
-            System.out.println("cols:" + cols);
-            //配列の枠を作成
-            ret = new String[cols][rows + 1]; //タイトル分１行多い
-            
-            //Title
-            for (int i = 0; i < cols; i++) {
-                logDebug("Title" + i + ":" + tableFieldSup[i][0]);
-                ret[i][0] = tableFieldSup[i][0];
-            }
-            
-            //Data
-            int idx = 0;
-            while (rs.next()) {
-                idx = idx + 1;
-                for (int j = 0; j < cols; j++) {
-                    ret[j][idx] = rs.getString(j + 1);
-                    logDebug("Data" + idx + "," + j + ":" + rs.getString(j + 1));
-                    logDebug("ret[][]" + idx + "," + j + ":" + ret[j][idx]);
-                }
-            }
-            
-            rs.close();
-            
-            //ステートメントのクローズ
-            stmt.close();
-            
-            //コミットする
-            //con.commit();
-        } catch (ClassNotFoundException e) {
-            System.err.println("JDBCドライバが見つかりませんでした。");
-        } catch (SQLException e) {
-            System.err.println("エラーコード　　: " + e.getSQLState());
-            System.err.println("エラーメッセージ: " + e.getMessage());
-            e.printStackTrace();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (con != null) {
-                    con.close();
-                    System.out.println("データベースとの接続を切断しました。");
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        ret = sortArray(ret);
-        return ret;
+        //SQLの実行
+        String SQL = "SELECT * FROM " + tableNameSup + " " + where;
+        return getResultSetTableBySQL(SQL);
     }
     /**
      * ２次元配列をソートして返します
@@ -514,9 +452,9 @@ public class DbAccessOS {
      * @return 
      */
     private String[][] sortArray(String[][] src) {
-        int cols = src.length;
-        int rows = src[0].length;
-        String[][] desc = new String[cols][rows];
+        int rows = src.length;
+        int cols = src[0].length;
+        String[][] desc = new String[rows][cols];
         
         DecimalFormat exFormat10 = new DecimalFormat("0000000000");
         TreeSet<String> arrayKeys = new TreeSet<String>();
@@ -529,10 +467,10 @@ public class DbAccessOS {
             for (int j = 0; j < cols; j++) {
                 //ソートキー作成
                 try {
-                    long wk = Long.parseLong(src[j][i]);
+                    long wk = Long.parseLong(src[i][j]);
                     key.append(exFormat10.format(wk));
                 } catch (Exception e) {
-                    key.append(src[j][i]);
+                    key.append(src[i][j]);
                 }
             }
             //最後の１０桁はインデックス
@@ -550,7 +488,7 @@ public class DbAccessOS {
                 e.printStackTrace();
             }
             for (int j = 0; j < cols; j++) {
-                desc[j][i] = src[j][idx];
+                desc[i][j] = src[idx][j];
             }
         }
         

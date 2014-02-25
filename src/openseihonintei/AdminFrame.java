@@ -63,8 +63,6 @@ public class AdminFrame extends javax.swing.JFrame {
         textPG = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
         textRS = new javax.swing.JTextArea();
-        jLabel2 = new javax.swing.JLabel();
-        textCols = new javax.swing.JTextField();
 
         setTitle("データベース管理");
 
@@ -91,10 +89,6 @@ public class AdminFrame extends javax.swing.JFrame {
         textRS.setRows(5);
         jScrollPane2.setViewportView(textRS);
 
-        jLabel2.setText("Cols");
-
-        textCols.setText("1");
-
         org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -106,19 +100,13 @@ public class AdminFrame extends javax.swing.JFrame {
                 .add(0, 0, Short.MAX_VALUE))
             .add(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jPanel1Layout.createSequentialGroup()
-                        .add(jLabel1)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                            .add(comboAction, 0, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .add(comboDB, 0, 137, Short.MAX_VALUE))
-                        .add(18, 18, 18)
-                        .add(jButton1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 109, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                    .add(jPanel1Layout.createSequentialGroup()
-                        .add(jLabel2)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(textCols, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 107, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                .add(jLabel1)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                    .add(comboAction, 0, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .add(comboDB, 0, 137, Short.MAX_VALUE))
+                .add(18, 18, 18)
+                .add(jButton1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 109, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -126,18 +114,14 @@ public class AdminFrame extends javax.swing.JFrame {
             .add(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                    .add(jButton1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
+                    .add(jButton1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .add(jPanel1Layout.createSequentialGroup()
                         .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                             .add(jLabel1)
                             .add(comboDB, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(comboAction, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-                .add(3, 3, 3)
-                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jLabel2)
-                    .add(textCols, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                 .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 79, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jScrollPane2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 172, Short.MAX_VALUE))
@@ -155,7 +139,7 @@ public class AdminFrame extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(17, Short.MAX_VALUE)
                 .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .add(13, 13, 13))
         );
@@ -231,18 +215,18 @@ public class AdminFrame extends javax.swing.JFrame {
         if (action.equals("SQL Test")) {
             flg = true;
             String SQL = textPG.getText();
-            int cols = DbAccessOS.getValueI(textCols.getText());
-            ArrayList rs = accesser.getResultSetTableBySQL(cols, SQL);
+//            int cols = DbAccessOS.getValueI(textCols.getText());
+            String[][] rs = accesser.getResultSetTableBySQL(SQL);
             StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < rs.size(); i++) {
-                for (int j = 0; j < ((ArrayList)rs.get(i)).size(); j++) {
+            for (int i = 0; i < rs.length; i++) {
+                for (int j = 0; j < rs[i].length; j++) {
                     sb.append("rs[");
                     sb.append("" + i);
                     sb.append("]");
                     sb.append("[");
                     sb.append("" + j);
                     sb.append("]");
-                    sb.append(((ArrayList)rs.get(i)).get(j));
+                    sb.append(rs[i][j]);
                     sb.append("\n");
                 }
             }
@@ -301,11 +285,9 @@ public class AdminFrame extends javax.swing.JFrame {
     private javax.swing.JComboBox comboDB;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField textCols;
     private javax.swing.JTextArea textPG;
     private javax.swing.JTextArea textRS;
     // End of variables declaration//GEN-END:variables
