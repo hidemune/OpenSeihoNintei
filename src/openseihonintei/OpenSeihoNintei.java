@@ -6,6 +6,8 @@
 
 package openseihonintei;
 
+import javax.swing.UIManager;
+
 /**
  *
  * @author hdm
@@ -13,12 +15,19 @@ package openseihonintei;
 public class OpenSeihoNintei {
 public static final String version = "0.01";
 public static int MaxSetaiIn = 14;
+public static String DefaultKyuti = "11";
+public static String DefaultTouki = "6";
 
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        try{
+          UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        }catch(Exception e) {
+          e.printStackTrace();
+        }
+        
         SplashFrame sp = new SplashFrame();
         sp.setVisible(true);
         MainFrame frm = new MainFrame();

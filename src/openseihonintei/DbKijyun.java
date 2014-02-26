@@ -210,7 +210,8 @@ public class DbKijyun extends DbAccessOS{
         {"Boshi2N", "INTEGER"},
         {"Boshi3Z", "INTEGER"},
         {"Boshi3N", "INTEGER"},
-
+        
+        //教育扶助
         {"KyoikuS", "INTEGER"},
         {"KyoikuC", "INTEGER"},
         {"KyoikuSienS", "INTEGER"},
@@ -229,5 +230,22 @@ public class DbKijyun extends DbAccessOS{
         setTablePrimary(tablePrimary);
         setTableField(tableField);
         logDebug("初期化:" + tableName);
+    }
+    
+    /**
+     * 基準DB専用　リザルトセットの配列の行番号を返します。
+     * @param rs
+     * @param kyutiID 11 ならば１級地−１の基準を探します
+     * @return 
+     */
+    public int getKyutiIdx(String[][] rs, String kyutiID) {
+        for (int i = 0; i < rs.length; i++) {
+            String wk = this.getValue(rs, "kyuti", i);
+            if (wk.equals(kyutiID)) {
+                return i;
+            }
+        }
+        //見つからなかった場合
+        return -1;
     }
 }

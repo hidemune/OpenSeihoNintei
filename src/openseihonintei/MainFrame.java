@@ -13,10 +13,12 @@ import java.awt.Desktop;
 import java.awt.Dimension;
 import java.io.File;
 import java.net.URI;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTabbedPane;
 
@@ -29,6 +31,7 @@ private static SetaiPanel[] sp ;
 private static String ninteiYMD;
 private DbSetai dbSetai = new DbSetai();
 private DbKojin dbKojin = new DbKojin();
+private DbKijyun dbKijyun = new DbKijyun();
 private String[][] rsSetaiPre;
 private String[][] rsKojin;
 private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
@@ -52,12 +55,13 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         }
         
         initComponents();
-        setIconImage(new ImageIcon("hidemune_s.png").getImage());
+        setIconImage(new ImageIcon("OpenSeiho.png").getImage());
         //画面を中心に表示
         java.awt.GraphicsEnvironment env = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment();
         // 変数desktopBoundsにデスクトップ領域を表すRectangleが代入される
         java.awt.Rectangle desktopBounds = env.getMaximumWindowBounds();
         java.awt.Rectangle thisBounds = this.getBounds();
+        thisBounds.setSize(thisBounds.width, 700);                  //画面大きすぎるため
         int x = desktopBounds.width / 2 - thisBounds.width / 2;
         int y = desktopBounds.height / 2 - thisBounds.height / 2;
         this.setBounds(x, y, thisBounds.width, thisBounds.height);
@@ -82,6 +86,8 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         
         //スクロール量
         jScrollPaneSetai.getVerticalScrollBar().setUnitIncrement(25);
+        jScrollPaneGetugaku.getVerticalScrollBar().setUnitIncrement(25);
+        jScrollPaneHiwari.getVerticalScrollBar().setUnitIncrement(25);
         
         //画面クリア
         init();
@@ -109,8 +115,8 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         
         //コンボボックス デフォルト値を設定
         //comboIDNinzuu.setDefaultID1("1");  //人数のデフォルト
-        comboIDKyuti.setDefaultID1(11);
-        comboIDTouki.setDefaultID1(6);
+        comboIDKyuti.setDefaultID1(OpenSeihoNintei.DefaultKyuti);
+        comboIDTouki.setDefaultID1(OpenSeihoNintei.DefaultTouki);
         comboIDSeikatuKeitai.setDefaultID1(1);
         //初期化
         comboIDNinzuu.setSelectedIndexID1(0);
@@ -156,6 +162,52 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         listKyouikuKyouzai.setModel(new DefaultListModel());
         listKyouikuKyuusyoku.setModel(new DefaultListModel());
         listKyouikuSonota.setModel(new DefaultListModel());
+        list1KasanSbt.setModel(new DefaultListModel());
+        
+        listSetaiIn1.setModel(new DefaultListModel());
+        list1Ippan1.setModel(new DefaultListModel());
+        list1Kasan1.setModel(new DefaultListModel());
+        listGakunen1.setModel(new DefaultListModel());
+        listIryoKijyun1.setModel(new DefaultListModel());
+        listIryouHoken1.setModel(new DefaultListModel());
+        listIryouSonota1.setModel(new DefaultListModel());
+        listKaigoHoken1.setModel(new DefaultListModel());
+        listKaigoKijyun1.setModel(new DefaultListModel());
+        listKaigoSonota1.setModel(new DefaultListModel());
+        listSetaiIn5.setModel(new DefaultListModel());
+        listSetaiIn6.setModel(new DefaultListModel());
+        listSetaiIn7.setModel(new DefaultListModel());
+        listKyouikuKijyun1.setModel(new DefaultListModel());
+        listKyouikuKoutuu1.setModel(new DefaultListModel());
+        listKyouikuKyouzai1.setModel(new DefaultListModel());
+        listKyouikuKyuusyoku1.setModel(new DefaultListModel());
+        listKyouikuSonota1.setModel(new DefaultListModel());
+        list1KasanSbt1.setModel(new DefaultListModel());
+        
+        text1Ippan.setText("");
+        text1Ippan1.setText("");
+        text1Kasan.setText("");
+        text1Kasan1.setText("");
+        text1Total.setText("");
+        text1Total1.setText("");
+        text2Total.setText("");
+        text2Total1.setText("");
+        textIryou.setText("");
+        textIryou1.setText("");
+        textJyutaku.setText("");
+        textJyutaku1.setText("");
+        textKaigo.setText("");
+        textKaigo1.setText("");
+        textKimatu.setText("");
+        textKimatu1.setText("");
+        textKyouiku.setText("");
+        textKyouiku1.setText("");
+        textSeikatuKei.setText("");
+        textSeikatuKei1.setText("");
+        textTeigenRitu.setText("");
+        textTeigenRitu1.setText("");
+        textTotal.setText("");
+        textTotal1.setText("");
         
     }
     
@@ -414,6 +466,8 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         textKasanBoshiNinzuu = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         chkTyouhuku = new javax.swing.JCheckBox();
+        jLabel80 = new javax.swing.JLabel();
+        textKasanBoshiNinzuuS = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         comboIDSeikatuKeitai = new openseiho.comboID();
         jComboBoxKojin = new javax.swing.JComboBox();
@@ -423,7 +477,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         jButtonKojinCheck = new javax.swing.JButton();
         jButtonKojinInst = new javax.swing.JButton();
         setaiInPanel = new openseihonintei.SetaiPanel();
-        jScrollPane3 = new javax.swing.JScrollPane();
+        jScrollPaneGetugaku = new javax.swing.JScrollPane();
         jPanel3 = new javax.swing.JPanel();
         jButton5 = new javax.swing.JButton();
         jButtonSaikeisan = new javax.swing.JButton();
@@ -450,6 +504,9 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         textKimatu = new javax.swing.JTextField();
         jLabel18 = new javax.swing.JLabel();
         textSeikatuKei = new javax.swing.JTextField();
+        jScrollPane21 = new javax.swing.JScrollPane();
+        list1KasanSbt = new javax.swing.JList();
+        jLabel78 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabel19 = new javax.swing.JLabel();
         textJyutaku = new javax.swing.JTextField();
@@ -477,6 +534,8 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         jLabel27 = new javax.swing.JLabel();
         jScrollPane12 = new javax.swing.JScrollPane();
         listKyouikuSonota = new javax.swing.JList();
+        jLabel76 = new javax.swing.JLabel();
+        jLabel77 = new javax.swing.JLabel();
         jPanel15 = new javax.swing.JPanel();
         jLabel28 = new javax.swing.JLabel();
         jScrollPane13 = new javax.swing.JScrollPane();
@@ -511,7 +570,8 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         jLabel72 = new javax.swing.JLabel();
         jLabel73 = new javax.swing.JLabel();
         textTotal = new javax.swing.JTextField();
-        jScrollPane21 = new javax.swing.JScrollPane();
+        jLabel75 = new javax.swing.JLabel();
+        jScrollPaneHiwari = new javax.swing.JScrollPane();
         jPanel17 = new javax.swing.JPanel();
         jPanel18 = new javax.swing.JPanel();
         jLabel38 = new javax.swing.JLabel();
@@ -536,6 +596,9 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         textKimatu1 = new javax.swing.JTextField();
         jLabel46 = new javax.swing.JLabel();
         textSeikatuKei1 = new javax.swing.JTextField();
+        jLabel79 = new javax.swing.JLabel();
+        jScrollPane42 = new javax.swing.JScrollPane();
+        list1KasanSbt1 = new javax.swing.JList();
         jPanel19 = new javax.swing.JPanel();
         jLabel47 = new javax.swing.JLabel();
         textJyutaku1 = new javax.swing.JTextField();
@@ -602,6 +665,8 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         jLabel67 = new javax.swing.JLabel();
         jLabel68 = new javax.swing.JLabel();
         jLabel69 = new javax.swing.JLabel();
+        jLabel74 = new javax.swing.JLabel();
+        textTotal1 = new javax.swing.JTextField();
         jLabel71 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
@@ -1064,9 +1129,14 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         textKasanBoshiNinzuu.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         textKasanBoshiNinzuu.setText("0");
 
-        jLabel5.setText("人");
+        jLabel5.setText("人(内施設入所");
 
         chkTyouhuku.setText("重複調整");
+
+        jLabel80.setText("人）");
+
+        textKasanBoshiNinzuuS.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        textKasanBoshiNinzuuS.setText("0");
 
         org.jdesktop.layout.GroupLayout jPanel13Layout = new org.jdesktop.layout.GroupLayout(jPanel13);
         jPanel13.setLayout(jPanel13Layout);
@@ -1081,9 +1151,13 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                 .add(textKasanBoshiNinzuu, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 27, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jLabel5)
-                .add(86, 86, 86)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(textKasanBoshiNinzuuS, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 27, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jLabel80)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 130, Short.MAX_VALUE)
                 .add(chkTyouhuku)
-                .add(0, 308, Short.MAX_VALUE))
+                .add(115, 115, 115))
         );
         jPanel13Layout.setVerticalGroup(
             jPanel13Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -1093,7 +1167,9 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, chkBoshi, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 21, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(jPanel13Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                         .add(jLabel5, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .add(chkTyouhuku, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 21, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                        .add(chkTyouhuku, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 21, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(jLabel80, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .add(textKasanBoshiNinzuuS))
                     .add(textKasanBoshiNinzuu))
                 .add(5, 5, 5))
         );
@@ -1215,15 +1291,15 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                 .add(jLabel3)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanelKasan, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 227, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(247, Short.MAX_VALUE))
+                .addContainerGap(666, Short.MAX_VALUE))
         );
 
         jScrollPane2.setViewportView(jPanelkojin);
 
         jTabbedPane1.addTab("個人状況", jScrollPane2);
 
-        jScrollPane3.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
-        jScrollPane3.setDoubleBuffered(true);
+        jScrollPaneGetugaku.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
+        jScrollPaneGetugaku.setDoubleBuffered(true);
 
         jButton5.setText("月額テーブル登録");
 
@@ -1289,6 +1365,15 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
 
         textSeikatuKei.setText("jTextField1");
 
+        list1KasanSbt.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane21.setViewportView(list1KasanSbt);
+
+        jLabel78.setText("加算種別");
+
         org.jdesktop.layout.GroupLayout jPanel4Layout = new org.jdesktop.layout.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -1297,63 +1382,82 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                 .addContainerGap()
                 .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jPanel4Layout.createSequentialGroup()
-                        .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jLabel10)
-                            .add(jLabel13)
-                            .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 136, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                            .add(jLabel11)
-                            .add(jScrollPane4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
-                            .add(text1Ippan, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)))
-                    .add(jPanel4Layout.createSequentialGroup()
                         .add(jLabel14)
-                        .add(65, 65, 65)
-                        .add(textTeigenRitu, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 92, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                    .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .add(textTeigenRitu, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 158, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(191, 191, 191))
+                    .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                        .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
+                            .add(jPanel4Layout.createSequentialGroup()
+                                .add(jLabel18)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .add(textSeikatuKei, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 92, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                            .add(org.jdesktop.layout.GroupLayout.LEADING, jPanel4Layout.createSequentialGroup()
+                                .add(jLabel17)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .add(textKimatu, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 92, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                            .add(org.jdesktop.layout.GroupLayout.LEADING, jPanel4Layout.createSequentialGroup()
+                                .add(jLabel16)
+                                .add(65, 65, 65)
+                                .add(text2Total))
+                            .add(org.jdesktop.layout.GroupLayout.LEADING, jPanel4Layout.createSequentialGroup()
+                                .add(jLabel15)
+                                .add(52, 52, 52)
+                                .add(text1Total, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 92, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
                         .add(jPanel4Layout.createSequentialGroup()
-                            .add(jLabel18)
-                            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .add(textSeikatuKei, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 92, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                        .add(org.jdesktop.layout.GroupLayout.LEADING, jPanel4Layout.createSequentialGroup()
-                            .add(jLabel17)
-                            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .add(textKimatu, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 92, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                        .add(org.jdesktop.layout.GroupLayout.LEADING, jPanel4Layout.createSequentialGroup()
-                            .add(jLabel16)
-                            .add(65, 65, 65)
-                            .add(text2Total))
-                        .add(org.jdesktop.layout.GroupLayout.LEADING, jPanel4Layout.createSequentialGroup()
-                            .add(jLabel15)
-                            .add(52, 52, 52)
-                            .add(text1Total, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 92, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                    .add(jLabel12)
-                    .add(jScrollPane5, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE)
-                    .add(text1Kasan, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
-                .add(92, 92, 92))
+                            .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                .add(jLabel10)
+                                .add(jLabel13)
+                                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 136, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                            .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                                .add(jLabel11)
+                                .add(jScrollPane4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
+                                .add(text1Ippan, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                            .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                                .add(jLabel12)
+                                .add(jScrollPane5)
+                                .add(text1Kasan, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 69, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                            .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                .add(jScrollPane21)
+                                .add(jPanel4Layout.createSequentialGroup()
+                                    .add(jLabel78)
+                                    .add(0, 0, Short.MAX_VALUE))))))
+                .add(12, 12, 12))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel4Layout.createSequentialGroup()
                 .add(0, 0, Short.MAX_VALUE)
-                .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jLabel10)
-                    .add(jLabel11)
-                    .add(jLabel12))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jScrollPane4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jScrollPane5, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jLabel13)
-                    .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                        .add(text1Ippan, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .add(text1Kasan, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel4Layout.createSequentialGroup()
+                        .add(jLabel78)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jScrollPane21, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(38, 38, 38))
+                    .add(jPanel4Layout.createSequentialGroup()
+                        .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(jPanel4Layout.createSequentialGroup()
+                                .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                                    .add(jLabel10)
+                                    .add(jLabel11))
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                    .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                    .add(jScrollPane4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                                .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                    .add(jLabel13)
+                                    .add(text1Ippan, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                            .add(jPanel4Layout.createSequentialGroup()
+                                .add(jLabel12)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(jScrollPane5, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                                .add(text1Kasan, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)))
                 .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jLabel14)
                     .add(textTeigenRitu, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
@@ -1437,39 +1541,68 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
 
         jLabel24.setText("教材代");
 
+        listKyouikuKyouzai.setBackground(new java.awt.Color(255, 204, 204));
         listKyouikuKyouzai.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
+        listKyouikuKyouzai.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                listKyouikuKyouzaiKeyPressed(evt);
+            }
+        });
         jScrollPane9.setViewportView(listKyouikuKyouzai);
 
         jLabel25.setText("給食費");
 
+        listKyouikuKyuusyoku.setBackground(new java.awt.Color(255, 204, 204));
         listKyouikuKyuusyoku.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
+        listKyouikuKyuusyoku.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                listKyouikuKyuusyokuKeyPressed(evt);
+            }
+        });
         jScrollPane10.setViewportView(listKyouikuKyuusyoku);
 
         jLabel26.setText("交通費");
 
+        listKyouikuKoutuu.setBackground(new java.awt.Color(255, 204, 204));
         listKyouikuKoutuu.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
+        listKyouikuKoutuu.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                listKyouikuKoutuuKeyPressed(evt);
+            }
+        });
         jScrollPane11.setViewportView(listKyouikuKoutuu);
 
         jLabel27.setText("その他");
 
+        listKyouikuSonota.setBackground(new java.awt.Color(255, 204, 204));
         listKyouikuSonota.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
+        listKyouikuSonota.setToolTipText("");
+        listKyouikuSonota.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                listKyouikuSonotaKeyPressed(evt);
+            }
+        });
         jScrollPane12.setViewportView(listKyouikuSonota);
+
+        jLabel76.setText("その他には学習支援費が計上されますので、");
+
+        jLabel77.setText("ここに学級費や再支給分を加算してください。");
 
         org.jdesktop.layout.GroupLayout jPanel14Layout = new org.jdesktop.layout.GroupLayout(jPanel14);
         jPanel14.setLayout(jPanel14Layout);
@@ -1482,7 +1615,9 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                         .add(jLabel23)
                         .add(52, 52, 52)
                         .add(textKyouiku, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 92, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .add(jLabel76)
+                        .addContainerGap())
                     .add(jPanel14Layout.createSequentialGroup()
                         .add(jPanel14Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(jLabel20)
@@ -1510,9 +1645,12 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jPanel14Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(jLabel27)
-                            .add(jPanel14Layout.createSequentialGroup()
-                                .add(jScrollPane12, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE)
-                                .addContainerGap())))))
+                            .add(jScrollPane12, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 55, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                        .add(0, 18, Short.MAX_VALUE))))
+            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel14Layout.createSequentialGroup()
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .add(jLabel77)
+                .addContainerGap())
         );
         jPanel14Layout.setVerticalGroup(
             jPanel14Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -1552,7 +1690,10 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel14Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jLabel23)
-                    .add(textKyouiku, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(textKyouiku, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jLabel76))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jLabel77)
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -1569,32 +1710,50 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
 
         jLabel29.setText("概算月額");
 
+        listKaigoKijyun.setBackground(new java.awt.Color(255, 204, 204));
         listKaigoKijyun.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "999,999", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
         listKaigoKijyun.setPreferredSize(new java.awt.Dimension(44, 90));
+        listKaigoKijyun.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                listKaigoKijyunKeyPressed(evt);
+            }
+        });
         jScrollPane14.setViewportView(listKaigoKijyun);
 
         jLabel30.setText("介護保険");
 
+        listKaigoHoken.setBackground(new java.awt.Color(255, 204, 204));
         listKaigoHoken.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "999,999", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
         listKaigoHoken.setPreferredSize(new java.awt.Dimension(44, 90));
+        listKaigoHoken.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                listKaigoHokenKeyPressed(evt);
+            }
+        });
         jScrollPane15.setViewportView(listKaigoHoken);
 
         jLabel31.setText("その他公費");
 
+        listKaigoSonota.setBackground(new java.awt.Color(255, 204, 204));
         listKaigoSonota.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "999,999", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
         listKaigoSonota.setPreferredSize(new java.awt.Dimension(44, 90));
+        listKaigoSonota.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                listKaigoSonotaKeyPressed(evt);
+            }
+        });
         jScrollPane16.setViewportView(listKaigoSonota);
 
         jLabel33.setText("介護費計");
@@ -1672,32 +1831,50 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
 
         jLabel34.setText("概算月額");
 
+        listIryoKijyun.setBackground(new java.awt.Color(255, 204, 204));
         listIryoKijyun.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "999,999", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
         listIryoKijyun.setPreferredSize(new java.awt.Dimension(44, 90));
+        listIryoKijyun.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                listIryoKijyunKeyPressed(evt);
+            }
+        });
         jScrollPane18.setViewportView(listIryoKijyun);
 
         jLabel35.setText("医療保険");
 
+        listIryouHoken.setBackground(new java.awt.Color(255, 204, 204));
         listIryouHoken.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "999,999", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
         listIryouHoken.setPreferredSize(new java.awt.Dimension(44, 90));
+        listIryouHoken.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                listIryouHokenKeyPressed(evt);
+            }
+        });
         jScrollPane19.setViewportView(listIryouHoken);
 
         jLabel36.setText("その他公費      ");
 
+        listIryouSonota.setBackground(new java.awt.Color(255, 204, 204));
         listIryouSonota.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "999,999", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
         listIryouSonota.setPreferredSize(new java.awt.Dimension(44, 90));
+        listIryouSonota.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                listIryouSonotaKeyPressed(evt);
+            }
+        });
         jScrollPane20.setViewportView(listIryouSonota);
 
         jLabel37.setText("医療費計");
@@ -1770,6 +1947,8 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
 
         textTotal.setText("jTextField1");
 
+        jLabel75.setText("リストは、手修正が可能です。選択してEnterを押してください。");
+
         org.jdesktop.layout.GroupLayout jPanel3Layout = new org.jdesktop.layout.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -1777,33 +1956,37 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
             .add(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jPanel3Layout.createSequentialGroup()
-                                .add(jLabel70)
-                                .add(36, 36, 36)
-                                .add(jLabel73)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(textTotal, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 86, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                            .add(jLabel72))
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 106, Short.MAX_VALUE)
-                        .add(jButtonSaikeisan)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jButton5))
                     .add(jPanel3Layout.createSequentialGroup()
                         .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jPanel3Layout.createSequentialGroup()
-                                .add(jPanel4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 324, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                            .add(jPanel14, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(jLabel75))
+                        .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .add(jPanel3Layout.createSequentialGroup()
+                        .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel3Layout.createSequentialGroup()
                                 .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                                    .add(jPanel5, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                    .add(jPanel14, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                                    .add(jPanel3Layout.createSequentialGroup()
+                                        .add(jLabel70)
+                                        .add(36, 36, 36)
+                                        .add(jLabel73)
+                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                        .add(textTotal, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 86, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                                    .add(jLabel72))
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 85, Short.MAX_VALUE)
+                                .add(jButtonSaikeisan)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(jButton5))
                             .add(jPanel3Layout.createSequentialGroup()
                                 .add(jPanel15, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 384, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                .add(18, 18, 18)
-                                .add(jPanel16, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 366, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-                        .add(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(jPanel16, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 366, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                .add(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())
+                    .add(jPanel3Layout.createSequentialGroup()
+                        .add(jPanel4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                        .add(jPanel5, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(75, 75, 75))))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -1820,23 +2003,24 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                             .add(textTotal, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                         .add(2, 2, 2)
                         .add(jLabel72)))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jLabel75)
+                .add(14, 14, 14)
                 .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jPanel4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jPanel3Layout.createSequentialGroup()
-                        .add(jPanel5, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                        .add(jPanel14, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                    .add(jPanel5, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jPanel14, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jPanel15, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(jPanel16, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(160, Short.MAX_VALUE))
         );
 
-        jScrollPane3.setViewportView(jPanel3);
+        jScrollPaneGetugaku.setViewportView(jPanel3);
 
-        jTabbedPane1.addTab("最低生活費月額", jScrollPane3);
+        jTabbedPane1.addTab("最低生活費月額", jScrollPaneGetugaku);
 
         jPanel18.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -1894,6 +2078,15 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
 
         textSeikatuKei1.setText("jTextField1");
 
+        jLabel79.setText("加算種別");
+
+        list1KasanSbt1.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane42.setViewportView(list1KasanSbt1);
+
         org.jdesktop.layout.GroupLayout jPanel18Layout = new org.jdesktop.layout.GroupLayout(jPanel18);
         jPanel18.setLayout(jPanel18Layout);
         jPanel18Layout.setHorizontalGroup(
@@ -1910,7 +2103,18 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                         .add(jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
                             .add(jLabel39)
                             .add(jScrollPane23, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
-                            .add(text1Ippan1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE)))
+                            .add(text1Ippan1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                            .add(jLabel40)
+                            .add(jScrollPane24)
+                            .add(text1Kasan1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 69, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(jScrollPane42)
+                            .add(jPanel18Layout.createSequentialGroup()
+                                .add(jLabel79)
+                                .add(0, 0, Short.MAX_VALUE))))
                     .add(jPanel18Layout.createSequentialGroup()
                         .add(jLabel42)
                         .add(65, 65, 65)
@@ -1932,31 +2136,36 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                             .add(jLabel43)
                             .add(52, 52, 52)
                             .add(text1Total1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 92, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .add(jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                    .add(jLabel40)
-                    .add(jScrollPane24, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE)
-                    .add(text1Kasan1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 1, Short.MAX_VALUE))
-                .add(92, 92, 92))
+                .addContainerGap())
         );
         jPanel18Layout.setVerticalGroup(
             jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel18Layout.createSequentialGroup()
                 .add(0, 0, Short.MAX_VALUE)
-                .add(jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                    .add(jLabel38)
-                    .add(jLabel39)
-                    .add(jLabel40))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jScrollPane22, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jScrollPane23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jScrollPane24, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                .add(jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jLabel41)
-                    .add(jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                        .add(text1Ippan1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jPanel18Layout.createSequentialGroup()
+                        .add(jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                            .add(jLabel38)
+                            .add(jLabel39))
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(jScrollPane22, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(jScrollPane23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                        .add(jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(jLabel41)
+                            .add(text1Ippan1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                    .add(jPanel18Layout.createSequentialGroup()
+                        .add(jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                            .add(jPanel18Layout.createSequentialGroup()
+                                .add(jLabel40)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(jScrollPane24, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                            .add(jPanel18Layout.createSequentialGroup()
+                                .add(jLabel79)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(jScrollPane42, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                         .add(text1Kasan1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                 .add(jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -2372,6 +2581,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         });
         jScrollPane40.setViewportView(listSetaiIn8);
 
+        listSetaiIn9.setBackground(new java.awt.Color(255, 204, 204));
         listSetaiIn9.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "9", "10", "11" };
             public int getSize() { return strings.length; }
@@ -2383,7 +2593,11 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
 
         jLabel68.setText("日数");
 
-        jLabel69.setText("日数は、手修正が可能です。ダブルクリックしてください。");
+        jLabel69.setText("日数は、手修正が可能です。選択してEnterを押してください。");
+
+        jLabel74.setText("月額計");
+
+        textTotal1.setText("jTextField1");
 
         org.jdesktop.layout.GroupLayout jPanel23Layout = new org.jdesktop.layout.GroupLayout(jPanel23);
         jPanel23.setLayout(jPanel23Layout);
@@ -2398,21 +2612,34 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                 .add(jLabel68)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jScrollPane41, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 35, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel23Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jLabel67)
-                    .add(jLabel69))
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .add(jPanel23Layout.createSequentialGroup()
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jPanel23Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(jLabel67)
+                            .add(jLabel69))
+                        .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel23Layout.createSequentialGroup()
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .add(jLabel74)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(textTotal1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 86, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(38, 38, 38))))
         );
         jPanel23Layout.setVerticalGroup(
             jPanel23Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel23Layout.createSequentialGroup()
                 .addContainerGap()
-                .add(jPanel23Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                .add(jPanel23Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, jScrollPane41, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 106, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(jLabel66)
                     .add(jScrollPane40, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 106, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel23Layout.createSequentialGroup()
+                        .add(8, 8, 8)
+                        .add(jPanel23Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                            .add(jLabel74)
+                            .add(textTotal1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .add(jLabel69)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jLabel67))
@@ -2432,51 +2659,53 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                 .addContainerGap()
                 .add(jPanel17Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jPanel17Layout.createSequentialGroup()
-                        .add(jPanel23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jButton3))
+                        .add(jPanel20, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(0, 0, Short.MAX_VALUE))
                     .add(jPanel17Layout.createSequentialGroup()
-                        .add(jPanel18, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 324, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jPanel17Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jPanel19, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                            .add(jPanel20, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-                    .add(jPanel17Layout.createSequentialGroup()
-                        .add(jPanel21, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .add(18, 18, 18)
-                        .add(jPanel22, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 366, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                    .add(jLabel71))
-                .addContainerGap(25, Short.MAX_VALUE))
+                            .add(jPanel23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(jPanel17Layout.createSequentialGroup()
+                                .add(jPanel21, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                .add(18, 18, 18)
+                                .add(jPanel22, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 366, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel17Layout.createSequentialGroup()
+                        .add(jPanel17Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                            .add(jPanel17Layout.createSequentialGroup()
+                                .add(jPanel18, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                                .add(jPanel19, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                            .add(jPanel17Layout.createSequentialGroup()
+                                .add(jLabel71)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 80, Short.MAX_VALUE)
+                                .add(jButton3)))
+                        .add(29, 29, 29))))
         );
         jPanel17Layout.setVerticalGroup(
             jPanel17Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel17Layout.createSequentialGroup()
                 .addContainerGap()
-                .add(jLabel71)
+                .add(jPanel17Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                    .add(jLabel71)
+                    .add(jButton3))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jPanel23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel17Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jPanel17Layout.createSequentialGroup()
-                        .add(jPanel23, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jPanel17Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jPanel18, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                            .add(jPanel17Layout.createSequentialGroup()
-                                .add(jPanel19, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                                .add(jPanel20, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jPanel17Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jPanel21, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                            .add(jPanel22, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-                    .add(jPanel17Layout.createSequentialGroup()
-                        .add(jButton3)
-                        .add(0, 0, Short.MAX_VALUE)))
+                    .add(jPanel19, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jPanel18, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jPanel20, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .add(jPanel17Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(jPanel21, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jPanel22, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
-        jScrollPane21.setViewportView(jPanel17);
+        jScrollPaneHiwari.setViewportView(jPanel17);
 
-        jTabbedPane1.addTab("日割計算・調書２作成", jScrollPane21);
+        jTabbedPane1.addTab("日割計算・調書２作成", jScrollPaneHiwari);
 
         jMenu3.setText("ファイル");
 
@@ -2528,11 +2757,11 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jTabbedPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 944, Short.MAX_VALUE)
+            .add(jTabbedPane1)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jTabbedPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 697, Short.MAX_VALUE)
+            .add(jTabbedPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 992, Short.MAX_VALUE)
         );
 
         pack();
@@ -2695,6 +2924,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         textKaigoHi.setText("0");
         textKaigoSisetu.setText("0");
         textKasanBoshiNinzuu.setText("0");
+        textKasanBoshiNinzuuS.setText("0");
         textKasanKaigoHokenRyou.setText("0");
         textSyussanYmd.setID("00000000");
     }
@@ -2728,6 +2958,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         comboIDKasanBoshi.setID1(dbKojin.getValueI(rsKojin, "kasanBoshi", idx));
 //        {"kasanBoshiNinzu", "INTEGER"},
         textKasanBoshiNinzuu.setText("" + dbKojin.getValueI(rsKojin, "kasanBoshiNinzu", idx));
+        textKasanBoshiNinzuuS.setText("" + dbKojin.getValueI(rsKojin, "kasanBoshiNinzuS", idx));
 //        {"kasanTyohukuFlg", "INTEGER"}
         chkTyouhuku.setSelected(dbKojin.getValueB(rsKojin, "kasanTyohukuFlg", idx));
         //チェック付け直し
@@ -2940,6 +3171,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         int kaigoNyusyo = DbAccessOS.getValueI(textKaigoSisetu.getText());
         int kaigoHokenRyou = DbAccessOS.getValueI(textKasanKaigoHokenRyou.getText());
         int boshiNinzuu = DbAccessOS.getValueI(textKasanBoshiNinzuu.getText());
+        int boshiNinzuuS = DbAccessOS.getValueI(textKasanBoshiNinzuuS.getText());
         
         if (kaigoHiyou == DbAccessOS.defaultErrorIntValue) {
             msg = msg + "介護人費用の入力が数値ではありません。\n";
@@ -2952,6 +3184,9 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         }
         if (boshiNinzuu == DbAccessOS.defaultErrorIntValue) {
             msg = msg + "母子加算人数の入力が数値ではありません。\n";
+        }
+        if (boshiNinzuuS == DbAccessOS.defaultErrorIntValue) {
+            msg = msg + "母子加算人数(施設分)の入力が数値ではありません。\n";
         }
         
         if (!(msg.equals(""))) {
@@ -2991,6 +3226,7 @@ String[][] field = {
     {"kasanKaigoHokenRyou", valueBefore, "" + kaigoHokenRyou},		//INTEGER
     {"kasanBoshi", valueBefore, comboIDKasanBoshi.getID1()},		//TEXT
     {"kasanBoshiNinzu", valueBefore, "" + boshiNinzuu},		//INTEGER
+    {"kasanBoshiNinzuS", valueBefore, "" + boshiNinzuuS},		//INTEGER
     {"kasanTyohukuFlg", valueBefore, DbAccessOS.isBoolean(chkTyouhuku.isSelected())}		//INTEGER
 };
         //メモリ上に退避
@@ -3020,10 +3256,74 @@ String[][] field = {
     }//GEN-LAST:event_jMenuItem4ActionPerformed
 
     private void jButtonSaikeisanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSaikeisanActionPerformed
-        // TODO add your handling code here:
-        //最低生活費認定　再計算
-        calc();
+        if (listSetaiIn.getModel().getSize() == 0) {
+            //最低生活費認定　設定
+            calc();
+        } else {
+            //画面から再計算
+            
+        }
     }//GEN-LAST:event_jButtonSaikeisanActionPerformed
+
+    private void listNumSet(java.awt.event.KeyEvent evt) {
+        if (evt.getKeyChar() ==  '\n') {
+            JList lst = (JList)evt.getSource();
+            DefaultListModel lstM = ((DefaultListModel)lst.getModel());
+            String strNum = (String) lst.getSelectedValue();
+            inputNumDialog inp = new inputNumDialog(this, true, DbAccessOS.getValueI(strNum));
+            int ret = inp.getNumber();
+            lstM.setElementAt("" + ret, lst.getSelectedIndex());
+        }
+    }
+    private void listKyouikuKyouzaiKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_listKyouikuKyouzaiKeyPressed
+        //list*KeyPressed
+        listNumSet(evt);
+    }//GEN-LAST:event_listKyouikuKyouzaiKeyPressed
+
+    private void listKyouikuKyuusyokuKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_listKyouikuKyuusyokuKeyPressed
+        //list*KeyPressed
+        listNumSet(evt);
+    }//GEN-LAST:event_listKyouikuKyuusyokuKeyPressed
+
+    private void listKyouikuKoutuuKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_listKyouikuKoutuuKeyPressed
+        //list*KeyPressed
+        listNumSet(evt);
+    }//GEN-LAST:event_listKyouikuKoutuuKeyPressed
+
+    private void listKyouikuSonotaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_listKyouikuSonotaKeyPressed
+        //list*KeyPressed
+        listNumSet(evt);
+    }//GEN-LAST:event_listKyouikuSonotaKeyPressed
+
+    private void listKaigoKijyunKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_listKaigoKijyunKeyPressed
+        //list*KeyPressed
+        listNumSet(evt);
+    }//GEN-LAST:event_listKaigoKijyunKeyPressed
+
+    private void listKaigoHokenKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_listKaigoHokenKeyPressed
+        //list*KeyPressed
+        listNumSet(evt);
+    }//GEN-LAST:event_listKaigoHokenKeyPressed
+
+    private void listKaigoSonotaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_listKaigoSonotaKeyPressed
+        //list*KeyPressed
+        listNumSet(evt);
+    }//GEN-LAST:event_listKaigoSonotaKeyPressed
+
+    private void listIryoKijyunKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_listIryoKijyunKeyPressed
+        //list*KeyPressed
+        listNumSet(evt);
+    }//GEN-LAST:event_listIryoKijyunKeyPressed
+
+    private void listIryouHokenKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_listIryouHokenKeyPressed
+        //list*KeyPressed
+        listNumSet(evt);
+    }//GEN-LAST:event_listIryouHokenKeyPressed
+
+    private void listIryouSonotaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_listIryouSonotaKeyPressed
+        //list*KeyPressed
+        listNumSet(evt);
+    }//GEN-LAST:event_listIryouSonotaKeyPressed
 
     /**
      * 最低生活費の再計算を行う。(ここでは月額を設定する。日割りは別処理)
@@ -3037,36 +3337,289 @@ String[][] field = {
         String caseNo = textCaseNo.getText();
         String ninteiYmd = textYmdNintei.getID();
         String kianYmd = textYmdKian.getID();
+        int nendo = classYMD.getNendo(ninteiYmd);
         
         //setai, kojin の取得
-        String[][] rsSetaiN = dbSetai.getResultSetTable("WHERE caseNo = '" + caseNo + "'");
+        //String[][] rsSetaiN = dbSetai.getResultSetTable("WHERE caseNo = '" + caseNo + "'");
         String[][] rsKojinN = dbKojin.getResultSetTable("WHERE caseNo = '" + caseNo + "' AND kianYmd = '" + kianYmd + "' AND ninteiYmd ='" + ninteiYmd + "'");
+        String[][] rsKijyun = dbKijyun.getResultSetTable("WHERE nendo = '" + nendo + "'");
+        
+        //デフォルト級地のインデックス取得
+        int kijyunIdx = dbKijyun.getKyutiIdx(rsKijyun, OpenSeihoNintei.DefaultKyuti);
+        if (kijyunIdx < 0) {
+            JOptionPane.showMessageDialog(this, "基準額データがみつかりません。" + OpenSeihoNintei.DefaultKyuti);
+            return;
+        }
+        //個人の級地のインデックスを全員分取得
+        Integer[] kijyunIdxKojin = new Integer[rsKojinN.length];
+        for (int i = 0; i < rsKojinN.length; i++) {
+            String kojinKyuti = dbKojin.getValue(rsKojinN, "kyuti", i);
+            kijyunIdxKojin[i] = dbKijyun.getKyutiIdx(rsKijyun, kojinKyuti);
+            if (kijyunIdx < 0) {
+                JOptionPane.showMessageDialog(this, "基準額データがみつかりません。" + kojinKyuti);
+                return;
+            }
+        }
+        
+        //世帯人数
+        int ninzu = rsKojinN.length - 1;
+        
+        //式１、式２の値の退避用
+        Double[] valA = new Double[ninzu + 1];
+        Double[] valB = new Double[ninzu + 1];
         
         //氏名セット（構成員のみ）
         String[] gakunen = {"小学１", "小学２", "小学３", "小学４", "小学５", "小学６", "中学１", "中学２", "中学３"};
         ((DefaultListModel)listSetaiIn.getModel()).clear();
         for (int i = 1; i < rsKojinN.length; i++) {
-            ((DefaultListModel)listSetaiIn.getModel()).addElement(dbKojin.getValue(rsKojinN, "nameKj", i));
+            String nameKj = dbKojin.getValue(rsKojinN, "nameKj", i);
+            ((DefaultListModel)listSetaiIn.getModel()).addElement(nameKj);
             //教育は絞り込み
             int nenrei = dbKojin.getValueI(rsKojinN, "ninteiNenrei", i);
             if ((6 <= nenrei) && (nenrei <= 14)) {
-                ((DefaultListModel)listSetaiIn2.getModel()).addElement(dbKojin.getValue(rsKojinN, "nameKj", i));
+                ((DefaultListModel)listSetaiIn2.getModel()).addElement(nameKj);
                 ((DefaultListModel)listGakunen.getModel()).addElement(gakunen[nenrei - 6]);
+                //教育
+                int kijyunS = dbKijyun.getValueI(rsKijyun, "KyoikuS", kijyunIdxKojin[i]);
+                int kijyunC = dbKijyun.getValueI(rsKijyun, "KyoikuC", kijyunIdxKojin[i]);
+                int sienhiS = dbKijyun.getValueI(rsKijyun, "KyoikuSienS", kijyunIdxKojin[i]);
+                int sienhiC = dbKijyun.getValueI(rsKijyun, "KyoikuSienC", kijyunIdxKojin[i]);
+                
+                if (nenrei <= 11) {
+                    //小学生
+                    ((DefaultListModel)listKyouikuKijyun.getModel()).addElement("" + kijyunS);
+                    ((DefaultListModel)listKyouikuSonota.getModel()).addElement("" + sienhiS);
+                } else {
+                    //中学生
+                    ((DefaultListModel)listKyouikuKijyun.getModel()).addElement("" + kijyunC);
+                    ((DefaultListModel)listKyouikuSonota.getModel()).addElement("" + sienhiC);
+                }
+                //前回のをセット。なければ０
+                if (true) {
+                    ((DefaultListModel)listKyouikuKoutuu.getModel()).addElement("0");
+                    ((DefaultListModel)listKyouikuKyouzai.getModel()).addElement("0");
+                    ((DefaultListModel)listKyouikuKyuusyoku.getModel()).addElement("0");
+                } else {
+                    
+                }
             }
-            ((DefaultListModel)listSetaiIn3.getModel()).addElement(dbKojin.getValue(rsKojinN, "nameKj", i));
-            ((DefaultListModel)listSetaiIn4.getModel()).addElement(dbKojin.getValue(rsKojinN, "nameKj", i));
+            ((DefaultListModel)listSetaiIn3.getModel()).addElement(nameKj);
+            
+            ((DefaultListModel)listSetaiIn4.getModel()).addElement(nameKj);
+            //前回のをセット。なければ０
+            if (true) {
+                ((DefaultListModel)listIryoKijyun.getModel()).addElement("0");
+                ((DefaultListModel)listIryouHoken.getModel()).addElement("0");
+                ((DefaultListModel)listIryouSonota.getModel()).addElement("0");
+                ((DefaultListModel)listKaigoHoken.getModel()).addElement("0");
+                ((DefaultListModel)listKaigoKijyun.getModel()).addElement("0");
+                ((DefaultListModel)listKaigoSonota.getModel()).addElement("0");
+            } else {
+                
+            }
+            
+            //一類
+            String nenreiKbn;
+            if (nenrei <= 2) {
+                nenreiKbn = "1";
+            } else if (nenrei <= 5) {
+                nenreiKbn = "2";
+            } else if (nenrei <= 11) {
+                nenreiKbn = "3";
+            } else if (nenrei <= 19) {
+                nenreiKbn = "4";
+            } else if (nenrei <= 40) {
+                nenreiKbn = "5";
+            } else if (nenrei <= 59) {
+                nenreiKbn = "6";
+            } else if (nenrei <= 69) {
+                nenreiKbn = "7";
+            } else {
+                nenreiKbn = "8";
+            }
+            //A:一類（１）
+            double Kijyun1_1 = dbKijyun.getValueI(rsKijyun, "kyotaku1_1" + nenreiKbn, kijyunIdxKojin[i]);
+            //B:一類（２）
+            double Kijyun1_2 = dbKijyun.getValueI(rsKijyun, "kyotaku1_2" + nenreiKbn, kijyunIdxKojin[i]);
+            
+            //低減率をかける前の値を退避
+            //A
+            valA[i] = Kijyun1_1;
+            //B
+            valB[i] = Kijyun1_2;
+            
+            //加算
+            String kasanSbt = "";
+            int kasan = 0;
+            int wk = 0;
+//        {"kasanNinpu", "TEXT"},
+            wk = dbKojin.getValueI(dbKojin.getValue(rsKojinN, "kasanNinpu", i));
+            if (wk == 1) {
+                kasan = kasan + dbKijyun.getValueI(rsKijyun, "NinpuS", kijyunIdxKojin[i]);
+                kasanSbt = kasanSbt + ",妊";
+            }
+            if (wk == 2) {
+                kasan = kasan + dbKijyun.getValueI(rsKijyun, "NinpuL", kijyunIdxKojin[i]);
+                kasanSbt = kasanSbt + ",妊";
+            }
+//        {"kasanSanpu", "TEXT"},
+            wk = dbKojin.getValueI(dbKojin.getValue(rsKojinN, "kasanSanpu", i));
+            if (wk == 1) {
+                kasan = kasan + dbKijyun.getValueI(rsKijyun, "Sanpu", kijyunIdxKojin[i]);
+                kasanSbt = kasanSbt + ",産";
+            }
+//        {"kasanSyussanYmd", "TEXT"},
+//        {"kasanSyougai", "TEXT"},
+            wk = dbKojin.getValueI(dbKojin.getValue(rsKojinN, "kasanSyougai", i));
+            if (wk == 1) {
+                kasan = kasan + dbKijyun.getValueI(rsKijyun, "Syougai1", kijyunIdxKojin[i]);
+                kasanSbt = kasanSbt + ",障";
+            }
+            if (wk == 2) {
+                kasan = kasan + dbKijyun.getValueI(rsKijyun, "Syougai2", kijyunIdxKojin[i]);
+                kasanSbt = kasanSbt + ",障";
+            }
+            if (wk == 3) {
+                kasan = kasan + dbKijyun.getValueI(rsKijyun, "Syougai3", kijyunIdxKojin[i]);
+                kasanSbt = kasanSbt + ",障";
+            }
+            if (wk == 4) {
+                kasan = kasan + dbKijyun.getValueI(rsKijyun, "Syougai4", kijyunIdxKojin[i]);
+                kasanSbt = kasanSbt + ",障";
+            }
+            if (wk == 5) {
+                kasan = kasan + dbKijyun.getValueI(rsKijyun, "Syougai5", kijyunIdxKojin[i]);
+                kasanSbt = kasanSbt + ",障";
+            }
+            if (wk == 6) {
+                kasan = kasan + dbKijyun.getValueI(rsKijyun, "Syougai6", kijyunIdxKojin[i]);
+                kasanSbt = kasanSbt + ",障";
+            }
+            if (wk == 7) {
+                kasan = kasan + dbKijyun.getValueI(rsKijyun, "Syougai7", kijyunIdxKojin[i]);
+                kasanSbt = kasanSbt + ",障";
+            }
+//        {"kasanKaigoHiyou", "INTEGER"},
+            wk = dbKojin.getValueI(dbKojin.getValue(rsKojinN, "kasanKaigoHiyou", i));
+            if (wk > 0) {
+                kasan = kasan + wk;
+                kasanSbt = kasanSbt + ",障";        
+            }
+//        {"kasanKaigoNyusyo", "INTEGER"},
+            wk = dbKojin.getValueI(dbKojin.getValue(rsKojinN, "kasanKaigoNyusyo", i));
+            if (wk > 0) {
+                kasan = kasan + wk;
+                kasanSbt = kasanSbt + ",介施";        
+            }
+//        {"kasanZaitakuFlg", "INTEGER"},
+            wk = dbKojin.getValueI(dbKojin.getValue(rsKojinN, "kasanZaitakuFlg", i));
+            if (wk == 1) {
+                kasan = kasan + dbKijyun.getValueI(rsKijyun, "ZaitakuKnajya", kijyunIdxKojin[i]);
+                kasanSbt = kasanSbt + ",在";        
+            }
+//        {"kasanHousyasen", "TEXT"},
+            wk = dbKojin.getValueI(dbKojin.getValue(rsKojinN, "kasanHousyasen", i));
+            if (wk == 1) {
+                kasan = kasan + dbKijyun.getValueI(rsKijyun, "Housya1", kijyunIdxKojin[i]);
+                kasanSbt = kasanSbt + ",放";
+            }
+            if (wk == 2) {
+                kasan = kasan + dbKijyun.getValueI(rsKijyun, "Housya2", kijyunIdxKojin[i]);
+                kasanSbt = kasanSbt + ",放";
+            }
+//        {"kasanJidouYouiku", "TEXT"},
+            wk = dbKojin.getValueI(dbKojin.getValue(rsKojinN, "kasanJidouYouiku", i));
+            if (wk == 1) {
+                kasan = kasan + dbKijyun.getValueI(rsKijyun, "JIdouyouiku1", kijyunIdxKojin[i]);
+                kasanSbt = kasanSbt + ",児";
+            }
+            if (wk == 2) {
+                kasan = kasan + dbKijyun.getValueI(rsKijyun, "JIdouyouiku2", kijyunIdxKojin[i]);
+                kasanSbt = kasanSbt + ",児";
+            }
+//        {"kasanKaigoHokenRyou", "INTEGER"},
+            wk = dbKojin.getValueI(dbKojin.getValue(rsKojinN, "kasanKaigoHokenRyou", i));
+            if (wk > 0) {
+                kasan = kasan + wk;
+                kasanSbt = kasanSbt + ",介保";        
+            }
+//        {"kasanBoshi", "TEXT"},
+//        {"kasanBoshiNinzu", "INTEGER"},
+//        {"kasanBoshiNinzuS", "INTEGER"},
+//        {"kasanTyohukuFlg", "INTEGER"}
+            
         }
         
-        //一類
+        
         
         //二類
+        String ninzuStr = "";
+        int kasan1rui = 0;
+        if (ninzu > 9) {
+            //10以上の場合は専用の処理が必要。
+            ninzuStr = "09";
+            //１類加算額（１０人以上の場合）
+            //kasan1rui = 
+        } else {
+            //９人まではこの額でOK
+            ninzuStr = ("0" + ninzu);
+        }
+        //率（１）Teigen_101 (1)_(niinzuStr)
+        int Ritu_1 = dbKijyun.getValueI(rsKijyun, "Teigen_1" + ninzuStr, kijyunIdx);
+        //率（２）
+        int Ritu_2 = dbKijyun.getValueI(rsKijyun, "Teigen_2" + ninzuStr, kijyunIdx);
+        //A，Bの合計を算出
+        //式１：(A * 2/3 + B * 1/3) * ritu  + C(冬季)    //Aは低減率（１）、Bは低減率（２）
+//            siki1and2[0][i] = (Kijyun1_1 * 2D / 3D + Kijyun1_2 / 3D) ;     // + touki;
+        //式２：A * 0.9 + C(冬季)   但し書き部分
+//            siki1and2[1][i] = Kijyun1_1 ;
+        //式１と式２の大きい方（式２の場合は低減率0.9とする）
+        //結論が出たら、まとめて最後に出力。世帯分まとめて比較する必要があるため。
+        double totalA = 0;
+        double totalB = 0;
+        for (int i = 1; i < valA.length; i++) {
+            totalA = totalA + valA[i];
+            totalB = totalB + valB[i];
+        }
+        double siki1 = (totalA / 3D * (double)Ritu_1 / 10000D) + (totalB * 2D / 3D * (double)Ritu_2) / 10000D;
+        double siki2 = totalA * 0.9D;
+        //式１と式２の大きい方（式２の場合は低減率0.9とする）
+        //結論が出たら、まとめて最後に出力。世帯分まとめて比較する必要があるため。
+        int ippanTotal = 0;
+        DebugMode = true;
+        logDebug("siki1:" + siki1);
+        logDebug("siki2:" + siki2);
+        if (siki1 > siki2) {
+            //式１
+            for (int i = 1; i < valA.length; i++) {
+                double wkIppan = (valA[i] / 3D * (double)Ritu_1 / 10000D) + (valB[i] * 2D / 3D * (double)Ritu_2) / 10000D;
+                //明細では丸めておく・合計で１０円単位の切り上げ
+                ippanTotal = ippanTotal + (int)Math.round(wkIppan);
+                ((DefaultListModel)list1Ippan.getModel()).addElement("" + (int)Math.round(wkIppan));
+            }
+        } else {
+            //式２
+            for (int i = 1; i < valA.length; i++) {
+                //A そのまま出す
+                ((DefaultListModel)list1Ippan.getModel()).addElement("" + valA[i]);
+                ippanTotal = ippanTotal + (int)Math.round(valA[i]);
+            }
+            Ritu_1 = 9000;
+            Ritu_2 = 9000;
+        }
+        //ここは単に足したものを出す
+        text1Ippan.setText("" + ippanTotal);
+        //低減率表示
+        DecimalFormat fmt = new DecimalFormat("0.0000");
+        String str = "(1):" + fmt.format((double)Ritu_1 / 10000D) + "  (2):" + fmt.format((double)Ritu_2 / 10000D);
+        textTeigenRitu.setText(str);
         
         //生活
         
         
         //住宅
         
-        //教育
+        
         
         //介護
         
@@ -3210,7 +3763,14 @@ String[][] field = {
     private javax.swing.JLabel jLabel71;
     private javax.swing.JLabel jLabel72;
     private javax.swing.JLabel jLabel73;
+    private javax.swing.JLabel jLabel74;
+    private javax.swing.JLabel jLabel75;
+    private javax.swing.JLabel jLabel76;
+    private javax.swing.JLabel jLabel77;
+    private javax.swing.JLabel jLabel78;
+    private javax.swing.JLabel jLabel79;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel80;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
@@ -3267,7 +3827,6 @@ String[][] field = {
     private javax.swing.JScrollPane jScrollPane27;
     private javax.swing.JScrollPane jScrollPane28;
     private javax.swing.JScrollPane jScrollPane29;
-    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane30;
     private javax.swing.JScrollPane jScrollPane31;
     private javax.swing.JScrollPane jScrollPane32;
@@ -3281,17 +3840,22 @@ String[][] field = {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane40;
     private javax.swing.JScrollPane jScrollPane41;
+    private javax.swing.JScrollPane jScrollPane42;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
+    private javax.swing.JScrollPane jScrollPaneGetugaku;
+    private javax.swing.JScrollPane jScrollPaneHiwari;
     private javax.swing.JScrollPane jScrollPaneSetai;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JList list1Ippan;
     private javax.swing.JList list1Ippan1;
     private javax.swing.JList list1Kasan;
     private javax.swing.JList list1Kasan1;
+    private javax.swing.JList list1KasanSbt;
+    private javax.swing.JList list1KasanSbt1;
     private javax.swing.JList listGakunen;
     private javax.swing.JList listGakunen1;
     private javax.swing.JList listIryoKijyun;
@@ -3348,6 +3912,7 @@ String[][] field = {
     private javax.swing.JTextField textKaigoHi;
     private javax.swing.JTextField textKaigoSisetu;
     private javax.swing.JTextField textKasanBoshiNinzuu;
+    private javax.swing.JTextField textKasanBoshiNinzuuS;
     private javax.swing.JTextField textKasanKaigoHokenRyou;
     private javax.swing.JTextField textKimatu;
     private javax.swing.JTextField textKimatu1;
@@ -3361,6 +3926,7 @@ String[][] field = {
     private javax.swing.JTextField textTeigenRitu;
     private javax.swing.JTextField textTeigenRitu1;
     private javax.swing.JTextField textTotal;
+    private javax.swing.JTextField textTotal1;
     private openseiho.textYmdPanel textYmdKian;
     private openseiho.textYmdPanel textYmdNintei;
     // End of variables declaration//GEN-END:variables

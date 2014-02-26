@@ -44,6 +44,7 @@ public class DbKojin extends DbAccessOS{
         {"kasanKaigoHokenRyou", "INTEGER"},
         {"kasanBoshi", "TEXT"},
         {"kasanBoshiNinzu", "INTEGER"},
+        {"kasanBoshiNinzuS", "INTEGER"},
         {"kasanTyohukuFlg", "INTEGER"}
     };
     //共通部分

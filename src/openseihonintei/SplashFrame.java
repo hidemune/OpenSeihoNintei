@@ -42,7 +42,7 @@ public class SplashFrame extends javax.swing.JFrame {
 
         setTitle("OpenSeiho");
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/openseihonintei/hidemune_s.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/openseihonintei/OpenSeiho.png"))); // NOI18N
 
         jLabel2.setText("オープンソース生活保護システム");
 
@@ -58,7 +58,7 @@ public class SplashFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2)
                     .addComponent(jLabel3))
-                .addGap(0, 84, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
