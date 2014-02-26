@@ -68,7 +68,7 @@ public class AdminFrame extends javax.swing.JFrame {
 
         jLabel1.setText("データベース");
 
-        comboDB.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "テーブルを選択", "setai", "kojin", "nintei", "ichiji" }));
+        comboDB.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "テーブルを選択", "setai", "kojin", "nintei", "ichiji", "kijyun" }));
 
         comboAction.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "操作を選択", "create", "edit", "drop", "program", "SQL Test" }));
 
@@ -181,6 +181,10 @@ public class AdminFrame extends javax.swing.JFrame {
         if (table.equals("kojin")) {
             //DbAccessOS.DebugMode = true;
             accesser = new DbKojin();            
+        }
+        if (table.equals("kijyun")) {
+            //DbAccessOS.DebugMode = true;
+            accesser = new DbKijyun();            
         }
         if (accesser == null) {
             JOptionPane.showMessageDialog(this, "実装されていない操作です。");

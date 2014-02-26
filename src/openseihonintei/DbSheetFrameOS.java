@@ -25,7 +25,7 @@ private javax.swing.JList[] lists;
 //private javax.swing.JSplitPane[] split;
 private String tableNameWk;
 private DefaultListModel ModelL[];
-private final int maxCols = 100;
+private final int maxCols = 200;
 private javax.swing.JTextField[] editPre;
 private javax.swing.JTextField[] edit;
 private javax.swing.JLabel[] name;

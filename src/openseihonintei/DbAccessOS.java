@@ -443,6 +443,7 @@ public class DbAccessOS {
             System.err.println("");
         }
         */
+        System.out.println(ret.length + "行取得");
         return ret;
     }
     
