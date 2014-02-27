@@ -32,9 +32,12 @@ private static String ninteiYMD;
 private DbSetai dbSetai = new DbSetai();
 private DbKojin dbKojin = new DbKojin();
 private DbKijyun dbKijyun = new DbKijyun();
+private DbSaiseihi dbSaiseihi = new DbSaiseihi();
 private String[][] rsSetaiPre;
 private String[][] rsKojin;
+private String[][] rsSaiseihi;
 private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
+//private ArrayList<String[][]> arrFieldSaiseihi = new ArrayList<String[][]>();
 
     //共通部分
     public static boolean DebugMode = false;
@@ -161,6 +164,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         listKyouikuKoutuu.setModel(new DefaultListModel());
         listKyouikuKyouzai.setModel(new DefaultListModel());
         listKyouikuKyuusyoku.setModel(new DefaultListModel());
+        listKyouikuSienhi.setModel(new DefaultListModel());
         listKyouikuSonota.setModel(new DefaultListModel());
         list1KasanSbt.setModel(new DefaultListModel());
         
@@ -181,6 +185,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         listKyouikuKoutuu1.setModel(new DefaultListModel());
         listKyouikuKyouzai1.setModel(new DefaultListModel());
         listKyouikuKyuusyoku1.setModel(new DefaultListModel());
+        listKyouikuSienhi1.setModel(new DefaultListModel());
         listKyouikuSonota1.setModel(new DefaultListModel());
         list1KasanSbt1.setModel(new DefaultListModel());
         
@@ -208,6 +213,8 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         textTeigenRitu1.setText("");
         textTotal.setText("");
         textTotal1.setText("");
+        textTouki.setText("");
+        textTouki1.setText("");
         
     }
     
@@ -507,6 +514,10 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         jScrollPane21 = new javax.swing.JScrollPane();
         list1KasanSbt = new javax.swing.JList();
         jLabel78 = new javax.swing.JLabel();
+        jLabel81 = new javax.swing.JLabel();
+        textTouki = new javax.swing.JTextField();
+        text1TotalKyotaku = new javax.swing.JTextField();
+        jLabel82 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabel19 = new javax.swing.JLabel();
         textJyutaku = new javax.swing.JTextField();
@@ -533,9 +544,11 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         listKyouikuKoutuu = new javax.swing.JList();
         jLabel27 = new javax.swing.JLabel();
         jScrollPane12 = new javax.swing.JScrollPane();
-        listKyouikuSonota = new javax.swing.JList();
-        jLabel76 = new javax.swing.JLabel();
+        listKyouikuSienhi = new javax.swing.JList();
         jLabel77 = new javax.swing.JLabel();
+        jLabel84 = new javax.swing.JLabel();
+        jScrollPane43 = new javax.swing.JScrollPane();
+        listKyouikuSonota = new javax.swing.JList();
         jPanel15 = new javax.swing.JPanel();
         jLabel28 = new javax.swing.JLabel();
         jScrollPane13 = new javax.swing.JScrollPane();
@@ -571,6 +584,8 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         jLabel73 = new javax.swing.JLabel();
         textTotal = new javax.swing.JTextField();
         jLabel75 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        textBikou = new javax.swing.JTextArea();
         jScrollPaneHiwari = new javax.swing.JScrollPane();
         jPanel17 = new javax.swing.JPanel();
         jPanel18 = new javax.swing.JPanel();
@@ -599,6 +614,8 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         jLabel79 = new javax.swing.JLabel();
         jScrollPane42 = new javax.swing.JScrollPane();
         list1KasanSbt1 = new javax.swing.JList();
+        jLabel83 = new javax.swing.JLabel();
+        textTouki1 = new javax.swing.JTextField();
         jPanel19 = new javax.swing.JPanel();
         jLabel47 = new javax.swing.JLabel();
         textJyutaku1 = new javax.swing.JTextField();
@@ -625,7 +642,10 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         listKyouikuKoutuu1 = new javax.swing.JList();
         jLabel55 = new javax.swing.JLabel();
         jScrollPane31 = new javax.swing.JScrollPane();
+        listKyouikuSienhi1 = new javax.swing.JList();
+        jScrollPane44 = new javax.swing.JScrollPane();
         listKyouikuSonota1 = new javax.swing.JList();
+        jLabel76 = new javax.swing.JLabel();
         jPanel21 = new javax.swing.JPanel();
         jLabel56 = new javax.swing.JLabel();
         jScrollPane32 = new javax.swing.JScrollPane();
@@ -682,6 +702,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         setTitle("生活保護認定");
 
         jTabbedPane1.setFocusable(false);
+        jTabbedPane1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jTabbedPane1.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 jTabbedPane1StateChanged(evt);
@@ -698,6 +719,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         panelSetai.setMinimumSize(new java.awt.Dimension(0, 896));
         panelSetai.setLayout(new java.awt.GridLayout(0, 1));
 
+        jButton2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jButton2.setText("チェック及び更新");
         jButton2.setFocusable(false);
         jButton2.addActionListener(new java.awt.event.ActionListener() {
@@ -706,6 +728,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
             }
         });
 
+        jLabel6.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel6.setText("ケースNo");
 
         textCaseNo.addActionListener(new java.awt.event.ActionListener() {
@@ -714,6 +737,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
             }
         });
 
+        jButton7.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jButton7.setText("自動採番");
         jButton7.setToolTipText("");
         jButton7.addActionListener(new java.awt.event.ActionListener() {
@@ -729,8 +753,10 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        jLabel1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel1.setText("苗字");
 
+        jLabel2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel2.setText("苗字カナ");
 
         textMyoujiKana.setToolTipText("ひらがな入力してEnterを押すと、全角カナになります");
@@ -740,6 +766,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
             }
         });
 
+        jButton1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jButton1.setText("苗字セット");
         jButton1.setToolTipText("構成員チェックした行のみ苗字が反映されます。\nこの機能は無理に使う必要はありません。");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -794,6 +821,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                 .addContainerGap())
         );
 
+        checkBoxSyokken.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         checkBoxSyokken.setText("職権保護");
         checkBoxSyokken.setFocusable(false);
 
@@ -874,11 +902,13 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
 
         jTabbedPane1.addTab("世帯一覧", jScrollPaneSetai);
 
+        jLabel3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel3.setText("加算");
 
         jPanelKasan.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jPanelKasan.setLayout(new java.awt.GridLayout(8, 1));
 
+        chkNinsanpu.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         chkNinsanpu.setText("妊産婦");
 
         comboIDKasanNinpu.setCaption("妊婦");
@@ -905,7 +935,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(comboIDKasanSanpu, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 178, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(textSyussanYmd, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 291, Short.MAX_VALUE)
+                .add(textSyussanYmd, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
@@ -921,6 +951,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
 
         jPanelKasan.add(jPanel6);
 
+        chkSyougai.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         chkSyougai.setText("障害者");
         chkSyougai.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -933,11 +964,13 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         comboIDKasanSyougai.setId0(new java.lang.Integer(13));
         comboIDKasanSyougai.setPostCap("");
 
+        jLabel4.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel4.setText("介護人費用");
 
         textKaigoHi.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         textKaigoHi.setText("\\0");
 
+        jLabel7.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel7.setText("円");
 
         org.jdesktop.layout.GroupLayout jPanel7Layout = new org.jdesktop.layout.GroupLayout(jPanel7);
@@ -955,7 +988,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                 .add(textKaigoHi, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 108, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jLabel7)
-                .addContainerGap(158, Short.MAX_VALUE))
+                .addContainerGap(167, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -972,11 +1005,13 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
 
         jPanelKasan.add(jPanel7);
 
+        chkKaigoSisetu.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         chkKaigoSisetu.setText("介護施設入所者");
 
         textKaigoSisetu.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         textKaigoSisetu.setText("\\0");
 
+        jLabel8.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel8.setText("円");
 
         org.jdesktop.layout.GroupLayout jPanel8Layout = new org.jdesktop.layout.GroupLayout(jPanel8);
@@ -990,7 +1025,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                 .add(textKaigoSisetu, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 108, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jLabel8)
-                .addContainerGap(488, Short.MAX_VALUE))
+                .addContainerGap(496, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -1004,6 +1039,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
 
         jPanelKasan.add(jPanel8);
 
+        chkZaitaku.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         chkZaitaku.setText("在宅患者");
 
         org.jdesktop.layout.GroupLayout jPanel9Layout = new org.jdesktop.layout.GroupLayout(jPanel9);
@@ -1013,7 +1049,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
             .add(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
                 .add(chkZaitaku)
-                .addContainerGap(668, Short.MAX_VALUE))
+                .addContainerGap(672, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -1024,6 +1060,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
 
         jPanelKasan.add(jPanel9);
 
+        chkHousya.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         chkHousya.setText("放射線障害者");
         chkHousya.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1044,7 +1081,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                 .add(chkHousya)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                 .add(comboIDHousyasen, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 105, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(529, Short.MAX_VALUE))
+                .addContainerGap(535, Short.MAX_VALUE))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -1059,6 +1096,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
 
         jPanelKasan.add(jPanel10);
 
+        chkJidouYouiku.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         chkJidouYouiku.setText("児童養育");
 
         comboIDKasanJidouYouiku.setCaption("");
@@ -1075,7 +1113,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                 .add(chkJidouYouiku)
                 .add(33, 33, 33)
                 .add(comboIDKasanJidouYouiku, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 163, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(472, Short.MAX_VALUE))
+                .addContainerGap(476, Short.MAX_VALUE))
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -1088,11 +1126,13 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
 
         jPanelKasan.add(jPanel11);
 
+        chkKaigoHokenRyou.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         chkKaigoHokenRyou.setText("介護保険料");
 
         textKasanKaigoHokenRyou.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         textKasanKaigoHokenRyou.setText("\\0");
 
+        jLabel9.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel9.setText("円");
 
         org.jdesktop.layout.GroupLayout jPanel12Layout = new org.jdesktop.layout.GroupLayout(jPanel12);
@@ -1106,7 +1146,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                 .add(textKasanKaigoHokenRyou, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 100, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jLabel9)
-                .addContainerGap(509, Short.MAX_VALUE))
+                .addContainerGap(515, Short.MAX_VALUE))
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -1120,6 +1160,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
 
         jPanelKasan.add(jPanel12);
 
+        chkBoshi.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         chkBoshi.setText("母子");
 
         comboIDKasanBoshi.setCaption("");
@@ -1129,10 +1170,13 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         textKasanBoshiNinzuu.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         textKasanBoshiNinzuu.setText("0");
 
+        jLabel5.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel5.setText("人(内施設入所");
 
+        chkTyouhuku.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         chkTyouhuku.setText("重複調整");
 
+        jLabel80.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel80.setText("人）");
 
         textKasanBoshiNinzuuS.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
@@ -1155,7 +1199,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                 .add(textKasanBoshiNinzuuS, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 27, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jLabel80)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 130, Short.MAX_VALUE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 145, Short.MAX_VALUE)
                 .add(chkTyouhuku)
                 .add(115, 115, 115))
         );
@@ -1165,11 +1209,11 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                 .add(jPanel13Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(comboIDKasanBoshi, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, chkBoshi, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 21, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jLabel80, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .add(textKasanBoshiNinzuuS)
                     .add(jPanel13Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                         .add(jLabel5, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .add(chkTyouhuku, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 21, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .add(jLabel80, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .add(textKasanBoshiNinzuuS))
+                        .add(chkTyouhuku, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 21, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                     .add(textKasanBoshiNinzuu))
                 .add(5, 5, 5))
         );
@@ -1183,6 +1227,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         comboIDSeikatuKeitai.setId0(new java.lang.Integer(4));
         comboIDSeikatuKeitai.setPostCap("");
 
+        jComboBoxKojin.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jComboBoxKojin.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jComboBoxKojin.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1190,6 +1235,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
             }
         });
 
+        chkNushi.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         chkNushi.setText("世帯主");
         chkNushi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1207,6 +1253,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         comboIDTouki.setId0(new java.lang.Integer(6));
         comboIDTouki.setPostCap("");
 
+        jButtonKojinCheck.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jButtonKojinCheck.setText("整合性チェック（個人毎）");
         jButtonKojinCheck.setToolTipText("整合性チェック後、他の世帯員を選択し直して下さい。");
         jButtonKojinCheck.addActionListener(new java.awt.event.ActionListener() {
@@ -1215,6 +1262,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
             }
         });
 
+        jButtonKojinInst.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jButtonKojinInst.setText("更新");
         jButtonKojinInst.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1301,8 +1349,15 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         jScrollPaneGetugaku.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
         jScrollPaneGetugaku.setDoubleBuffered(true);
 
+        jButton5.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jButton5.setText("月額テーブル登録");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
+        jButtonSaikeisan.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jButtonSaikeisan.setText("再計算");
         jButtonSaikeisan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1312,12 +1367,16 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
 
         jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        jLabel10.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel10.setText("氏名");
 
+        jLabel11.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel11.setText("一般分");
 
+        jLabel12.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel12.setText("加算額");
 
+        listSetaiIn.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         listSetaiIn.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -1325,6 +1384,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         });
         jScrollPane1.setViewportView(listSetaiIn);
 
+        list1Ippan.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         list1Ippan.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -1332,6 +1392,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         });
         jScrollPane4.setViewportView(list1Ippan);
 
+        list1Kasan.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         list1Kasan.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -1339,32 +1400,39 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         });
         jScrollPane5.setViewportView(list1Kasan);
 
+        jLabel13.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel13.setText("小計");
 
         text1Ippan.setText("jTextField1");
 
         text1Kasan.setText("jTextField1");
 
+        jLabel14.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel14.setText("低減率");
 
         textTeigenRitu.setText("jTextField1");
 
+        jLabel15.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel15.setText("第１類計");
 
         text1Total.setText("jTextField1");
 
+        jLabel16.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel16.setText("第２類");
 
         text2Total.setText("jTextField1");
 
+        jLabel17.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel17.setText("期末一時扶助");
 
         textKimatu.setText("jTextField1");
 
+        jLabel18.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel18.setText("生活費計");
 
         textSeikatuKei.setText("jTextField1");
 
+        list1KasanSbt.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         list1KasanSbt.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -1372,7 +1440,18 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         });
         jScrollPane21.setViewportView(list1KasanSbt);
 
+        jLabel78.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel78.setText("加算種別");
+
+        jLabel81.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel81.setText("冬季加算");
+
+        textTouki.setText("jTextField1");
+
+        text1TotalKyotaku.setText("jTextField1");
+
+        jLabel82.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel82.setText("内居宅一般分");
 
         org.jdesktop.layout.GroupLayout jPanel4Layout = new org.jdesktop.layout.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -1382,12 +1461,39 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                 .addContainerGap()
                 .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jPanel4Layout.createSequentialGroup()
-                        .add(jLabel14)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .add(textTeigenRitu, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 158, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .add(191, 191, 191))
-                    .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                        .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel4Layout.createSequentialGroup()
+                                .add(jLabel14)
+                                .add(65, 65, 65)
+                                .add(textTeigenRitu))
+                            .add(jPanel4Layout.createSequentialGroup()
+                                .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                    .add(jLabel10)
+                                    .add(jLabel13)
+                                    .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 136, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                    .add(jLabel11)
+                                    .add(text1Ippan, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 64, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                    .add(jScrollPane4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 94, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                    .add(text1Kasan, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 69, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                    .add(jPanel4Layout.createSequentialGroup()
+                                        .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                            .add(jScrollPane5, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 56, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                            .add(jLabel12))
+                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                        .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                            .add(jLabel78)
+                                            .add(jScrollPane21, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 74, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))))))
+                        .add(0, 0, Short.MAX_VALUE))
+                    .add(jPanel4Layout.createSequentialGroup()
                         .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
+                            .add(jPanel4Layout.createSequentialGroup()
+                                .add(jLabel81)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .add(textTouki, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 92, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                             .add(jPanel4Layout.createSequentialGroup()
                                 .add(jLabel18)
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1404,72 +1510,60 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                                 .add(jLabel15)
                                 .add(52, 52, 52)
                                 .add(text1Total, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 92, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-                        .add(jPanel4Layout.createSequentialGroup()
-                            .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                                .add(jLabel10)
-                                .add(jLabel13)
-                                .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 136, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                            .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                                .add(jLabel11)
-                                .add(jScrollPane4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
-                                .add(text1Ippan, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                            .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                                .add(jLabel12)
-                                .add(jScrollPane5)
-                                .add(text1Kasan, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 69, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                            .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                                .add(jScrollPane21)
-                                .add(jPanel4Layout.createSequentialGroup()
-                                    .add(jLabel78)
-                                    .add(0, 0, Short.MAX_VALUE))))))
-                .add(12, 12, 12))
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jLabel82)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(text1TotalKyotaku, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 92, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(62, Short.MAX_VALUE))))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel4Layout.createSequentialGroup()
                 .add(0, 0, Short.MAX_VALUE)
                 .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel4Layout.createSequentialGroup()
-                        .add(jLabel78)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jScrollPane21, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .add(38, 38, 38))
                     .add(jPanel4Layout.createSequentialGroup()
+                        .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                            .add(jLabel10)
+                            .add(jLabel11))
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(jScrollPane4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                        .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(jLabel13)
+                            .add(text1Ippan, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                    .add(jPanel4Layout.createSequentialGroup()
+                        .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
                             .add(jPanel4Layout.createSequentialGroup()
                                 .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                                    .add(jLabel10)
-                                    .add(jLabel11))
+                                    .add(jLabel12)
+                                    .add(jLabel78))
                                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                                    .add(jScrollPane1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                    .add(jScrollPane4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                                .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                                    .add(jLabel13)
-                                    .add(text1Ippan, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-                            .add(jPanel4Layout.createSequentialGroup()
-                                .add(jLabel12)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(jScrollPane5, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                                .add(text1Kasan, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)))
+                                .add(jScrollPane5, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                            .add(jScrollPane21, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                        .add(text1Kasan, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jLabel14)
                     .add(textTeigenRitu, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jLabel15)
-                    .add(text1Total, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(text1TotalKyotaku, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                        .add(text1Total, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(jLabel82)))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                 .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
                     .add(jLabel16)
                     .add(text2Total, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(jLabel81)
+                    .add(textTouki, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jLabel17)
                     .add(textKimatu, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
@@ -1481,6 +1575,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
 
         jPanel5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        jLabel19.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel19.setText("住宅費計");
 
         textJyutaku.setText("jTextField1");
@@ -1494,7 +1589,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                 .add(jLabel19)
                 .add(52, 52, 52)
                 .add(textJyutaku, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 92, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(117, Short.MAX_VALUE))
+                .addContainerGap(126, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -1508,8 +1603,10 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
 
         jPanel14.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        jLabel20.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel20.setText("氏名");
 
+        listSetaiIn2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         listSetaiIn2.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -1517,8 +1614,10 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         });
         jScrollPane6.setViewportView(listSetaiIn2);
 
+        jLabel21.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel21.setText("学年");
 
+        listGakunen.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         listGakunen.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "中学３年", "小学６年", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -1526,8 +1625,10 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         });
         jScrollPane7.setViewportView(listGakunen);
 
+        jLabel22.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel22.setText("基準額");
 
+        listKyouikuKijyun.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         listKyouikuKijyun.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "99,999", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -1535,13 +1636,16 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         });
         jScrollPane8.setViewportView(listKyouikuKijyun);
 
+        jLabel23.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel23.setText("教育費計");
 
         textKyouiku.setText("jTextField1");
 
+        jLabel24.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel24.setText("教材代");
 
         listKyouikuKyouzai.setBackground(new java.awt.Color(255, 204, 204));
+        listKyouikuKyouzai.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         listKyouikuKyouzai.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -1554,9 +1658,11 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         });
         jScrollPane9.setViewportView(listKyouikuKyouzai);
 
+        jLabel25.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel25.setText("給食費");
 
         listKyouikuKyuusyoku.setBackground(new java.awt.Color(255, 204, 204));
+        listKyouikuKyuusyoku.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         listKyouikuKyuusyoku.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -1569,9 +1675,11 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         });
         jScrollPane10.setViewportView(listKyouikuKyuusyoku);
 
+        jLabel26.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel26.setText("交通費");
 
         listKyouikuKoutuu.setBackground(new java.awt.Color(255, 204, 204));
+        listKyouikuKoutuu.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         listKyouikuKoutuu.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -1584,9 +1692,32 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         });
         jScrollPane11.setViewportView(listKyouikuKoutuu);
 
-        jLabel27.setText("その他");
+        jLabel27.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel27.setText("支援費");
+
+        listKyouikuSienhi.setBackground(new java.awt.Color(255, 204, 204));
+        listKyouikuSienhi.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        listKyouikuSienhi.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        listKyouikuSienhi.setToolTipText("");
+        listKyouikuSienhi.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                listKyouikuSienhiKeyPressed(evt);
+            }
+        });
+        jScrollPane12.setViewportView(listKyouikuSienhi);
+
+        jLabel77.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel77.setText("その他には学級費や再支給分を加算してください。");
+
+        jLabel84.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel84.setText("その他");
 
         listKyouikuSonota.setBackground(new java.awt.Color(255, 204, 204));
+        listKyouikuSonota.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         listKyouikuSonota.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -1598,11 +1729,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                 listKyouikuSonotaKeyPressed(evt);
             }
         });
-        jScrollPane12.setViewportView(listKyouikuSonota);
-
-        jLabel76.setText("その他には学習支援費が計上されますので、");
-
-        jLabel77.setText("ここに学級費や再支給分を加算してください。");
+        jScrollPane43.setViewportView(listKyouikuSonota);
 
         org.jdesktop.layout.GroupLayout jPanel14Layout = new org.jdesktop.layout.GroupLayout(jPanel14);
         jPanel14.setLayout(jPanel14Layout);
@@ -1611,13 +1738,6 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
             .add(jPanel14Layout.createSequentialGroup()
                 .addContainerGap()
                 .add(jPanel14Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jPanel14Layout.createSequentialGroup()
-                        .add(jLabel23)
-                        .add(52, 52, 52)
-                        .add(textKyouiku, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 92, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .add(jLabel76)
-                        .addContainerGap())
                     .add(jPanel14Layout.createSequentialGroup()
                         .add(jPanel14Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(jLabel20)
@@ -1646,16 +1766,23 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                         .add(jPanel14Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(jLabel27)
                             .add(jScrollPane12, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 55, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                        .add(0, 18, Short.MAX_VALUE))))
-            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel14Layout.createSequentialGroup()
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .add(jLabel77)
-                .addContainerGap())
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jPanel14Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(jLabel84)
+                            .add(jScrollPane43, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 55, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                        .add(0, 36, Short.MAX_VALUE))
+                    .add(jPanel14Layout.createSequentialGroup()
+                        .add(jLabel23)
+                        .add(52, 52, 52)
+                        .add(textKyouiku, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 92, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .add(jLabel77)
+                        .add(37, 37, 37))))
         );
         jPanel14Layout.setVerticalGroup(
             jPanel14Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel14Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .add(jPanel14Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
                     .add(jPanel14Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                         .add(jPanel14Layout.createSequentialGroup()
@@ -1686,21 +1813,24 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                     .add(jPanel14Layout.createSequentialGroup()
                         .add(jLabel27)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jScrollPane12, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                        .add(jScrollPane12, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(jPanel14Layout.createSequentialGroup()
+                        .add(jLabel84)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jScrollPane43, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel14Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jLabel23)
                     .add(textKyouiku, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jLabel76))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(jLabel77)
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .add(jLabel77)))
         );
 
         jPanel15.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        jLabel28.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel28.setText("氏名");
 
+        listSetaiIn3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         listSetaiIn3.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -1708,15 +1838,16 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         });
         jScrollPane13.setViewportView(listSetaiIn3);
 
+        jLabel29.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel29.setText("概算月額");
 
         listKaigoKijyun.setBackground(new java.awt.Color(255, 204, 204));
+        listKaigoKijyun.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         listKaigoKijyun.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "999,999", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
-        listKaigoKijyun.setPreferredSize(new java.awt.Dimension(44, 90));
         listKaigoKijyun.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 listKaigoKijyunKeyPressed(evt);
@@ -1724,15 +1855,16 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         });
         jScrollPane14.setViewportView(listKaigoKijyun);
 
+        jLabel30.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel30.setText("介護保険");
 
         listKaigoHoken.setBackground(new java.awt.Color(255, 204, 204));
+        listKaigoHoken.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         listKaigoHoken.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "999,999", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
-        listKaigoHoken.setPreferredSize(new java.awt.Dimension(44, 90));
         listKaigoHoken.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 listKaigoHokenKeyPressed(evt);
@@ -1740,15 +1872,16 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         });
         jScrollPane15.setViewportView(listKaigoHoken);
 
+        jLabel31.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel31.setText("その他公費");
 
         listKaigoSonota.setBackground(new java.awt.Color(255, 204, 204));
+        listKaigoSonota.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         listKaigoSonota.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "999,999", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
-        listKaigoSonota.setPreferredSize(new java.awt.Dimension(44, 90));
         listKaigoSonota.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 listKaigoSonotaKeyPressed(evt);
@@ -1756,6 +1889,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         });
         jScrollPane16.setViewportView(listKaigoSonota);
 
+        jLabel33.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel33.setText("介護費計");
 
         textKaigo.setText("jTextField1");
@@ -1820,8 +1954,10 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
 
         jPanel16.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        jLabel32.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel32.setText("氏名");
 
+        listSetaiIn4.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         listSetaiIn4.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -1829,15 +1965,16 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         });
         jScrollPane17.setViewportView(listSetaiIn4);
 
+        jLabel34.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel34.setText("概算月額");
 
         listIryoKijyun.setBackground(new java.awt.Color(255, 204, 204));
+        listIryoKijyun.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         listIryoKijyun.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "999,999", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
-        listIryoKijyun.setPreferredSize(new java.awt.Dimension(44, 90));
         listIryoKijyun.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 listIryoKijyunKeyPressed(evt);
@@ -1845,15 +1982,16 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         });
         jScrollPane18.setViewportView(listIryoKijyun);
 
+        jLabel35.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel35.setText("医療保険");
 
         listIryouHoken.setBackground(new java.awt.Color(255, 204, 204));
+        listIryouHoken.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         listIryouHoken.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "999,999", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
-        listIryouHoken.setPreferredSize(new java.awt.Dimension(44, 90));
         listIryouHoken.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 listIryouHokenKeyPressed(evt);
@@ -1861,15 +1999,16 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         });
         jScrollPane19.setViewportView(listIryouHoken);
 
+        jLabel36.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel36.setText("その他公費      ");
 
         listIryouSonota.setBackground(new java.awt.Color(255, 204, 204));
+        listIryouSonota.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         listIryouSonota.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "999,999", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
-        listIryouSonota.setPreferredSize(new java.awt.Dimension(44, 90));
         listIryouSonota.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 listIryouSonotaKeyPressed(evt);
@@ -1877,6 +2016,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         });
         jScrollPane20.setViewportView(listIryouSonota);
 
+        jLabel37.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel37.setText("医療費計");
 
         textIryou.setText("jTextField1");
@@ -1939,15 +2079,24 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jLabel70.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel70.setText("月額テーブルを更新する画面です。状況変更の度に起案してください。");
 
+        jLabel72.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel72.setText("月額データは、別画面の「一括認定」で自動作成される場合があります。");
 
+        jLabel73.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel73.setText("月額計");
 
         textTotal.setText("jTextField1");
 
+        jLabel75.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel75.setText("リストは、手修正が可能です。選択してEnterを押してください。");
+
+        textBikou.setColumns(20);
+        textBikou.setFont(new java.awt.Font("VL ゴシック", 0, 14)); // NOI18N
+        textBikou.setRows(5);
+        jScrollPane3.setViewportView(textBikou);
 
         org.jdesktop.layout.GroupLayout jPanel3Layout = new org.jdesktop.layout.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -1956,66 +2105,59 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
             .add(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(jPanel14, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(jPanel3Layout.createSequentialGroup()
-                        .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jPanel14, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                            .add(jLabel75))
-                        .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .add(jLabel70)
+                        .add(36, 36, 36)
+                        .add(jLabel73)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(textTotal, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 86, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jButtonSaikeisan)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jButton5))
+                    .add(jLabel72)
+                    .add(jLabel75)
                     .add(jPanel3Layout.createSequentialGroup()
-                        .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel3Layout.createSequentialGroup()
-                                .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                                    .add(jPanel3Layout.createSequentialGroup()
-                                        .add(jLabel70)
-                                        .add(36, 36, 36)
-                                        .add(jLabel73)
-                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                        .add(textTotal, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 86, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                                    .add(jLabel72))
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 85, Short.MAX_VALUE)
-                                .add(jButtonSaikeisan)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(jButton5))
-                            .add(jPanel3Layout.createSequentialGroup()
-                                .add(jPanel15, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 384, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                .add(jPanel16, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 366, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                .add(0, 0, Short.MAX_VALUE)))
-                        .addContainerGap())
+                        .add(jPanel15, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 384, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jPanel16, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 366, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                     .add(jPanel3Layout.createSequentialGroup()
-                        .add(jPanel4, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                        .add(jPanel5, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .add(75, 75, 75))))
+                        .add(jPanel4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                            .add(jPanel5, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .add(jScrollPane3))))
+                .addContainerGap(59, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                        .add(jButton5)
-                        .add(jButtonSaikeisan))
-                    .add(jPanel3Layout.createSequentialGroup()
-                        .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
-                            .add(jLabel70)
-                            .add(jLabel73)
-                            .add(textTotal, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                        .add(2, 2, 2)
-                        .add(jLabel72)))
+                .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(jLabel70)
+                    .add(jLabel73)
+                    .add(textTotal, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jButtonSaikeisan)
+                    .add(jButton5))
+                .add(2, 2, 2)
+                .add(jLabel72)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jLabel75)
                 .add(14, 14, 14)
-                .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jPanel4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                    .add(jPanel5, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                    .add(jPanel3Layout.createSequentialGroup()
+                        .add(jPanel5, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jScrollPane3))
+                    .add(jPanel4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel14, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jPanel15, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(jPanel16, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(160, Short.MAX_VALUE))
+                .addContainerGap(29, Short.MAX_VALUE))
         );
 
         jScrollPaneGetugaku.setViewportView(jPanel3);
@@ -2024,12 +2166,16 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
 
         jPanel18.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        jLabel38.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel38.setText("氏名");
 
+        jLabel39.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel39.setText("一般分");
 
+        jLabel40.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel40.setText("加算額");
 
+        listSetaiIn1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         listSetaiIn1.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -2038,6 +2184,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         jScrollPane22.setViewportView(listSetaiIn1);
 
         list1Ippan1.setBackground(new java.awt.Color(255, 204, 204));
+        list1Ippan1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         list1Ippan1.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -2045,6 +2192,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         });
         jScrollPane23.setViewportView(list1Ippan1);
 
+        list1Kasan1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         list1Kasan1.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -2052,40 +2200,53 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         });
         jScrollPane24.setViewportView(list1Kasan1);
 
+        jLabel41.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel41.setText("小計");
 
         text1Ippan1.setText("jTextField1");
 
         text1Kasan1.setText("jTextField1");
 
+        jLabel42.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel42.setText("低減率");
 
         textTeigenRitu1.setText("jTextField1");
 
+        jLabel43.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel43.setText("第１類計");
 
         text1Total1.setText("jTextField1");
 
+        jLabel44.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel44.setText("第２類");
 
         text2Total1.setText("jTextField1");
 
+        jLabel45.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel45.setText("期末一時扶助");
 
         textKimatu1.setText("jTextField1");
 
+        jLabel46.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel46.setText("生活費計");
 
         textSeikatuKei1.setText("jTextField1");
 
+        jLabel79.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel79.setText("加算種別");
 
+        list1KasanSbt1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         list1KasanSbt1.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
         jScrollPane42.setViewportView(list1KasanSbt1);
+
+        jLabel83.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel83.setText("冬季加算");
+
+        textTouki1.setText("jTextField1");
 
         org.jdesktop.layout.GroupLayout jPanel18Layout = new org.jdesktop.layout.GroupLayout(jPanel18);
         jPanel18.setLayout(jPanel18Layout);
@@ -2094,40 +2255,11 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
             .add(jPanel18Layout.createSequentialGroup()
                 .addContainerGap()
                 .add(jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jPanel18Layout.createSequentialGroup()
-                        .add(jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jLabel38)
-                            .add(jLabel41)
-                            .add(jScrollPane22, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 136, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                            .add(jLabel39)
-                            .add(jScrollPane23, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
-                            .add(text1Ippan1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                            .add(jLabel40)
-                            .add(jScrollPane24)
-                            .add(text1Kasan1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 69, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jScrollPane42)
-                            .add(jPanel18Layout.createSequentialGroup()
-                                .add(jLabel79)
-                                .add(0, 0, Short.MAX_VALUE))))
-                    .add(jPanel18Layout.createSequentialGroup()
-                        .add(jLabel42)
-                        .add(65, 65, 65)
-                        .add(textTeigenRitu1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 92, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                     .add(jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
                         .add(jPanel18Layout.createSequentialGroup()
                             .add(jLabel46)
                             .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .add(textSeikatuKei1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 92, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                        .add(org.jdesktop.layout.GroupLayout.LEADING, jPanel18Layout.createSequentialGroup()
-                            .add(jLabel45)
-                            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .add(textKimatu1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 92, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                         .add(org.jdesktop.layout.GroupLayout.LEADING, jPanel18Layout.createSequentialGroup()
                             .add(jLabel44)
                             .add(65, 65, 65)
@@ -2135,13 +2267,46 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                         .add(org.jdesktop.layout.GroupLayout.LEADING, jPanel18Layout.createSequentialGroup()
                             .add(jLabel43)
                             .add(52, 52, 52)
-                            .add(text1Total1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 92, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap())
+                            .add(text1Total1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 92, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                    .add(jPanel18Layout.createSequentialGroup()
+                        .add(jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(jLabel38)
+                            .add(jLabel41)
+                            .add(jScrollPane22, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 136, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(jLabel39)
+                            .add(text1Ippan1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 64, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(jScrollPane23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 54, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(jLabel40)
+                            .add(text1Kasan1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 69, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                            .add(jScrollPane24, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 58, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(jLabel79)
+                            .add(jScrollPane42, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 142, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                    .add(jPanel18Layout.createSequentialGroup()
+                        .add(jLabel42)
+                        .add(65, 65, 65)
+                        .add(textTeigenRitu1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 300, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(jPanel18Layout.createSequentialGroup()
+                        .add(jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(jPanel18Layout.createSequentialGroup()
+                                .add(101, 101, 101)
+                                .add(textTouki1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 92, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                            .add(jLabel83))
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jLabel45)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(textKimatu1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 92, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(22, Short.MAX_VALUE))
         );
         jPanel18Layout.setVerticalGroup(
             jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel18Layout.createSequentialGroup()
-                .add(0, 0, Short.MAX_VALUE)
+                .add(0, 6, Short.MAX_VALUE)
                 .add(jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jPanel18Layout.createSequentialGroup()
                         .add(jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
@@ -2175,15 +2340,17 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                 .add(jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jLabel43)
                     .add(text1Total1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
                     .add(jLabel44)
                     .add(text2Total1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
+                    .add(jLabel83)
+                    .add(textTouki1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(jLabel45)
                     .add(textKimatu1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jLabel46)
                     .add(textSeikatuKei1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
@@ -2191,6 +2358,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
 
         jPanel19.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        jLabel47.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel47.setText("住宅費計");
 
         textJyutaku1.setText("jTextField1");
@@ -2218,8 +2386,10 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
 
         jPanel20.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        jLabel48.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel48.setText("氏名");
 
+        listSetaiIn5.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         listSetaiIn5.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -2227,8 +2397,10 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         });
         jScrollPane25.setViewportView(listSetaiIn5);
 
+        jLabel49.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel49.setText("学年");
 
+        listGakunen1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         listGakunen1.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "中学３年", "小学６年", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -2236,8 +2408,10 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         });
         jScrollPane26.setViewportView(listGakunen1);
 
+        jLabel50.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel50.setText("基準額");
 
+        listKyouikuKijyun1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         listKyouikuKijyun1.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "99,999", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -2245,12 +2419,15 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         });
         jScrollPane27.setViewportView(listKyouikuKijyun1);
 
+        jLabel51.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel51.setText("教育費計");
 
         textKyouiku1.setText("jTextField1");
 
+        jLabel52.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel52.setText("教材代");
 
+        listKyouikuKyouzai1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         listKyouikuKyouzai1.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -2258,8 +2435,10 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         });
         jScrollPane28.setViewportView(listKyouikuKyouzai1);
 
+        jLabel53.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel53.setText("給食費");
 
+        listKyouikuKyuusyoku1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         listKyouikuKyuusyoku1.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -2267,8 +2446,10 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         });
         jScrollPane29.setViewportView(listKyouikuKyuusyoku1);
 
+        jLabel54.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel54.setText("交通費");
 
+        listKyouikuKoutuu1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         listKyouikuKoutuu1.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -2276,14 +2457,27 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         });
         jScrollPane30.setViewportView(listKyouikuKoutuu1);
 
-        jLabel55.setText("その他");
+        jLabel55.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel55.setText("支援費");
 
+        listKyouikuSienhi1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        listKyouikuSienhi1.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane31.setViewportView(listKyouikuSienhi1);
+
+        listKyouikuSonota1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         listKyouikuSonota1.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
-        jScrollPane31.setViewportView(listKyouikuSonota1);
+        jScrollPane44.setViewportView(listKyouikuSonota1);
+
+        jLabel76.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel76.setText("その他");
 
         org.jdesktop.layout.GroupLayout jPanel20Layout = new org.jdesktop.layout.GroupLayout(jPanel20);
         jPanel20.setLayout(jPanel20Layout);
@@ -2295,8 +2489,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                     .add(jPanel20Layout.createSequentialGroup()
                         .add(jLabel51)
                         .add(52, 52, 52)
-                        .add(textKyouiku1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 92, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .add(textKyouiku1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 92, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                     .add(jPanel20Layout.createSequentialGroup()
                         .add(jPanel20Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(jLabel48)
@@ -2324,9 +2517,12 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jPanel20Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(jLabel55)
-                            .add(jPanel20Layout.createSequentialGroup()
-                                .add(jScrollPane31, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 59, Short.MAX_VALUE)
-                                .addContainerGap())))))
+                            .add(jScrollPane31, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 60, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jPanel20Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(jLabel76)
+                            .add(jScrollPane44, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 60, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         jPanel20Layout.setVerticalGroup(
             jPanel20Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -2362,7 +2558,11 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                     .add(jPanel20Layout.createSequentialGroup()
                         .add(jLabel55)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jScrollPane31, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                        .add(jScrollPane31, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                    .add(jPanel20Layout.createSequentialGroup()
+                        .add(jLabel76)
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(jScrollPane44, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanel20Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jLabel51)
@@ -2372,8 +2572,10 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
 
         jPanel21.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        jLabel56.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel56.setText("氏名");
 
+        listSetaiIn6.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         listSetaiIn6.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -2381,8 +2583,10 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         });
         jScrollPane32.setViewportView(listSetaiIn6);
 
+        jLabel57.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel57.setText("概算月額");
 
+        listKaigoKijyun1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         listKaigoKijyun1.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "999,999", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -2390,8 +2594,10 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         });
         jScrollPane33.setViewportView(listKaigoKijyun1);
 
+        jLabel58.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel58.setText("介護保険");
 
+        listKaigoHoken1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         listKaigoHoken1.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "999,999", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -2399,8 +2605,10 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         });
         jScrollPane34.setViewportView(listKaigoHoken1);
 
+        jLabel59.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel59.setText("その他公費");
 
+        listKaigoSonota1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         listKaigoSonota1.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -2408,6 +2616,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         });
         jScrollPane35.setViewportView(listKaigoSonota1);
 
+        jLabel60.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel60.setText("介護費計");
 
         textKaigo1.setText("jTextField1");
@@ -2472,8 +2681,10 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
 
         jPanel22.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        jLabel61.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel61.setText("氏名");
 
+        listSetaiIn7.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         listSetaiIn7.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -2481,8 +2692,10 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         });
         jScrollPane36.setViewportView(listSetaiIn7);
 
+        jLabel62.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel62.setText("概算月額");
 
+        listIryoKijyun1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         listIryoKijyun1.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "999,999", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -2490,8 +2703,10 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         });
         jScrollPane37.setViewportView(listIryoKijyun1);
 
+        jLabel63.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel63.setText("医療保険");
 
+        listIryouHoken1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         listIryouHoken1.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "999,999", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -2499,8 +2714,10 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         });
         jScrollPane38.setViewportView(listIryouHoken1);
 
+        jLabel64.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel64.setText("その他公費      ");
 
+        listIryouSonota1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         listIryouSonota1.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "999,999", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
@@ -2508,6 +2725,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         });
         jScrollPane39.setViewportView(listIryouSonota1);
 
+        jLabel65.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel65.setText("医療費計");
 
         textIryou1.setText("jTextField1");
@@ -2572,8 +2790,10 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
 
         jPanel23.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
+        jLabel66.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel66.setText("生活歴");
 
+        listSetaiIn8.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         listSetaiIn8.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "認定日:H26/04/01（起案日:H26/03/24）", "認定日:H26/04/10（起案日:H26/04/10）", "認定日:H26/04/20（起案日:H26/04/20）", " " };
             public int getSize() { return strings.length; }
@@ -2582,6 +2802,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         jScrollPane40.setViewportView(listSetaiIn8);
 
         listSetaiIn9.setBackground(new java.awt.Color(255, 204, 204));
+        listSetaiIn9.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         listSetaiIn9.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "9", "10", "11" };
             public int getSize() { return strings.length; }
@@ -2589,12 +2810,16 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         });
         jScrollPane41.setViewportView(listSetaiIn9);
 
+        jLabel67.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel67.setText("分母は、２月のみ実日数、その他は30日となります。");
 
+        jLabel68.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel68.setText("日数");
 
+        jLabel69.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel69.setText("日数は、手修正が可能です。選択してEnterを押してください。");
 
+        jLabel74.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel74.setText("月額計");
 
         textTotal1.setText("jTextField1");
@@ -2647,8 +2872,10 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jLabel71.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel71.setText("認定テーブルを更新する画面です。毎月１レコード作成します。別画面の「一括認定」後に修正することもできます。");
 
+        jButton3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jButton3.setText("登録・印刷");
 
         org.jdesktop.layout.GroupLayout jPanel17Layout = new org.jdesktop.layout.GroupLayout(jPanel17);
@@ -2658,28 +2885,26 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
             .add(jPanel17Layout.createSequentialGroup()
                 .addContainerGap()
                 .add(jPanel17Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jPanel17Layout.createSequentialGroup()
-                        .add(jPanel20, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .add(0, 0, Short.MAX_VALUE))
+                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel17Layout.createSequentialGroup()
+                        .add(jPanel17Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                            .add(jPanel17Layout.createSequentialGroup()
+                                .add(jPanel18, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .add(18, 18, 18)
+                                .add(jPanel19, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                            .add(jPanel17Layout.createSequentialGroup()
+                                .add(jLabel71)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 98, Short.MAX_VALUE)
+                                .add(jButton3)))
+                        .add(29, 29, 29))
                     .add(jPanel17Layout.createSequentialGroup()
                         .add(jPanel17Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(jPanel23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                             .add(jPanel17Layout.createSequentialGroup()
                                 .add(jPanel21, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                                 .add(18, 18, 18)
-                                .add(jPanel22, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 366, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel17Layout.createSequentialGroup()
-                        .add(jPanel17Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                            .add(jPanel17Layout.createSequentialGroup()
-                                .add(jPanel18, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                                .add(jPanel19, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                            .add(jPanel17Layout.createSequentialGroup()
-                                .add(jLabel71)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 80, Short.MAX_VALUE)
-                                .add(jButton3)))
-                        .add(29, 29, 29))))
+                                .add(jPanel22, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 366, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                            .add(jPanel20, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel17Layout.setVerticalGroup(
             jPanel17Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -2694,7 +2919,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                 .add(jPanel17Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jPanel19, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(jPanel18, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(12, 12, 12)
                 .add(jPanel20, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .add(jPanel17Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -2708,6 +2933,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         jTabbedPane1.addTab("日割計算・調書２作成", jScrollPaneHiwari);
 
         jMenu3.setText("ファイル");
+        jMenu3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
 
         jMenuItem4.setText("閉じる");
         jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
@@ -2720,6 +2946,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         jMenuBar1.add(jMenu3);
 
         jMenu2.setText("管理者メニュー");
+        jMenu2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
 
         jMenuItem3.setText("データベース管理");
         jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
@@ -2732,6 +2959,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         jMenuBar1.add(jMenu2);
 
         jMenu1.setText("Help");
+        jMenu1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
 
         jMenuItem2.setText("バージョン情報");
         jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
@@ -2761,7 +2989,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jTabbedPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 992, Short.MAX_VALUE)
+            .add(jTabbedPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 971, Short.MAX_VALUE)
         );
 
         pack();
@@ -2857,7 +3085,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
             jComboBoxKojin.removeAllItems();
             for (int i = 0; i < sp.length; i++) {
                 if (sp[i].isChecked()) {
-                    jComboBoxKojin.addItem(sp[i].getNameKj());
+                    jComboBoxKojin.addItem((i + 1) + "." + sp[i].getNameKj());
                 }
             }
         }
@@ -2927,6 +3155,9 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         textKasanBoshiNinzuuS.setText("0");
         textKasanKaigoHokenRyou.setText("0");
         textSyussanYmd.setID("00000000");
+        
+        chkBoshi.setSelected(false);
+        chkBoshi.setEnabled(false);
     }
     private void setKojin(int idx) {
         //認定日・起案日をセット
@@ -2987,10 +3218,23 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
             chkBoshi.setSelected(true);
         }
         
+        //世帯主を選択した場合、母子加算をアクティブ化
+        if (chkNushi.isSelected()) {
+            chkBoshi.setEnabled(true);
+        } else {
+            chkBoshi.setSelected(false);
+            chkBoshi.setEnabled(false);
+        }
     }
     
     private void chkNushiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkNushiActionPerformed
-        // TODO add your handling code here:
+        //世帯主を選択した場合、母子加算をアクティブ化
+        if (chkNushi.isSelected()) {
+            chkBoshi.setEnabled(true);
+        } else {
+            chkBoshi.setSelected(false);
+            chkBoshi.setEnabled(false);
+        }
     }//GEN-LAST:event_chkNushiActionPerformed
 
     private void jButton1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jButton1KeyPressed
@@ -3166,7 +3410,17 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         //→個人単位では無意味。ここではやらない。
         
         //数値項目チェック
-        int inNo = jComboBoxKojin.getSelectedIndex() + 1;
+        //int inNo = jComboBoxKojin.getSelectedIndex() + 1; 間違い！！！
+        String[] str = ((String)jComboBoxKojin.getSelectedItem()).split("\\.");
+        int inNo = DbAccessOS.getValueI(str[0]);
+        if (inNo == DbAccessOS.defaultErrorIntValue) {
+            JOptionPane.showMessageDialog(this, "員番号が取得できません。");
+            return;
+        }
+        if (inNo == 0) {
+            JOptionPane.showMessageDialog(this, "員番号が取得できません。");
+            return;
+        }
         int kaigoHiyou = DbAccessOS.getValueI(textKaigoHi.getText());
         int kaigoNyusyo = DbAccessOS.getValueI(textKaigoSisetu.getText());
         int kaigoHokenRyou = DbAccessOS.getValueI(textKasanKaigoHokenRyou.getText());
@@ -3259,12 +3513,53 @@ String[][] field = {
         if (listSetaiIn.getModel().getSize() == 0) {
             //最低生活費認定　設定
             calc();
+            recalc();
         } else {
             //画面から再計算
-            
+            recalc();
         }
     }//GEN-LAST:event_jButtonSaikeisanActionPerformed
 
+    private void recalc() {
+        //教育費算出
+        int kyouiku = 0;
+        for (int i = 0; i < listKyouikuKijyun.getModel().getSize(); i++) {
+            kyouiku = kyouiku + DbAccessOS.getValueI((String) listKyouikuKijyun.getModel().getElementAt(i));
+            kyouiku = kyouiku + DbAccessOS.getValueI((String) listKyouikuKoutuu.getModel().getElementAt(i));
+            kyouiku = kyouiku + DbAccessOS.getValueI((String) listKyouikuKyouzai.getModel().getElementAt(i));
+            kyouiku = kyouiku + DbAccessOS.getValueI((String) listKyouikuKyuusyoku.getModel().getElementAt(i));
+            kyouiku = kyouiku + DbAccessOS.getValueI((String) listKyouikuSienhi.getModel().getElementAt(i));
+            kyouiku = kyouiku + DbAccessOS.getValueI((String) listKyouikuSonota.getModel().getElementAt(i));
+        }
+        textKyouiku.setText("" + kyouiku);
+        
+        //医療費算出
+        int iryo = 0;
+        for (int i = 0; i < listIryoKijyun.getModel().getSize(); i++) {
+            iryo = iryo + DbAccessOS.getValueI((String) listIryoKijyun.getModel().getElementAt(i));
+            iryo = iryo - DbAccessOS.getValueI((String) listIryouHoken.getModel().getElementAt(i));
+            iryo = iryo - DbAccessOS.getValueI((String) listIryouSonota.getModel().getElementAt(i));
+        }
+        textIryou.setText("" + iryo);
+        
+        //介護費算出
+        int kaigo = 0;
+        for (int i = 0; i < listIryoKijyun.getModel().getSize(); i++) {
+            kaigo = kaigo + DbAccessOS.getValueI((String) listIryoKijyun.getModel().getElementAt(i));
+            kaigo = kaigo - DbAccessOS.getValueI((String) listIryouHoken.getModel().getElementAt(i));
+            kaigo = kaigo - DbAccessOS.getValueI((String) listIryouSonota.getModel().getElementAt(i));
+        }
+        textKaigo.setText("" + kaigo);
+        
+        int jyutaku = DbAccessOS.getValueI(textJyutaku.getText());
+        
+        //生活扶助
+        int seikatu = 0;
+        
+        
+        seikatu = DbAccessOS.getValueI(textSeikatuKei.getText());
+        textTotal.setText("" + (seikatu + jyutaku + kyouiku + kaigo + iryo));
+    }
     private void listNumSet(java.awt.event.KeyEvent evt) {
         if (evt.getKeyChar() ==  '\n') {
             JList lst = (JList)evt.getSource();
@@ -3290,10 +3585,10 @@ String[][] field = {
         listNumSet(evt);
     }//GEN-LAST:event_listKyouikuKoutuuKeyPressed
 
-    private void listKyouikuSonotaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_listKyouikuSonotaKeyPressed
+    private void listKyouikuSienhiKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_listKyouikuSienhiKeyPressed
         //list*KeyPressed
         listNumSet(evt);
-    }//GEN-LAST:event_listKyouikuSonotaKeyPressed
+    }//GEN-LAST:event_listKyouikuSienhiKeyPressed
 
     private void listKaigoKijyunKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_listKaigoKijyunKeyPressed
         //list*KeyPressed
@@ -3325,6 +3620,142 @@ String[][] field = {
         listNumSet(evt);
     }//GEN-LAST:event_listIryouSonotaKeyPressed
 
+    private void listKyouikuSonotaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_listKyouikuSonotaKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_listKyouikuSonotaKeyPressed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+        instSaiseihi();
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    /**
+     * 調書２の内容をテーブルに保存する。
+     */
+    private void instSaiseihi() {
+        //エラーチェック
+        //世帯主１人か？
+        int nusi = 0;
+        for (int i = 1; i < rsKojin.length; i++) {
+            if (dbKojin.getValueB(rsKojin, "nushiFlg", i)) {
+                nusi = nusi + 1;
+            }
+        }
+        if (nusi <= 0) {
+            JOptionPane.showMessageDialog(this, "世帯主が設定されていません。世帯主欄にチェックを入れてください。");
+            return;
+        }
+        if (nusi > 1) {
+            JOptionPane.showMessageDialog(this, "世帯主が複数設定されています。ご確認ください。");
+            return;
+        }
+        
+        //更新前の確認
+        if ((JOptionPane.showConfirmDialog(this, "更新しますか？", "確認", JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION)) {
+            JOptionPane.showMessageDialog(this, "処理を中止しました。");
+            return;
+        };
+        
+        //インサート処理
+        ArrayList lst = new ArrayList();
+        
+        //インサート前にデリート(1件ずつ全件：１つのSQLで複数件削除はエラーとなることに注意)
+        if (rsSaiseihi != null) {
+            for (int i = 1; i < rsSaiseihi.length; i++) {
+                String[][] field = {
+                    {"caseNo", dbSaiseihi.getValue(rsSaiseihi, "caseNo", i), ""},		//TEXT
+                    {"inNo", dbSaiseihi.getValue(rsSaiseihi, "inNo", i), ""},		//INTEGER
+                    {"kianYmd", dbSaiseihi.getValue(rsSaiseihi, "kianYmd", i), ""},		//INTEGER
+                    {"ninteiYmd", dbSaiseihi.getValue(rsSaiseihi, "ninteiYmd", i), ""},		//INTEGER
+                };
+                //前レコードが見つかったため削除しておく
+                String wk = dbSaiseihi.deleteSQL(field);
+                lst.add(wk);
+                logDebug(wk);
+            }
+        }
+        
+        ArrayList<String[][]> arrFieldSaiseihi = new ArrayList<String[][]>();
+        
+        String valueBefore = "";
+        String valueAfter = "";
+        
+        for (int i = 0; i < jComboBoxKojin.getItemCount(); i++) {
+            int inNo = DbAccessOS.getValueI((String) jComboBoxKojin.getItemAt(i));
+            String ichiRuiTotal = "0";
+            String niRuiTotal = "0";
+            String toukiTotal = "0";
+            String kimatuTotal = "0";
+            String SeikatuTotal = "0";
+            String KyouikuTotal = "0";
+            String KaigoTotal = "0";
+            String IryouTotal = "0";
+            String JyutakuTotal = "0";
+            //世帯主か？
+            if (dbKojin.getValueB(rsKojin, "nushiFlg", i)) {
+                ichiRuiTotal = text1Total.getText();
+                niRuiTotal = text2Total.getText();
+                toukiTotal = textTouki.getText();
+                kimatuTotal = textKimatu.getText();
+                SeikatuTotal = textSeikatuKei.getText();
+                KyouikuTotal = textKyouiku.getText();
+                KaigoTotal = textKaigo.getText();
+                IryouTotal = textIryou.getText();
+                JyutakuTotal = textJyutaku.getText();
+            }
+String[][] field = {
+    {"caseNo", valueBefore, textCaseNo.getText()},		//TEXT
+    {"inNo", valueBefore, "" + inNo},		//INTEGER
+    {"kianYmd", valueBefore, textYmdKian.getID()},		//TEXT
+    {"ninteiYmd", valueBefore, textYmdNintei.getID()},		//TEXT
+    {"ichiRuiIppan", valueBefore, (String)list1Ippan.getModel().getElementAt(i)},		//TEXT
+    {"ichiRuiKasan", valueBefore, (String)list1Kasan.getModel().getElementAt(i)},		//TEXT
+    {"ichiRuiKasanKbn", valueBefore, (String)list1KasanSbt.getModel().getElementAt(i)},		//TEXT
+    {"ichiRuiTeigenRitu", valueBefore, textTeigenRitu.getText()},		//TEXT
+    {"ichiRuiTotal", valueBefore, ichiRuiTotal},		//INTEGER           Totalとあるものは世帯主のみに計上
+    {"niRuiTotal", valueBefore, niRuiTotal},		//INTEGER
+    {"toukiTotal", valueBefore, toukiTotal},		//INTEGER
+    {"kimatuTotal", valueBefore, kimatuTotal},		//INTEGER
+    {"SeikatuTotal", valueBefore, SeikatuTotal},		//INTEGER
+    {"JyutakuTotal", valueBefore, JyutakuTotal},		//INTEGER
+    {"KyouikuKijyun", valueBefore, valueAfter},		//TEXT
+    {"KyouikuKyozai", valueBefore, valueAfter},		//TEXT
+    {"KyouikuKyusyoku", valueBefore, valueAfter},		//TEXT
+    {"KyouikuKoutuuHi", valueBefore, valueAfter},		//TEXT
+    {"KyouikuSienHi", valueBefore, valueAfter},		//TEXT
+    {"KyouikuSonota", valueBefore, valueAfter},		//TEXT
+    {"KyouikuTotal", valueBefore, KyouikuTotal},		//INTEGER
+    {"KaigoGetugaku", valueBefore, valueAfter},		//TEXT
+    {"KaigoHoken", valueBefore, valueAfter},		//TEXT
+    {"KaigoSonota", valueBefore, valueAfter},		//TEXT
+    {"KaigoTotal", valueBefore, KaigoTotal},		//INTEGER
+    {"IryouGetugaku", valueBefore, valueAfter},		//TEXT
+    {"IryouHoken", valueBefore, valueAfter},		//TEXT
+    {"IryouKouhi", valueBefore, valueAfter},		//TEXT
+    {"IryouTotal", valueBefore, IryouTotal},		//INTEGER
+    {"Total", valueBefore, valueAfter}		//INTEGER
+};
+            arrFieldSaiseihi.add(field);
+        }        
+        
+        for (int i = 0; i < arrFieldSaiseihi.size(); i++) {
+            //インサート処理
+            String wk = dbSaiseihi.insertSQL(arrFieldSaiseihi.get(i));
+            lst.add(wk);
+            logDebug(wk);
+        }
+        //更新処理
+        String[] SQL=(String[])lst.toArray(new String[0]);
+        String msg = dbSaiseihi.execSQLUpdate(SQL);
+        if (msg.equals("")) {
+            JOptionPane.showMessageDialog(this, "更新しました。");
+            //同じキーで再読み込み
+            getKojin();
+        } else {
+            JOptionPane.showMessageDialog(this, msg);
+        }
+    }
+    
     /**
      * 最低生活費の再計算を行う。(ここでは月額を設定する。日割りは別処理)
      * 基本的に前回の認定のコピーを貼り付け、（無ければ基準から初期値を取得）
@@ -3364,9 +3795,12 @@ String[][] field = {
         //世帯人数
         int ninzu = rsKojinN.length - 1;
         
-        //式１、式２の値の退避用
-        Double[] valA = new Double[ninzu + 1];
-        Double[] valB = new Double[ninzu + 1];
+        //居宅はコード 1-19
+        int kyotakuNinzu = 0;
+        
+        //(1)、(2)の値の退避用
+        Double[] kyotaku1ruiKijyun1 = new Double[ninzu + 1];
+        Double[] kyotaku1ruiKijyun2 = new Double[ninzu + 1];
         
         //氏名セット（構成員のみ）
         String[] gakunen = {"小学１", "小学２", "小学３", "小学４", "小学５", "小学６", "中学１", "中学２", "中学３"};
@@ -3388,17 +3822,18 @@ String[][] field = {
                 if (nenrei <= 11) {
                     //小学生
                     ((DefaultListModel)listKyouikuKijyun.getModel()).addElement("" + kijyunS);
-                    ((DefaultListModel)listKyouikuSonota.getModel()).addElement("" + sienhiS);
+                    ((DefaultListModel)listKyouikuSienhi.getModel()).addElement("" + sienhiS);
                 } else {
                     //中学生
                     ((DefaultListModel)listKyouikuKijyun.getModel()).addElement("" + kijyunC);
-                    ((DefaultListModel)listKyouikuSonota.getModel()).addElement("" + sienhiC);
+                    ((DefaultListModel)listKyouikuSienhi.getModel()).addElement("" + sienhiC);
                 }
                 //前回のをセット。なければ０
                 if (true) {
                     ((DefaultListModel)listKyouikuKoutuu.getModel()).addElement("0");
                     ((DefaultListModel)listKyouikuKyouzai.getModel()).addElement("0");
                     ((DefaultListModel)listKyouikuKyuusyoku.getModel()).addElement("0");
+                    ((DefaultListModel)listKyouikuSonota.getModel()).addElement("0");
                 } else {
                     
                 }
@@ -3418,39 +3853,49 @@ String[][] field = {
                 
             }
             
-            //一類
-            String nenreiKbn;
-            if (nenrei <= 2) {
-                nenreiKbn = "1";
-            } else if (nenrei <= 5) {
-                nenreiKbn = "2";
-            } else if (nenrei <= 11) {
-                nenreiKbn = "3";
-            } else if (nenrei <= 19) {
-                nenreiKbn = "4";
-            } else if (nenrei <= 40) {
-                nenreiKbn = "5";
-            } else if (nenrei <= 59) {
-                nenreiKbn = "6";
-            } else if (nenrei <= 69) {
-                nenreiKbn = "7";
-            } else {
-                nenreiKbn = "8";
+            //居宅はコード 1-19
+            //kyotakuNinzu
+            int seikatukeitai = DbAccessOS.getValueI(dbKojin.getValue(rsKojinN, "seikatuKeitai", i));
+            if ((1 <= seikatukeitai) && (seikatukeitai <= 19)) {
+                kyotakuNinzu = kyotakuNinzu + 1;
+                //一類
+                String nenreiKbn;
+                if (nenrei <= 2) {
+                    nenreiKbn = "1";
+                } else if (nenrei <= 5) {
+                    nenreiKbn = "2";
+                } else if (nenrei <= 11) {
+                    nenreiKbn = "3";
+                } else if (nenrei <= 19) {
+                    nenreiKbn = "4";
+                } else if (nenrei <= 40) {
+                    nenreiKbn = "5";
+                } else if (nenrei <= 59) {
+                    nenreiKbn = "6";
+                } else if (nenrei <= 69) {
+                    nenreiKbn = "7";
+                } else {
+                    nenreiKbn = "8";
+                }
+                //一類（１）
+                double Kijyun1_1 = dbKijyun.getValueI(rsKijyun, "kyotaku1_1" + nenreiKbn, kijyunIdxKojin[i]);
+                //一類（２）
+                double Kijyun1_2 = dbKijyun.getValueI(rsKijyun, "kyotaku1_2" + nenreiKbn, kijyunIdxKojin[i]);
+                
+                //表示
+                ((DefaultListModel)list1Ippan.getModel()).addElement("" + (int)Math.round(Kijyun1_1) + "/" + (int)Math.round(Kijyun1_2));
+                
+                //低減率をかける前の値を退避
+                //(1)基準
+                kyotaku1ruiKijyun1[i] = Kijyun1_1;
+                //(2)基準
+                kyotaku1ruiKijyun2[i] = Kijyun1_2;
             }
-            //A:一類（１）
-            double Kijyun1_1 = dbKijyun.getValueI(rsKijyun, "kyotaku1_1" + nenreiKbn, kijyunIdxKojin[i]);
-            //B:一類（２）
-            double Kijyun1_2 = dbKijyun.getValueI(rsKijyun, "kyotaku1_2" + nenreiKbn, kijyunIdxKojin[i]);
-            
-            //低減率をかける前の値を退避
-            //A
-            valA[i] = Kijyun1_1;
-            //B
-            valB[i] = Kijyun1_2;
             
             //加算
             String kasanSbt = "";
             int kasan = 0;
+            int kasanSyougai = 0;
             int wk = 0;
 //        {"kasanNinpu", "TEXT"},
             wk = dbKojin.getValueI(dbKojin.getValue(rsKojinN, "kasanNinpu", i));
@@ -3472,37 +3917,37 @@ String[][] field = {
 //        {"kasanSyougai", "TEXT"},
             wk = dbKojin.getValueI(dbKojin.getValue(rsKojinN, "kasanSyougai", i));
             if (wk == 1) {
-                kasan = kasan + dbKijyun.getValueI(rsKijyun, "Syougai1", kijyunIdxKojin[i]);
+                kasanSyougai = kasanSyougai + dbKijyun.getValueI(rsKijyun, "Syougai1", kijyunIdxKojin[i]);
                 kasanSbt = kasanSbt + ",障";
             }
             if (wk == 2) {
-                kasan = kasan + dbKijyun.getValueI(rsKijyun, "Syougai2", kijyunIdxKojin[i]);
+                kasanSyougai = kasanSyougai + dbKijyun.getValueI(rsKijyun, "Syougai2", kijyunIdxKojin[i]);
                 kasanSbt = kasanSbt + ",障";
             }
             if (wk == 3) {
-                kasan = kasan + dbKijyun.getValueI(rsKijyun, "Syougai3", kijyunIdxKojin[i]);
+                kasanSyougai = kasanSyougai + dbKijyun.getValueI(rsKijyun, "Syougai3", kijyunIdxKojin[i]);
                 kasanSbt = kasanSbt + ",障";
             }
             if (wk == 4) {
-                kasan = kasan + dbKijyun.getValueI(rsKijyun, "Syougai4", kijyunIdxKojin[i]);
+                kasanSyougai = kasanSyougai + dbKijyun.getValueI(rsKijyun, "Syougai4", kijyunIdxKojin[i]);
                 kasanSbt = kasanSbt + ",障";
             }
             if (wk == 5) {
-                kasan = kasan + dbKijyun.getValueI(rsKijyun, "Syougai5", kijyunIdxKojin[i]);
+                kasanSyougai = kasanSyougai + dbKijyun.getValueI(rsKijyun, "Syougai5", kijyunIdxKojin[i]);
                 kasanSbt = kasanSbt + ",障";
             }
             if (wk == 6) {
-                kasan = kasan + dbKijyun.getValueI(rsKijyun, "Syougai6", kijyunIdxKojin[i]);
+                kasanSyougai = kasanSyougai + dbKijyun.getValueI(rsKijyun, "Syougai6", kijyunIdxKojin[i]);
                 kasanSbt = kasanSbt + ",障";
             }
             if (wk == 7) {
-                kasan = kasan + dbKijyun.getValueI(rsKijyun, "Syougai7", kijyunIdxKojin[i]);
+                kasanSyougai = kasanSyougai + dbKijyun.getValueI(rsKijyun, "Syougai7", kijyunIdxKojin[i]);
                 kasanSbt = kasanSbt + ",障";
             }
 //        {"kasanKaigoHiyou", "INTEGER"},
             wk = dbKojin.getValueI(dbKojin.getValue(rsKojinN, "kasanKaigoHiyou", i));
             if (wk > 0) {
-                kasan = kasan + wk;
+                kasanSyougai = kasanSyougai + wk;
                 kasanSbt = kasanSbt + ",障";        
             }
 //        {"kasanKaigoNyusyo", "INTEGER"},
@@ -3544,87 +3989,277 @@ String[][] field = {
                 kasanSbt = kasanSbt + ",介保";        
             }
 //        {"kasanBoshi", "TEXT"},
+            wk = dbKojin.getValueI(dbKojin.getValue(rsKojinN, "kasanBoshi", i));
 //        {"kasanBoshiNinzu", "INTEGER"},
 //        {"kasanBoshiNinzuS", "INTEGER"},
+            int boshiNinzuTotal = dbKojin.getValueI(dbKojin.getValue(rsKojinN, "kasanBoshiNinzu", i));      //Total
+            int boshiNinzuS = dbKojin.getValueI(dbKojin.getValue(rsKojinN, "kasanBoshiNinzuS", i));     //入所
+            int boshiNinzuZ = boshiNinzuTotal - boshiNinzuS; //在宅
+            //金額の大きな在宅から順に計上、入所分は額が小さくなるため、後回しのほうが支給額は大きくなる
+            int boshiKingaku = 0;
+            //何人目まで在宅かに注意
+            int kIdx = 1;
+            for (int j = 0; j < boshiNinzuTotal; j++) { 
+                if (boshiNinzuZ > j) {
+                    //在宅
+                    boshiKingaku = boshiKingaku + dbKijyun.getValueI(rsKijyun, "Boshi" + kIdx + "Z", kijyunIdxKojin[i]);
+                } else {
+                    //施設
+                    boshiKingaku = boshiKingaku + dbKijyun.getValueI(rsKijyun, "Boshi" + kIdx + "N", kijyunIdxKojin[i]);
+                }
+                kIdx = kIdx + 1;
+                if (kIdx > 3) {
+                    kIdx = 3;
+                }
+            }
+            if (boshiKingaku > 0 ) {
+                kasanSbt = kasanSbt + ",母";  
+            }
 //        {"kasanTyohukuFlg", "INTEGER"}
+            wk = dbKojin.getValueI(dbKojin.getValue(rsKojinN, "kasanTyohukuFlg", i));
+            if (wk == 1) {
+                //重複調整あり
+                kasanSbt = kasanSbt + "(重複調整)";
+                //障害・母子の多い方のみ計上
+                if (kasanSyougai < boshiKingaku) {
+                    kasan = kasan + boshiKingaku;
+                } else {
+                    kasan = kasan + kasanSyougai;
+                }
+            } else {
+                //重複調整なし：両方計上
+                kasan = kasan + kasanSyougai + boshiKingaku;
+            }
+            //加算額表示
+            ((DefaultListModel)list1Kasan.getModel()).addElement("" + kasan);
+            kasanSbt = kasanSbt + "  "; //エラー回避
+            ((DefaultListModel)list1KasanSbt.getModel()).addElement(kasanSbt.substring(1)); //最初のカンマを除く
             
+        }   //個人ループ終了
+        //加算合計
+        int kasanTotal = 0;
+        for (int i = 0; i < list1Kasan.getModel().getSize(); i++) {
+            kasanTotal = kasanTotal + DbAccessOS.getValueI((String) list1Kasan.getModel().getElementAt(i));
         }
-        
-        
+        text1Kasan.setText("" + kasanTotal);
         
         //二類
-        String ninzuStr = "";
-        int kasan1rui = 0;
-        if (ninzu > 9) {
-            //10以上の場合は専用の処理が必要。
-            ninzuStr = "09";
-            //１類加算額（１０人以上の場合）
-            //kasan1rui = 
-        } else {
-            //９人まではこの額でOK
-            ninzuStr = ("0" + ninzu);
-        }
-        //率（１）Teigen_101 (1)_(niinzuStr)
-        int Ritu_1 = dbKijyun.getValueI(rsKijyun, "Teigen_1" + ninzuStr, kijyunIdx);
-        //率（２）
-        int Ritu_2 = dbKijyun.getValueI(rsKijyun, "Teigen_2" + ninzuStr, kijyunIdx);
-        //A，Bの合計を算出
-        //式１：(A * 2/3 + B * 1/3) * ritu  + C(冬季)    //Aは低減率（１）、Bは低減率（２）
-//            siki1and2[0][i] = (Kijyun1_1 * 2D / 3D + Kijyun1_2 / 3D) ;     // + touki;
-        //式２：A * 0.9 + C(冬季)   但し書き部分
-//            siki1and2[1][i] = Kijyun1_1 ;
-        //式１と式２の大きい方（式２の場合は低減率0.9とする）
-        //結論が出たら、まとめて最後に出力。世帯分まとめて比較する必要があるため。
-        double totalA = 0;
-        double totalB = 0;
-        for (int i = 1; i < valA.length; i++) {
-            totalA = totalA + valA[i];
-            totalB = totalB + valB[i];
-        }
-        double siki1 = (totalA / 3D * (double)Ritu_1 / 10000D) + (totalB * 2D / 3D * (double)Ritu_2) / 10000D;
-        double siki2 = totalA * 0.9D;
-        //式１と式２の大きい方（式２の場合は低減率0.9とする）
-        //結論が出たら、まとめて最後に出力。世帯分まとめて比較する必要があるため。
-        int ippanTotal = 0;
-        DebugMode = true;
-        logDebug("siki1:" + siki1);
-        logDebug("siki2:" + siki2);
-        if (siki1 > siki2) {
-            //式１
-            for (int i = 1; i < valA.length; i++) {
-                double wkIppan = (valA[i] / 3D * (double)Ritu_1 / 10000D) + (valB[i] * 2D / 3D * (double)Ritu_2) / 10000D;
-                //明細では丸めておく・合計で１０円単位の切り上げ
-                ippanTotal = ippanTotal + (int)Math.round(wkIppan);
-                ((DefaultListModel)list1Ippan.getModel()).addElement("" + (int)Math.round(wkIppan));
+        if (kyotakuNinzu > 0) {
+            String ninzuStr = "";
+            int kasan1rui = 0;
+            if (kyotakuNinzu > 9) {
+                //10以上の場合は専用の処理が必要。
+                ninzuStr = "09";
+                //加算額（１０人以上の場合）
+                //kasan1rui = 
+            } else {
+                //９人まではこの額でOK
+                ninzuStr = ("0" + kyotakuNinzu);
             }
-        } else {
-            //式２
-            for (int i = 1; i < valA.length; i++) {
-                //A そのまま出す
-                ((DefaultListModel)list1Ippan.getModel()).addElement("" + valA[i]);
-                ippanTotal = ippanTotal + (int)Math.round(valA[i]);
+            //基準２類(1)
+            int kijyun2rui1 = dbKijyun.getValueI(rsKijyun, "kyotaku2_1" + ninzuStr, kijyunIdx);
+            //基準２類(2)
+            int kijyun2rui2 = dbKijyun.getValueI(rsKijyun, "kyotaku2_2" + ninzuStr, kijyunIdx);
+            //率（１）Teigen_101 (1)_(niinzuStr)
+            int Ritu_1 = dbKijyun.getValueI(rsKijyun, "Teigen_1" + ninzuStr, kijyunIdx);
+            //率（２）
+            int Ritu_2 = dbKijyun.getValueI(rsKijyun, "Teigen_2" + ninzuStr, kijyunIdx);
+            /*
+            A = 1rui(1) * ritu(1) + 2rui(1)
+            B1 = 1rui(2) * ritu(2) + 2rui(2)
+            B2 = A * 0.9
+            B = B1 or B2 (大きい方)
+            A * 2/3 + B * 1/3 + touki
+            */
+            StringBuilder sb = new StringBuilder();
+            sb.append("A = 1rui(1) * ritu(1) + 2rui(1)\n");
+            sb.append("B1 = 1rui(2) * ritu(2) + 2rui(2)\n");
+            sb.append("B2 = A * 0.9\n");
+            sb.append("B = B1 or B2 (大きい方)\n");
+            sb.append("A * 2/3 + B * 1/3 + touki\n");
+            double total1rui1 = 0;
+            double total1rui2 = 0;
+            for (int i = 1; i < kyotaku1ruiKijyun1.length; i++) {
+                total1rui1 = total1rui1 + kyotaku1ruiKijyun1[i];
+                total1rui2 = total1rui2 + kyotaku1ruiKijyun2[i];
             }
-            Ritu_1 = 9000;
-            Ritu_2 = 9000;
+            sb.append("sikiA:\n");
+            sb.append("" + total1rui1);
+            sb.append(" * " + (double)Ritu_1 / 10000D);
+            sb.append(" + " + kijyun2rui1 + "\n");
+            double sikiA = total1rui1 * (double)Ritu_1 / 10000D + kijyun2rui1;
+            sb.append("A:" + sikiA);
+            sb.append("\n");
+            sb.append("sikiB1:\n");
+            sb.append("" + total1rui2);
+            sb.append(" * " + (double)Ritu_2 / 10000D);
+            sb.append(" + " + kijyun2rui2 + "\n");
+            double sikiB1 = total1rui2 * (double)Ritu_2 / 10000D + kijyun2rui2;
+            sb.append("B1:" + sikiB1);
+            sb.append("\n");
+            sb.append("sikiB2:\n");
+            sb.append("" + sikiA);
+            sb.append(" * 0.9\n");
+            double sikiB2 = sikiA * 0.9D;
+            sb.append("B2:" + sikiB2);
+            sb.append("\n");
+            double sikiB = 0;
+            if (sikiB1 < sikiB2) {
+                sikiB = sikiB2;
+            } else {
+                sikiB = sikiB1;
+            }
+            sb.append("B:" + sikiB);
+            sb.append("\n");
+            sb.append("よって、式は A*2/3 + B*1/3 + C(冬季加算)なので\n");
+            sb.append("A*2/3 + B*1/3 = ");
+            double seikatu1and2Total = sikiA * 2D / 3D + sikiB / 3D;
+            sb.append("" + seikatu1and2Total);
+            sb.append("\n");
+            sb.append("低減率は\n");
+            //低減率表示
+            DecimalFormat fmt = new DecimalFormat("0.0000");
+            String str = "";
+            if (sikiB1 > sikiB2) {
+                //複雑な方
+                str = "(1):" + fmt.format((double)Ritu_1 / 10000D) + "  (2):" + fmt.format((double)Ritu_2 / 10000D);
+                textTeigenRitu.setText(str);
+                sb.append(str);
+                sb.append("\n");
+                sb.append("\n");
+                sb.append("検算\n");
+                sb.append("" + total1rui1);
+                sb.append(" * ");
+                sb.append(fmt.format((double)Ritu_1 / 10000D));
+                sb.append(" * 2/3 + ");
+                sb.append("" + total1rui2);
+                sb.append(" * ");
+                sb.append(fmt.format((double)Ritu_2 / 10000D));
+                sb.append(" * 1/3\n");
+                sb.append("= ");
+                int kyotaku1rui = (int)(Math.round((double)total1rui1 * (double)Ritu_1 / 10000D * 2D / 3D + (double)total1rui2 * (double)Ritu_2 / 10000D / 3D * 0.9D));
+                sb.append("" + kyotaku1rui);
+                sb.append("\n");
+                text1TotalKyotaku.setText("" + (int)Math.round(kyotaku1rui));
+            } else {
+//                str = "(1):" + fmt.format((double)Ritu_1 / 10000D) + "  (B): A * 0.9";
+                str = "(1):" + fmt.format((double)Ritu_1 / 10000D) + "  (1): " + fmt.format((double)Ritu_1 / 10000D) + " * 0.9";
+                textTeigenRitu.setText(str);
+                sb.append(str);
+                sb.append("\n");
+                sb.append("\n");
+                sb.append("(2)は使わないので、(1)基準のみ表示する。\n");
+                for (int i = 0; i < list1Ippan.getModel().getSize(); i++) {
+                    String item = (String) ((DefaultListModel)list1Ippan.getModel()).getElementAt(i);
+                    String[] items = item.split("/");
+                    ((DefaultListModel)list1Ippan.getModel()).setElementAt(items[0], i);
+                }
+                sb.append("検算\n");
+                sb.append("" + total1rui1);
+                sb.append(" * ");
+                sb.append(fmt.format((double)Ritu_1 / 10000D));
+                sb.append(" * 2/3 + ");
+                sb.append("" + total1rui1);
+                sb.append(" * ");
+                sb.append(fmt.format((double)Ritu_1 / 10000D));
+                sb.append(" * 1/3 *0.9\n");
+                sb.append("= ");
+                int kyotaku1rui = (int)(Math.round((double)total1rui1 * (double)Ritu_1 / 10000D * 2D / 3D + (double)total1rui1 * (double)Ritu_1 / 10000D / 3D * 0.9D));
+                sb.append("" + kyotaku1rui);
+                sb.append("\n");
+                text1TotalKyotaku.setText("" + (int)Math.round(kyotaku1rui));
+                //ここはあってた。
+            }
+            
+/*
+double sikiA = total1rui1 * (double)Ritu_1 / 10000D + kijyun2rui1;
+double sikiB1 = total1rui2 * (double)Ritu_2 / 10000D + kijyun2rui2;
+double sikiB2 = sikiA * 0.9D;
+*/
+            //２類は逓減率なし
+            double keisanZumi2rui = 0;
+            if (sikiB1 > sikiB2) {
+                //複雑な方
+                keisanZumi2rui = kijyun2rui1 * 2D / 3D + kijyun2rui2 / 3D;
+                sb.append("\n");
+                sb.append("検算\n");
+                sb.append("２類の計算式は\n");
+                sb.append(kijyun2rui1);
+                sb.append(" * 2/3 + (");
+                sb.append(kijyun2rui2);
+                sb.append(" * 1/3 )\n");
+                sb.append("= " + keisanZumi2rui);
+                sb.append("\n");
+            } else {
+                keisanZumi2rui = kijyun2rui1 * 2D / 3D + kijyun2rui1 / 3D * 0.9D;
+                sb.append("\n");
+                sb.append("検算\n");
+                sb.append("２類の計算式は\n");
+                sb.append(kijyun2rui1);
+                sb.append(" * 2/3 + (");
+                sb.append(kijyun2rui1);
+                sb.append(" * 1/3 * 0.9)\n");
+                sb.append("= " + keisanZumi2rui);
+                sb.append("\n");
+            }
+            //一類計(按分)
+            text1Total.setText("" + Math.round(seikatu1and2Total - keisanZumi2rui + kasanTotal));
+            //２類(按分)
+            text2Total.setText("" + Math.round(keisanZumi2rui));
+            
+            int ninteiM = DbAccessOS.getValueI(ninteiYmd.substring(4, 6));
+            //冬季加算 11-3
+            int touki = 0;
+            if ((ninteiM >= 11) || (ninteiM <= 3)) {
+                touki = dbKijyun.getValueI(rsKijyun, "kyotaku2_T" + OpenSeihoNintei.DefaultTouki + ninzuStr, kijyunIdx);
+                textTouki.setText("" + touki);
+            } else {
+                textTouki.setText("0");
+            }
+            //期末一時扶助 12
+            int kimatu = 0;
+            if (ninteiM == 12) {
+                kimatu = dbKijyun.getValueI(rsKijyun, "Kimatu_" + ninzuStr, kijyunIdx);
+                textKimatu.setText("" + kimatu);
+            } else {
+                textKimatu.setText("0");
+            }
+            
+            //生活計(10円切り上げ) ceil
+            int totalSeikatu = (int)(Math.ceil((double)(seikatu1and2Total + kasanTotal + touki + kimatu) / 10D)) * 10;
+            textSeikatuKei.setText("" + totalSeikatu);
+            
+            //一般分小計
+            int total1Ippan = 0;
+            boolean errfrg = false;
+            for (int i = 0; i < list1Ippan.getModel().getSize(); i++) {
+                int wk = DbAccessOS.getValueI((String)((DefaultListModel)list1Ippan.getModel()).get(i));
+                if (wk == DbAccessOS.defaultErrorIntValue) {
+                    errfrg = true;
+                }
+                total1Ippan = total1Ippan + wk;
+            }
+            if (errfrg) {
+                text1Ippan.setText("");
+            } else {
+                text1Ippan.setText("" + total1Ippan);
+            }
+            textBikou.setText(sb.toString());
         }
-        //ここは単に足したものを出す
-        text1Ippan.setText("" + ippanTotal);
-        //低減率表示
-        DecimalFormat fmt = new DecimalFormat("0.0000");
-        String str = "(1):" + fmt.format((double)Ritu_1 / 10000D) + "  (2):" + fmt.format((double)Ritu_2 / 10000D);
-        textTeigenRitu.setText(str);
-        
-        //生活
-        
         
         //住宅
-        
-        
+        int jyutakuHi = 0;
+        if (kyotakuNinzu > 0) {
+            jyutakuHi = dbKijyun.getValueI(rsKijyun, "JyutakuJyougen", kijyunIdx);
+        }
+        textJyutaku.setText("" + jyutakuHi);
         
         //介護
         
         //医療
         
+        //合計金額セット
+        recalc();
     }
     /**
      * @param args the command line arguments
@@ -3771,6 +4406,10 @@ String[][] field = {
     private javax.swing.JLabel jLabel79;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel80;
+    private javax.swing.JLabel jLabel81;
+    private javax.swing.JLabel jLabel82;
+    private javax.swing.JLabel jLabel83;
+    private javax.swing.JLabel jLabel84;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
@@ -3827,6 +4466,7 @@ String[][] field = {
     private javax.swing.JScrollPane jScrollPane27;
     private javax.swing.JScrollPane jScrollPane28;
     private javax.swing.JScrollPane jScrollPane29;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane30;
     private javax.swing.JScrollPane jScrollPane31;
     private javax.swing.JScrollPane jScrollPane32;
@@ -3841,6 +4481,8 @@ String[][] field = {
     private javax.swing.JScrollPane jScrollPane40;
     private javax.swing.JScrollPane jScrollPane41;
     private javax.swing.JScrollPane jScrollPane42;
+    private javax.swing.JScrollPane jScrollPane43;
+    private javax.swing.JScrollPane jScrollPane44;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
@@ -3878,6 +4520,8 @@ String[][] field = {
     private javax.swing.JList listKyouikuKyouzai1;
     private javax.swing.JList listKyouikuKyuusyoku;
     private javax.swing.JList listKyouikuKyuusyoku1;
+    private javax.swing.JList listKyouikuSienhi;
+    private javax.swing.JList listKyouikuSienhi1;
     private javax.swing.JList listKyouikuSonota;
     private javax.swing.JList listKyouikuSonota1;
     private javax.swing.JList listSetaiIn;
@@ -3900,8 +4544,10 @@ String[][] field = {
     private javax.swing.JTextField text1Kasan1;
     private javax.swing.JTextField text1Total;
     private javax.swing.JTextField text1Total1;
+    private javax.swing.JTextField text1TotalKyotaku;
     private javax.swing.JTextField text2Total;
     private javax.swing.JTextField text2Total1;
+    private javax.swing.JTextArea textBikou;
     private javax.swing.JTextField textCaseNo;
     private javax.swing.JTextField textIryou;
     private javax.swing.JTextField textIryou1;
@@ -3927,6 +4573,8 @@ String[][] field = {
     private javax.swing.JTextField textTeigenRitu1;
     private javax.swing.JTextField textTotal;
     private javax.swing.JTextField textTotal1;
+    private javax.swing.JTextField textTouki;
+    private javax.swing.JTextField textTouki1;
     private openseiho.textYmdPanel textYmdKian;
     private openseiho.textYmdPanel textYmdNintei;
     // End of variables declaration//GEN-END:variables

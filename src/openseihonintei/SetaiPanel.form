@@ -85,6 +85,9 @@
   <SubComponents>
     <Component class="javax.swing.JCheckBox" name="checked">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Dialog" size="12" style="0"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="&#x69cb;&#x6210;&#x54e1;"/>
         <Property name="toolTipText" type="java.lang.String" value="&#x4e00;&#x756a;&#x4e0a;&#x306e;&#x69cb;&#x6210;&#x54e1;&#x304c;&#x4e16;&#x5e2f;&#x4e3b;&#x306b;&#x306a;&#x308a;&#x307e;&#x3059;"/>
       </Properties>
@@ -100,6 +103,9 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel1">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Dialog" size="12" style="0"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="&#x8a8d;&#x5b9a;&#x5e74;&#x9f62;"/>
       </Properties>
     </Component>
@@ -112,6 +118,9 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel2">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Dialog" size="12" style="0"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="&#x6b73;"/>
       </Properties>
     </Component>
@@ -147,6 +156,9 @@
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
       <Properties>
+        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+          <Font name="Dialog" size="12" style="0"/>
+        </Property>
         <Property name="text" type="java.lang.String" value="&#x30ab;&#x30ca;&#x6c0f;&#x540d;"/>
       </Properties>
     </Component>

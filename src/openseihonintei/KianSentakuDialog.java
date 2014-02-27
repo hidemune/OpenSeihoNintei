@@ -136,6 +136,9 @@ private String ninteiYmd;
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        if (listSelect.getSelectedIndex() < 0) {
+            return;
+        }
         String arr[] = lstM.get(listSelect.getSelectedIndex()).split("\\|");
         if (arr.length > 1) {
             kianYmd = arr[2];

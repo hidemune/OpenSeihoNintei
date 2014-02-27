@@ -201,6 +201,7 @@ public class SetaiPanel extends javax.swing.JPanel {
         setMinimumSize(new java.awt.Dimension(0, 64));
         setPreferredSize(new java.awt.Dimension(686, 64));
 
+        checked.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         checked.setText("構成員");
         checked.setToolTipText("一番上の構成員が世帯主になります");
         checked.addActionListener(new java.awt.event.ActionListener() {
@@ -220,12 +221,14 @@ public class SetaiPanel extends javax.swing.JPanel {
             }
         });
 
+        jLabel1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel1.setText("認定年齢");
 
         textNenrei.setEditable(false);
         textNenrei.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         textNenrei.setFocusable(false);
 
+        jLabel2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel2.setText("歳");
 
         textYmd.setCaption("生年月日");
@@ -252,6 +255,7 @@ public class SetaiPanel extends javax.swing.JPanel {
             }
         });
 
+        jLabel3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel3.setText("カナ氏名");
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
