@@ -1695,7 +1695,6 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         jLabel27.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel27.setText("支援費");
 
-        listKyouikuSienhi.setBackground(new java.awt.Color(255, 204, 204));
         listKyouikuSienhi.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         listKyouikuSienhi.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
