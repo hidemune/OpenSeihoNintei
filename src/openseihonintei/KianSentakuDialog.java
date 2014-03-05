@@ -29,7 +29,7 @@ import openseiho.classYMD;
  */
 public class KianSentakuDialog extends javax.swing.JDialog {
 private String[][] rs;
-private DefaultListModel<String> lstM;
+private DefaultListModel lstM;
 private String kianYmd;
 private String ninteiYmd;
 
@@ -38,7 +38,7 @@ private String ninteiYmd;
      */
     public KianSentakuDialog(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
-        this.lstM = new DefaultListModel<String>();
+        this.lstM = new DefaultListModel();
         initComponents();
         //画面を中心に表示
         java.awt.GraphicsEnvironment env = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -139,7 +139,7 @@ private String ninteiYmd;
         if (listSelect.getSelectedIndex() < 0) {
             return;
         }
-        String arr[] = lstM.get(listSelect.getSelectedIndex()).split("\\|");
+        String arr[] = ((String)lstM.get(listSelect.getSelectedIndex())).split("\\|");
         if (arr.length > 1) {
             kianYmd = arr[2];
             ninteiYmd = arr[3];

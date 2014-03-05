@@ -541,6 +541,7 @@
                         <Component class="openseiho.textYmdPanel" name="textSyussanYmd">
                           <Properties>
                             <Property name="caption" type="java.lang.String" value="&#x51fa;&#x7523;(&#x4e88;&#x5b9a;)&#x65e5;"/>
+                            <Property name="debugGraphicsOptions" type="int" value="0"/>
                           </Properties>
                         </Component>
                       </SubComponents>
@@ -1116,7 +1117,6 @@
         </Container>
         <Container class="javax.swing.JScrollPane" name="jScrollPaneGetugaku">
           <Properties>
-            <Property name="debugGraphicsOptions" type="int" value="4"/>
             <Property name="doubleBuffered" type="boolean" value="true"/>
           </Properties>
           <Constraints>
@@ -1154,7 +1154,7 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jPanel15" min="-2" pref="384" max="-2" attributes="0"/>
                                   <EmptySpace max="-2" attributes="0"/>
-                                  <Component id="jPanel16" min="-2" pref="366" max="-2" attributes="0"/>
+                                  <Component id="jPanel16" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
@@ -2428,7 +2428,7 @@
                                       <Component id="textIryou" min="-2" pref="92" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace pref="23" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -2736,7 +2736,7 @@
                                       <Group type="102" alignment="0" attributes="0">
                                           <Component id="jPanel21" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Component id="jPanel22" min="-2" pref="366" max="-2" attributes="0"/>
+                                          <Component id="jPanel22" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <Component id="jPanel20" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
@@ -3888,7 +3888,7 @@
                                       <Component id="textIryou1" min="-2" pref="92" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace pref="23" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>

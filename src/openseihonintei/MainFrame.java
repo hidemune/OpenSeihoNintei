@@ -922,6 +922,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         comboIDKasanSanpu.setPostCap("");
 
         textSyussanYmd.setCaption("出産(予定)日");
+        textSyussanYmd.setDebugGraphicsOptions(0);
 
         org.jdesktop.layout.GroupLayout jPanel6Layout = new org.jdesktop.layout.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -1346,7 +1347,6 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
 
         jTabbedPane1.addTab("個人状況", jScrollPane2);
 
-        jScrollPaneGetugaku.setDebugGraphicsOptions(javax.swing.DebugGraphics.BUFFERED_OPTION);
         jScrollPaneGetugaku.setDoubleBuffered(true);
 
         jButton5.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
@@ -2047,7 +2047,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                         .add(jLabel37)
                         .add(52, 52, 52)
                         .add(textIryou, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 92, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         jPanel16Layout.setVerticalGroup(
             jPanel16Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -2120,7 +2120,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                     .add(jPanel3Layout.createSequentialGroup()
                         .add(jPanel15, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 384, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jPanel16, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 366, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                        .add(jPanel16, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                     .add(jPanel3Layout.createSequentialGroup()
                         .add(jPanel4, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
@@ -2756,7 +2756,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                         .add(jLabel65)
                         .add(52, 52, 52)
                         .add(textIryou1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 92, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         jPanel22Layout.setVerticalGroup(
             jPanel22Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -2901,7 +2901,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                             .add(jPanel17Layout.createSequentialGroup()
                                 .add(jPanel21, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                                 .add(18, 18, 18)
-                                .add(jPanel22, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 366, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                                .add(jPanel22, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                             .add(jPanel20, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
