@@ -390,7 +390,6 @@
                 <Component class="openseiho.textYmdPanel" name="textYmdNintei">
                   <Properties>
                     <Property name="caption" type="java.lang.String" value="&#x8a8d;&#x5b9a;&#x65e5;"/>
-                    <Property name="debugGraphicsOptions" type="int" value="0"/>
                     <Property name="textYmdErr" type="boolean" value="false"/>
                   </Properties>
                   <AccessibilityProperties>
@@ -541,7 +540,6 @@
                         <Component class="openseiho.textYmdPanel" name="textSyussanYmd">
                           <Properties>
                             <Property name="caption" type="java.lang.String" value="&#x51fa;&#x7523;(&#x4e88;&#x5b9a;)&#x65e5;"/>
-                            <Property name="debugGraphicsOptions" type="int" value="0"/>
                           </Properties>
                         </Component>
                       </SubComponents>
@@ -1200,7 +1198,7 @@
                               <Component id="jPanel15" min="-2" max="-2" attributes="0"/>
                               <Component id="jPanel16" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="29" max="32767" attributes="0"/>
+                          <EmptySpace pref="55" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1259,10 +1257,15 @@
                                               <EmptySpace max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
                                                   <Component id="jLabel11" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="text1Ippan" alignment="0" min="-2" pref="64" max="-2" attributes="0"/>
                                                   <Component id="jScrollPane4" alignment="0" min="-2" pref="94" max="-2" attributes="0"/>
                                               </Group>
                                               <EmptySpace max="-2" attributes="0"/>
+                                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                                  <Component id="jLabel85" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="jScrollPane45" pref="61" max="32767" attributes="0"/>
+                                                  <Component id="text1Ippan" alignment="0" pref="0" max="32767" attributes="0"/>
+                                              </Group>
+                                              <EmptySpace min="-2" max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
                                                   <Component id="text1Kasan" alignment="0" min="-2" pref="69" max="-2" attributes="0"/>
                                                   <Group type="102" alignment="0" attributes="0">
@@ -1279,7 +1282,7 @@
                                               </Group>
                                           </Group>
                                       </Group>
-                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                      <EmptySpace min="0" pref="32" max="32767" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
@@ -1313,7 +1316,7 @@
                                       <Component id="jLabel82" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
                                       <Component id="text1TotalKyotaku" min="-2" pref="92" max="-2" attributes="0"/>
-                                      <EmptySpace pref="62" max="32767" attributes="0"/>
+                                      <EmptySpace max="32767" attributes="0"/>
                                   </Group>
                               </Group>
                           </Group>
@@ -1335,10 +1338,7 @@
                                           <Component id="jScrollPane4" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
-                                          <Component id="text1Ippan" alignment="0" min="-2" max="-2" attributes="0"/>
-                                      </Group>
+                                      <Component id="jLabel13" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="1" attributes="0">
@@ -1351,9 +1351,17 @@
                                               <Component id="jScrollPane5" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                           <Component id="jScrollPane21" min="-2" max="-2" attributes="0"/>
+                                          <Group type="102" alignment="1" attributes="0">
+                                              <Component id="jLabel85" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="jScrollPane45" min="-2" max="-2" attributes="0"/>
+                                          </Group>
                                       </Group>
                                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                      <Component id="text1Kasan" min="-2" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="text1Kasan" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="text1Ippan" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
                                   </Group>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
@@ -1408,7 +1416,7 @@
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Dialog" size="12" style="0"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="&#x4e00;&#x822c;&#x5206;"/>
+                        <Property name="text" type="java.lang.String" value="&#x4e00;&#x822c;&#x5206;(&#x6848;&#x5206;&#x524d;)"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel12">
@@ -1517,7 +1525,7 @@
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Dialog" size="12" style="0"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="&#x4f4e;&#x6e1b;&#x7387;"/>
+                        <Property name="text" type="java.lang.String" value="&#x9013;&#x6e1b;&#x7387;"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="textTeigenRitu">
@@ -1634,6 +1642,39 @@
                           <Font name="Dialog" size="12" style="0"/>
                         </Property>
                         <Property name="text" type="java.lang.String" value="&#x5185;&#x5c45;&#x5b85;&#x4e00;&#x822c;&#x5206;"/>
+                      </Properties>
+                    </Component>
+                    <Container class="javax.swing.JScrollPane" name="jScrollPane45">
+                      <AuxValues>
+                        <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+                      </AuxValues>
+
+                      <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+                      <SubComponents>
+                        <Component class="javax.swing.JList" name="list1IppanA">
+                          <Properties>
+                            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                              <Font name="Dialog" size="12" style="0"/>
+                            </Property>
+                            <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.editors2.ListModelEditor">
+                              <StringArray count="5">
+                                <StringItem index="0" value="Item 1"/>
+                                <StringItem index="1" value="Item 2"/>
+                                <StringItem index="2" value="Item 3"/>
+                                <StringItem index="3" value="Item 4"/>
+                                <StringItem index="4" value="Item 5"/>
+                              </StringArray>
+                            </Property>
+                          </Properties>
+                        </Component>
+                      </SubComponents>
+                    </Container>
+                    <Component class="javax.swing.JLabel" name="jLabel85">
+                      <Properties>
+                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                          <Font name="Dialog" size="12" style="0"/>
+                        </Property>
+                        <Property name="text" type="java.lang.String" value="&#x4e00;&#x822c;&#x5206;"/>
                       </Properties>
                     </Component>
                   </SubComponents>
@@ -2717,18 +2758,21 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
                                   <Group type="103" groupAlignment="1" attributes="0">
-                                      <Group type="102" attributes="0">
-                                          <Component id="jPanel18" max="32767" attributes="0"/>
-                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="1" attributes="0">
+                                          <Component id="jPanel18" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
                                           <Component id="jPanel19" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="32767" attributes="0"/>
                                       </Group>
                                       <Group type="102" attributes="0">
                                           <Component id="jLabel71" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace pref="98" max="32767" attributes="0"/>
+                                          <EmptySpace pref="70" max="32767" attributes="0"/>
+                                          <Component id="jButton4" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
                                           <Component id="jButton3" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
-                                  <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
@@ -2752,7 +2796,10 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
                               <Component id="jLabel71" min="-2" max="-2" attributes="0"/>
-                              <Component id="jButton3" min="-2" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jButton3" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jButton4" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jPanel23" min="-2" max="-2" attributes="0"/>
@@ -2816,9 +2863,9 @@
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="jLabel39" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Component id="text1Ippan1" alignment="0" min="-2" pref="64" max="-2" attributes="0"/>
-                                          <Component id="jScrollPane23" alignment="0" min="-2" pref="54" max="-2" attributes="0"/>
+                                          <Component id="jScrollPane23" alignment="0" min="-2" pref="55" max="-2" attributes="0"/>
                                       </Group>
-                                      <EmptySpace max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" max="-2" attributes="0"/>
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="jLabel40" alignment="0" min="-2" max="-2" attributes="0"/>
                                           <Component id="text1Kasan1" alignment="0" min="-2" pref="69" max="-2" attributes="0"/>
@@ -2849,7 +2896,7 @@
                                       <Component id="textKimatu1" min="-2" pref="92" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <EmptySpace pref="22" max="32767" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -2954,7 +3001,7 @@
 
                       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                       <SubComponents>
-                        <Component class="javax.swing.JList" name="listSetaiIn1">
+                        <Component class="javax.swing.JList" name="listSetaiInH1">
                           <Properties>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                               <Font name="Dialog" size="12" style="0"/>
@@ -2979,7 +3026,7 @@
 
                       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                       <SubComponents>
-                        <Component class="javax.swing.JList" name="list1Ippan1">
+                        <Component class="javax.swing.JList" name="list1IppanA1">
                           <Properties>
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="cc" green="cc" red="ff" type="rgb"/>
@@ -3048,7 +3095,7 @@
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                           <Font name="Dialog" size="12" style="0"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" value="&#x4f4e;&#x6e1b;&#x7387;"/>
+                        <Property name="text" type="java.lang.String" value="&#x9013;&#x6e1b;&#x7387;"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="textTeigenRitu1">
@@ -3173,7 +3220,7 @@
                               <Component id="jLabel47" min="-2" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
                               <Component id="textJyutaku1" min="-2" pref="92" max="-2" attributes="0"/>
-                              <EmptySpace pref="117" max="32767" attributes="0"/>
+                              <EmptySpace pref="61" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -3349,7 +3396,7 @@
 
                       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                       <SubComponents>
-                        <Component class="javax.swing.JList" name="listSetaiIn5">
+                        <Component class="javax.swing.JList" name="listSetaiInH2K">
                           <Properties>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                               <Font name="Dialog" size="12" style="0"/>
@@ -3714,7 +3761,7 @@
 
                       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                       <SubComponents>
-                        <Component class="javax.swing.JList" name="listSetaiIn6">
+                        <Component class="javax.swing.JList" name="listSetaiInH3">
                           <Properties>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                               <Font name="Dialog" size="12" style="0"/>
@@ -3947,7 +3994,7 @@
 
                       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                       <SubComponents>
-                        <Component class="javax.swing.JList" name="listSetaiIn7">
+                        <Component class="javax.swing.JList" name="listSetaiInH4">
                           <Properties>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                               <Font name="Dialog" size="12" style="0"/>
@@ -4162,7 +4209,7 @@
 
                       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                       <SubComponents>
-                        <Component class="javax.swing.JList" name="listSetaiIn8">
+                        <Component class="javax.swing.JList" name="listSeikatuReki">
                           <Properties>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                               <Font name="Dialog" size="12" style="0"/>
@@ -4186,7 +4233,7 @@
 
                       <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
                       <SubComponents>
-                        <Component class="javax.swing.JList" name="listSetaiIn9">
+                        <Component class="javax.swing.JList" name="listNissu">
                           <Properties>
                             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                               <Color blue="cc" green="cc" red="ff" type="rgb"/>
@@ -4259,6 +4306,17 @@
                     </Property>
                     <Property name="text" type="java.lang.String" value="&#x767b;&#x9332;&#x30fb;&#x5370;&#x5237;"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JButton" name="jButton4">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="&#x691c;&#x7d22;"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton4ActionPerformed"/>
+                  </Events>
                 </Component>
               </SubComponents>
             </Container>
