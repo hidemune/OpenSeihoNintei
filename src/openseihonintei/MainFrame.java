@@ -3696,7 +3696,7 @@ String[][] field = {
         int nendo = classYMD.getNendo(ninteiYmd);
         String ninteYm = ninteiYmd.substring(0, 6);
         //生活歴の取得
-        String SQL =  "SELECT DISTINCT ninteiYmd, kianYmd FROM saiseihi WHERE caseNo = '" + caseNo + "' AND kianYmd <= '" + kianYmd + "' AND ninteiYmd >='" + ninteYm + "00" + "' AND ninteiYmd <='" + ninteYm + "99" + "'";
+        String SQL =  "SELECT DISTINCT kianYmd , ninteiYmd FROM saiseihi WHERE caseNo = '" + caseNo + "' AND kianYmd <= '" + kianYmd + "' AND ninteiYmd >='" + ninteYm + "00" + "' AND ninteiYmd <='" + ninteYm + "99" + "'";
         String[][] rsSeikatuReki = dbSaiseihi.getResultSetTableBySQL(SQL);
         Integer[] nissu = new Integer[rsSeikatuReki.length];
         nissu[0] = 0;

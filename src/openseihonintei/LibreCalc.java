@@ -56,6 +56,7 @@ private static XDispatchProvider xDocDispatchProviderOut = null;
             makeDesktop = getDesktop();
             
             xSheetDocumentOut = openCreatedocument(makeDesktop);
+            initSheet();
             
             append(null);
             
@@ -94,16 +95,16 @@ private static XDispatchProvider xDocDispatchProviderOut = null;
                              com.sun.star.frame.XComponentLoader.class, oDesktop);
 
                 com.sun.star.beans.PropertyValue[] propertyValue =
-                    new com.sun.star.beans.PropertyValue[1];
+                    new com.sun.star.beans.PropertyValue[2];
                 propertyValue[0] = new com.sun.star.beans.PropertyValue();
                 propertyValue[0].Name = "AsTemplate";
                 propertyValue[0].Value = true;
                 
-                //propertyValue[1] = new com.sun.star.beans.PropertyValue();
-                //propertyValue[1].Name = "Hidden";
-                //propertyValue[1].Value = true;
+                propertyValue[1] = new com.sun.star.beans.PropertyValue();
+                propertyValue[1].Name = "Hidden";
+                propertyValue[1].Value = false;
                 
-                java.io.File sourceFile = new java.io.File("print/templateA4P.ods");
+                java.io.File sourceFile = new java.io.File("print/TemplateA4P.ods");
                 StringBuilder sLoadUrl = new StringBuilder("file:///");
                 sLoadUrl.append(sourceFile.getCanonicalPath().replace('\\', '/'));
                 Object oDocToStore = xCompLoader.loadComponentFromURL(
@@ -112,7 +113,7 @@ private static XDispatchProvider xDocDispatchProviderOut = null;
                 
             }catch (Exception e) {
                 Logger.getLogger(LibreCalc.class.getName()).log(Level.SEVERE, null, e);
-                JOptionPane.showMessageDialog(null, "エラーが発生しました。\n「print/templateA4P.ods」がカレントディレクトリにあるか確認してください。");
+                JOptionPane.showMessageDialog(null, "エラーが発生しました。\n「print/TemplateA4P.ods」がカレントディレクトリにあるか確認してください。");
             }
         
         return aSheetDocument;
@@ -160,7 +161,7 @@ private static XDispatchProvider xDocDispatchProviderOut = null;
                     com.sun.star.beans.PropertyValue[] propertyValue =
                         new com.sun.star.beans.PropertyValue[1];
                     propertyValue[0] = new com.sun.star.beans.PropertyValue();
-                    propertyValue[0].Name = "AsTemplate";           //Hidden AsTemplate
+                    propertyValue[0].Name = "Hidden";           //Hidden AsTemplate
                     propertyValue[0].Value = true;
                     java.io.File sourceFile = new java.io.File("print/chosyo2.ods");
                     StringBuilder sLoadUrl = new StringBuilder("file:///");
@@ -281,6 +282,129 @@ private static XDispatchProvider xDocDispatchProviderOut = null;
                 JOptionPane.showMessageDialog(null, "エラーが発生しました。");
                 throw ex;
                 //return;
+            }
+    }
+    public void initSheet() throws IllegalArgumentException, Exception {
+        XComponentContext xContext = null;
+        XModel xDocModel = null;
+        
+            try {
+                //テンプレートファイル
+                // get the remote office component context
+                String oooExeFolder = LibreExePath;
+                xContext = BootstrapSocketConnector.bootstrap(oooExeFolder);
+                //xContext = com.sun.star.comp.helper.Bootstrap.bootstrap();
+                System.out.println("Connected to a office ...");
+
+                // get the remote office service manager
+                com.sun.star.lang.XMultiComponentFactory xMCF =
+                    xContext.getServiceManager();
+                Object oDesktop = xMCF.createInstanceWithContext(
+                    "com.sun.star.frame.Desktop", xContext);
+                
+                com.sun.star.frame.XComponentLoader xCompLoader =
+                    (com.sun.star.frame.XComponentLoader)
+                         UnoRuntime.queryInterface(
+                             com.sun.star.frame.XComponentLoader.class, oDesktop);
+                
+                
+                //コマンドを発行可能にする
+                XMultiComponentFactory xRemoteServiceManager = null;
+                xRemoteServiceManager = makeContext.getServiceManager();
+                Object configProvider = xRemoteServiceManager.createInstanceWithContext(
+                              "com.sun.star.configuration.ConfigurationProvider",
+                              makeContext );
+                XMultiServiceFactory xConfigProvider = null;
+                xConfigProvider = (com.sun.star.lang.XMultiServiceFactory)
+                    UnoRuntime.queryInterface(
+                        com.sun.star.lang.XMultiServiceFactory.class, configProvider );
+                enableCommands(xConfigProvider);
+                
+
+                //テンプレート読み込み
+                com.sun.star.beans.PropertyValue[] propertyValue =
+                    new com.sun.star.beans.PropertyValue[1];
+                propertyValue[0] = new com.sun.star.beans.PropertyValue();
+                propertyValue[0].Name = "Hidden";           //Hidden AsTemplate
+                propertyValue[0].Value = true;
+                java.io.File sourceFile = new java.io.File("print/chosyo2.ods");
+                StringBuilder sLoadUrl = new StringBuilder("file:///");
+                sLoadUrl.append(sourceFile.getCanonicalPath().replace('\\', '/'));
+                Object oDocToStore = xCompLoader.loadComponentFromURL(
+                    sLoadUrl.toString(), "_blank", 0, propertyValue );
+
+                //com.sun.star.text.XTextDocument aSheetDocument = (com.sun.star.text.XTextDocument)
+                //    UnoRuntime.queryInterface(
+                //        com.sun.star.text.XTextDocument.class, oDocToStore);
+
+
+                com.sun.star.frame.XStorable xStorable =
+                    (com.sun.star.frame.XStorable)UnoRuntime.queryInterface(
+                        com.sun.star.frame.XStorable.class, oDocToStore );
+                sourceFile = new java.io.File("tmp.ods");
+                StringBuilder sSaveUrl = new StringBuilder("file:///");
+                sSaveUrl.append(sourceFile.getCanonicalPath().replace('\\', '/'));
+                // save
+                propertyValue = new com.sun.star.beans.PropertyValue[ 2 ];
+                propertyValue[0] = new com.sun.star.beans.PropertyValue();
+                propertyValue[0].Name = "Overwrite";
+                propertyValue[0].Value = new Boolean(true);
+                propertyValue[1] = new com.sun.star.beans.PropertyValue();
+                propertyValue[1].Name = "FilterName";
+                propertyValue[1].Value = "calc8";
+                xStorable.storeAsURL( sSaveUrl.toString(), propertyValue );
+
+                //Calc
+                XSpreadsheetDocument myDoc = (XSpreadsheetDocument)UnoRuntime.queryInterface( XSpreadsheetDocument.class, xStorable);
+                
+                //copy
+                Object dispatchHelper = xMCF.createInstanceWithContext("com.sun.star.frame.DispatchHelper", makeContext);
+                XDispatchHelper xDispatchHelper =
+                  (XDispatchHelper)UnoRuntime.queryInterface(XDispatchHelper.class, dispatchHelper); 
+
+                xDocModel = (XModel) UnoRuntime.queryInterface(XModel.class, myDoc);
+                XController xDocController = (XController) UnoRuntime.queryInterface(
+                        XController.class, xDocModel.getCurrentController());
+                XDispatchProvider xDocDispatchProvider = (XDispatchProvider) UnoRuntime.queryInterface(
+                        XDispatchProvider.class, xDocController);
+                
+                xDispatchHelper.executeDispatch(xDocDispatchProvider, ".uno:SelectAll", "", 0, new PropertyValue[0]);
+                xDispatchHelper.executeDispatch(xDocDispatchProvider, ".uno:Copy", "", 0, new PropertyValue[0]);
+
+                //貼り付け
+                Object dispatchHelperOut = xMCF.createInstanceWithContext("com.sun.star.frame.DispatchHelper", makeContext);
+                xDispatchHelperOut =
+                  (XDispatchHelper)UnoRuntime.queryInterface(XDispatchHelper.class, dispatchHelperOut); 
+
+                XModel xDocModelOut = (XModel) UnoRuntime.queryInterface(XModel.class, xSheetDocumentOut);
+                XController  xDocControllerOut = (XController) UnoRuntime.queryInterface(
+                        XController.class, xDocModelOut.getCurrentController());
+                xDocDispatchProviderOut = (XDispatchProvider) UnoRuntime.queryInterface(
+                        XDispatchProvider.class, xDocControllerOut);
+                
+                xDispatchHelperOut.executeDispatch(xDocDispatchProviderOut, ".uno:SelectAll", "", 0, new PropertyValue[0]);
+                xDispatchHelperOut.executeDispatch(xDocDispatchProviderOut, ".uno:Paste", "", 0, new PropertyValue[0]);
+
+                //閉じる
+                com.sun.star.util.XCloseable xCloseable = (com.sun.star.util.XCloseable)
+                    UnoRuntime.queryInterface(com.sun.star.util.XCloseable.class,
+                                              oDocToStore );
+                if (xCloseable != null ) {
+                    xCloseable.close(false);
+                } else {
+                    com.sun.star.lang.XComponent xComp = (com.sun.star.lang.XComponent)
+                        UnoRuntime.queryInterface(
+                            com.sun.star.lang.XComponent.class, oDocToStore );
+                    xComp.dispose();
+                }
+            } catch (com.sun.star.lang.IllegalArgumentException ex) {
+                Logger.getLogger(LibreCalc.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "エラーが発生しました。\nカレントディレクトリに「print/chosyo2.ods」があるか確認してください。");
+                throw ex;
+            } catch (Exception ex) {
+                Logger.getLogger(LibreCalc.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "エラーが発生しました。");
+                throw ex;
             }
     }
     
