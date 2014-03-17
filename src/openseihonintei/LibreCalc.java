@@ -21,6 +21,8 @@ import com.sun.star.uno.XComponentContext;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import ooo.connector.BootstrapSocketConnector;
 /*
@@ -40,7 +42,18 @@ XSpreadsheetDocument xSheetDocumentOut = null;
 private static XDispatchHelper xDispatchHelperOut = null;
 private static XDispatchProvider xDocDispatchProviderOut = null;
 
-    public void makeWiterFile(ArrayList<String> ArrStr[]) {
+    /**
+     * 帳票をCalcで出力します。
+     * @param ArrStr 
+     * @param printName 
+     *  Template .ods File name
+     * @param paperType 
+     *  A4P : A4 - Portrait
+     *  A4L : A4 - Landscape
+     * @param cellRangeEnd
+     *  ex. "I52"
+     */
+    public void makeCalcFile(ArrayList<String[][]> ArrStr, String printName, String paperType, String cellRangeEnd) {
         System.out.println("LibreExePath:" + LibreExePath);
         if (LibreExePath.equals("")) {
             //Msg
@@ -55,10 +68,10 @@ private static XDispatchProvider xDocDispatchProviderOut = null;
             //com.sun.star.frame.XDesktop xDesktop = null;
             makeDesktop = getDesktop();
             
-            xSheetDocumentOut = openCreatedocument(makeDesktop);
-            initSheet();
+            xSheetDocumentOut = openCreatedocument(makeDesktop, paperType);
+            initSheet(printName);
             
-            append(null);
+            append(ArrStr, printName, paperType, cellRangeEnd);
             
         }
         catch( Exception e) {
@@ -70,7 +83,7 @@ private static XDispatchProvider xDocDispatchProviderOut = null;
     }
     
     
-    public XSpreadsheetDocument openCreatedocument(XDesktop xDesktop)
+    public XSpreadsheetDocument openCreatedocument(XDesktop xDesktop, String paperType)
     {
         XSpreadsheetDocument aSheetDocument = null;
         
@@ -104,7 +117,7 @@ private static XDispatchProvider xDocDispatchProviderOut = null;
                 propertyValue[1].Name = "Hidden";
                 propertyValue[1].Value = false;
                 
-                java.io.File sourceFile = new java.io.File("print/TemplateA4P.ods");
+                java.io.File sourceFile = new java.io.File("print/Template" + paperType + ".ods");
                 StringBuilder sLoadUrl = new StringBuilder("file:///");
                 sLoadUrl.append(sourceFile.getCanonicalPath().replace('\\', '/'));
                 Object oDocToStore = xCompLoader.loadComponentFromURL(
@@ -113,13 +126,13 @@ private static XDispatchProvider xDocDispatchProviderOut = null;
                 
             }catch (Exception e) {
                 Logger.getLogger(LibreCalc.class.getName()).log(Level.SEVERE, null, e);
-                JOptionPane.showMessageDialog(null, "エラーが発生しました。\n「print/TemplateA4P.ods」がカレントディレクトリにあるか確認してください。");
+                JOptionPane.showMessageDialog(null, "エラーが発生しました。\n「print/Template" + paperType + ".ods」がカレントディレクトリにあるか確認してください。");
             }
         
         return aSheetDocument;
     }
 
-    public void append(ArrayList<String> ArrStr[]) throws IllegalArgumentException, Exception {
+    public void append(ArrayList<String[][]> ArrStr, String printName, String paper, String cellRangeEnd) throws IllegalArgumentException, Exception {
         XComponentContext xContext = null;
         XModel xDocModel = null;
         
@@ -155,7 +168,13 @@ private static XDispatchProvider xDocDispatchProviderOut = null;
                         com.sun.star.lang.XMultiServiceFactory.class, configProvider );
                 enableCommands(xConfigProvider);
                 
-                for (int i = 0; i < 3; i++) {
+                //セル範囲文字列から、列数を取得
+                Pattern p = Pattern.compile("[A-Z]*");
+                Matcher m = p.matcher(cellRangeEnd);
+                String result = m.replaceAll("");
+                int RowNum = Integer.parseInt(result);
+                System.err.println("RowNum:" + RowNum);
+                for (int i = 0; i < ArrStr.size(); i++) {
 
                     //テンプレート読み込み
                     com.sun.star.beans.PropertyValue[] propertyValue =
@@ -163,16 +182,11 @@ private static XDispatchProvider xDocDispatchProviderOut = null;
                     propertyValue[0] = new com.sun.star.beans.PropertyValue();
                     propertyValue[0].Name = "Hidden";           //Hidden AsTemplate
                     propertyValue[0].Value = true;
-                    java.io.File sourceFile = new java.io.File("print/chosyo2.ods");
+                    java.io.File sourceFile = new java.io.File("print/" + printName);
                     StringBuilder sLoadUrl = new StringBuilder("file:///");
                     sLoadUrl.append(sourceFile.getCanonicalPath().replace('\\', '/'));
                     Object oDocToStore = xCompLoader.loadComponentFromURL(
                         sLoadUrl.toString(), "_blank", 0, propertyValue );
-
-                    //com.sun.star.text.XTextDocument aSheetDocument = (com.sun.star.text.XTextDocument)
-                    //    UnoRuntime.queryInterface(
-                    //        com.sun.star.text.XTextDocument.class, oDocToStore);
-                    
                     
                     com.sun.star.frame.XStorable xStorable =
                         (com.sun.star.frame.XStorable)UnoRuntime.queryInterface(
@@ -191,7 +205,6 @@ private static XDispatchProvider xDocDispatchProviderOut = null;
                     xStorable.storeAsURL( sSaveUrl.toString(), propertyValue );
                     
                     //Calc
-                    //XSpreadsheetDocument myDoc = (XSpreadsheetDocument)UnoRuntime.queryInterface( XSpreadsheetDocument.class, oDocToStore);
                     XSpreadsheetDocument myDoc = (XSpreadsheetDocument)UnoRuntime.queryInterface( XSpreadsheetDocument.class, xStorable);
                     
                     XSpreadsheets xSheets = myDoc.getSheets() ;
@@ -204,16 +217,16 @@ private static XDispatchProvider xDocDispatchProviderOut = null;
                         XIndexAccess.class, xSheets);
                     xSheet = (XSpreadsheet) UnoRuntime.queryInterface(
                         XSpreadsheet.class, oIndexSheets.getByIndex(0));
-                    xCellRange = xSheet.getCellRangeByName("CaseNo");
-                    if (i == 0) {
-                        xCellRange.getCellByPosition(0, 0).setFormula("ZZZ-0000");
-                    } else if (i == 1){
-                        xCellRange.getCellByPosition(0, 0).setFormula("ZZZ-1111");
-                    } else {
-                        xCellRange.getCellByPosition(0, 0).setFormula("ZZZ-2222");
+                    for (int j = 0; j < ArrStr.get(i).length; j++) {
+                        String name = ArrStr.get(i)[j][0];
+                        String value = ArrStr.get(i)[j][1];
+                        try {
+                            xCellRange = xSheet.getCellRangeByName(name);
+                            xCellRange.getCellByPosition(0, 0).setFormula(value);
+                        } catch (Exception e) {
+                            System.err.println("Err : " + name + "/" + value);
+                        }
                     }
-
-
 
                     //copy
                     Object dispatchHelper = xMCF.createInstanceWithContext("com.sun.star.frame.DispatchHelper", makeContext);
@@ -230,7 +243,7 @@ private static XDispatchProvider xDocDispatchProviderOut = null;
                         new com.sun.star.beans.PropertyValue[1];
                     a[0] = new com.sun.star.beans.PropertyValue();
                     a[0].Name = "ToPoint";
-                    a[0].Value = "A1:I52";
+                    a[0].Value = "A1:" + cellRangeEnd;;
                     a[0].Handle = 0;
                     a[0].State = com.sun.star.beans.PropertyState.DIRECT_VALUE;
                     xDispatchHelper.executeDispatch(xDocDispatchProvider, ".uno:GoToCell", "", 0, a);
@@ -247,11 +260,12 @@ private static XDispatchProvider xDocDispatchProviderOut = null;
                     xDocDispatchProviderOut = (XDispatchProvider) UnoRuntime.queryInterface(
                             XDispatchProvider.class, xDocControllerOut);
                     
+                    
                     //PasteThread thread = new PasteThread();
                     //thread.start();
                     a[0] = new com.sun.star.beans.PropertyValue();
                     a[0].Name = "ToPoint";
-                    a[0].Value = "A" + (i * 52 + 1);
+                    a[0].Value = "A" + (i * RowNum + 1);
                     a[0].Handle = 0;
                     a[0].State = com.sun.star.beans.PropertyState.DIRECT_VALUE;
                     xDispatchHelperOut.executeDispatch(xDocDispatchProviderOut, ".uno:GoToCell", "", 0, a);
@@ -274,17 +288,17 @@ private static XDispatchProvider xDocDispatchProviderOut = null;
                 }
             } catch (com.sun.star.lang.IllegalArgumentException ex) {
                 Logger.getLogger(LibreCalc.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(null, "エラーが発生しました。\nカレントディレクトリに「print/chosyo2.ods」があるか確認してください。");
+                JOptionPane.showMessageDialog(null, "エラーが発生しました。\nカレントディレクトリに「print/" + printName + "」があるか確認してください。");
                 throw ex;
-                //return;
+                //return; ここには来ない
             } catch (Exception ex) {
                 Logger.getLogger(LibreCalc.class.getName()).log(Level.SEVERE, null, ex);
                 JOptionPane.showMessageDialog(null, "エラーが発生しました。");
                 throw ex;
-                //return;
+                //return; ここには来ない
             }
     }
-    public void initSheet() throws IllegalArgumentException, Exception {
+    public void initSheet(String printName) throws IllegalArgumentException, Exception {
         XComponentContext xContext = null;
         XModel xDocModel = null;
         
@@ -327,16 +341,11 @@ private static XDispatchProvider xDocDispatchProviderOut = null;
                 propertyValue[0] = new com.sun.star.beans.PropertyValue();
                 propertyValue[0].Name = "Hidden";           //Hidden AsTemplate
                 propertyValue[0].Value = true;
-                java.io.File sourceFile = new java.io.File("print/chosyo2.ods");
+                java.io.File sourceFile = new java.io.File("print/" + printName);
                 StringBuilder sLoadUrl = new StringBuilder("file:///");
                 sLoadUrl.append(sourceFile.getCanonicalPath().replace('\\', '/'));
                 Object oDocToStore = xCompLoader.loadComponentFromURL(
                     sLoadUrl.toString(), "_blank", 0, propertyValue );
-
-                //com.sun.star.text.XTextDocument aSheetDocument = (com.sun.star.text.XTextDocument)
-                //    UnoRuntime.queryInterface(
-                //        com.sun.star.text.XTextDocument.class, oDocToStore);
-
 
                 com.sun.star.frame.XStorable xStorable =
                     (com.sun.star.frame.XStorable)UnoRuntime.queryInterface(
@@ -399,7 +408,7 @@ private static XDispatchProvider xDocDispatchProviderOut = null;
                 }
             } catch (com.sun.star.lang.IllegalArgumentException ex) {
                 Logger.getLogger(LibreCalc.class.getName()).log(Level.SEVERE, null, ex);
-                JOptionPane.showMessageDialog(null, "エラーが発生しました。\nカレントディレクトリに「print/chosyo2.ods」があるか確認してください。");
+                JOptionPane.showMessageDialog(null, "エラーが発生しました。\nカレントディレクトリに「print/" + printName + "」があるか確認してください。");
                 throw ex;
             } catch (Exception ex) {
                 Logger.getLogger(LibreCalc.class.getName()).log(Level.SEVERE, null, ex);

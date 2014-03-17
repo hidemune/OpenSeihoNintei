@@ -3125,8 +3125,8 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         int index = sourceTabbedPane.getSelectedIndex();
         //DebugMode = true;
         logDebug("Tab changed to: " + index + "/" + sourceTabbedPane.getTitleAt(index));
-        //個人状況が選択された場合
-        if (index == 1) {
+        //個人状況以降が選択された場合
+        if (index >= 1) {
             jComboBoxKojin.removeAllItems();
             for (int i = 0; i < sp.length; i++) {
                 if (sp[i].isChecked()) {
@@ -3993,7 +3993,7 @@ String[][] field = {
         String valueAfter = "";
         
         for (int i = 0; i < jComboBoxKojin.getItemCount(); i++) {
-            String[] strInNo = jComboBoxKojin.getItemAt(i).toString().split("\\.");
+            String[] strInNo = jComboBoxKojin.getItemAt(i).toString().split("\\.", 2);
             int inNo = DbAccessOS.getValueI(strInNo[0]);
             String ichiRuiTotal = "0";
             String niRuiTotal = "0";
@@ -4065,7 +4065,79 @@ String[][] field = {
         if (msg.equals("")) {
             //印刷処理
             LibreCalc lbr = new LibreCalc();
-            lbr.makeWiterFile(null);
+            ArrayList<String[][]> ArrStr = new ArrayList<String[][]>();
+            
+            ArrayListOS<ClassSetaiIn> arrSetaiIn = new ArrayListOS<ClassSetaiIn>();
+            for (int i = 0; i < jComboBoxKojin.getItemCount(); i++) {
+                String[] strInNo = jComboBoxKojin.getItemAt(i).toString().split("\\.", 2);
+                ClassSetaiIn wkSetaiIn = new ClassSetaiIn();
+                wkSetaiIn.inNo = strInNo[0];
+                wkSetaiIn.NameKj = strInNo[1];
+                wkSetaiIn.ItiruiIppan = (String)list1IppanA1.getModel().getElementAt(i);
+                wkSetaiIn.Kasan = (String)list1Kasan1.getModel().getElementAt(i);
+                wkSetaiIn.KasanSbt = (String) list1KasanSbt1.getModel().getElementAt(i);
+                arrSetaiIn.add(wkSetaiIn);
+            }
+            
+String[][] field = {
+    {"CaseNo", textCaseNo.getText()},
+    {"NinteiYmd", textYmdNintei.getTextYMD()},
+    {"KianYmd", textYmdKian.getTextYMD()},
+    
+    {"inNo0", arrSetaiIn.getSafety(0).inNo},
+    {"inNo1", arrSetaiIn.getSafety(1).inNo},
+    {"inNo2", arrSetaiIn.getSafety(2).inNo},
+    {"inNo3", arrSetaiIn.getSafety(3).inNo},
+    {"inNo4", arrSetaiIn.getSafety(4).inNo},
+    {"inNo5", arrSetaiIn.getSafety(5).inNo},
+    {"inNo6", arrSetaiIn.getSafety(6).inNo},
+    {"inNo7", arrSetaiIn.getSafety(7).inNo},
+    {"inNo8", arrSetaiIn.getSafety(8).inNo},
+    {"inNo9", arrSetaiIn.getSafety(9).inNo},
+    {"NameKj0", arrSetaiIn.getSafety(0).NameKj},
+    {"NameKj1", arrSetaiIn.getSafety(1).NameKj},
+    {"NameKj2", arrSetaiIn.getSafety(2).NameKj},
+    {"NameKj3", arrSetaiIn.getSafety(3).NameKj},
+    {"NameKj4", arrSetaiIn.getSafety(4).NameKj},
+    {"NameKj5", arrSetaiIn.getSafety(5).NameKj},
+    {"NameKj6", arrSetaiIn.getSafety(6).NameKj},
+    {"NameKj7", arrSetaiIn.getSafety(7).NameKj},
+    {"NameKj8", arrSetaiIn.getSafety(8).NameKj},
+    {"NameKj9", arrSetaiIn.getSafety(9).NameKj},
+    {"Ippan0", arrSetaiIn.getSafety(0).ItiruiIppan},
+    {"Ippan1", arrSetaiIn.getSafety(1).ItiruiIppan},
+    {"Ippan2", arrSetaiIn.getSafety(2).ItiruiIppan},
+    {"Ippan3", arrSetaiIn.getSafety(3).ItiruiIppan},
+    {"Ippan4", arrSetaiIn.getSafety(4).ItiruiIppan},
+    {"Ippan5", arrSetaiIn.getSafety(5).ItiruiIppan},
+    {"Ippan6", arrSetaiIn.getSafety(6).ItiruiIppan},
+    {"Ippan7", arrSetaiIn.getSafety(7).ItiruiIppan},
+    {"Ippan8", arrSetaiIn.getSafety(8).ItiruiIppan},
+    {"Ippan9", arrSetaiIn.getSafety(9).ItiruiIppan},
+    {"Kasan0", arrSetaiIn.getSafety(0).Kasan},
+    {"Kasan1", arrSetaiIn.getSafety(1).Kasan},
+    {"Kasan2", arrSetaiIn.getSafety(2).Kasan},
+    {"Kasan3", arrSetaiIn.getSafety(3).Kasan},
+    {"Kasan4", arrSetaiIn.getSafety(4).Kasan},
+    {"Kasan5", arrSetaiIn.getSafety(5).Kasan},
+    {"Kasan6", arrSetaiIn.getSafety(6).Kasan},
+    {"Kasan7", arrSetaiIn.getSafety(7).Kasan},
+    {"Kasan8", arrSetaiIn.getSafety(8).Kasan},
+    {"Kasan9", arrSetaiIn.getSafety(9).Kasan},
+    {"Seikatu0", arrSetaiIn.getSafety(0).KasanSbt},
+    {"Seikatu1", arrSetaiIn.getSafety(1).KasanSbt},
+    {"Seikatu2", arrSetaiIn.getSafety(2).KasanSbt},
+    {"Seikatu3", arrSetaiIn.getSafety(3).KasanSbt},
+    {"Seikatu4", arrSetaiIn.getSafety(4).KasanSbt},
+    {"Seikatu5", arrSetaiIn.getSafety(5).KasanSbt},
+    {"Seikatu6", arrSetaiIn.getSafety(6).KasanSbt},
+    {"Seikatu7", arrSetaiIn.getSafety(7).KasanSbt},
+    {"Seikatu8", arrSetaiIn.getSafety(8).KasanSbt},
+    {"Seikatu9", arrSetaiIn.getSafety(9).KasanSbt}
+    
+};
+ArrStr.add(field);
+            lbr.makeCalcFile(ArrStr, "chosyo2.ods", "A4P", "I49");
             JOptionPane.showMessageDialog(this, "更新しました。");
             //同じキーで再読み込み
             getKojin();
