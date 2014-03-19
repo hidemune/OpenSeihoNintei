@@ -30,4 +30,21 @@ public class ClassSetaiIn {
     public String Kasan = "";
     public String KasanSbt = "";
     
+    public String Gakunen = "";
+    public String KKijyun = "";
+    public String Kyozai = "";
+    public String Kyusyoku = "";
+    public String Koutu = "";
+    public String Sien = "";
+    public String KSonota = "";
+    
+    public String KgGetugaku = "";
+    public String KgHoken = "";
+    public String KgSonota = "";
+    
+    public String IrGetugaku = "";
+    public String IrHoken = "";
+    public String IrSonota = "";
+    
+    
 }

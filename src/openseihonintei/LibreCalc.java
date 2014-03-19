@@ -18,6 +18,7 @@ import com.sun.star.table.XCell;
 import com.sun.star.table.XCellRange;
 import com.sun.star.uno.UnoRuntime;
 import com.sun.star.uno.XComponentContext;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -36,6 +37,7 @@ import ooo.connector.BootstrapSocketConnector;
  */
 public class LibreCalc {
 public static String LibreExePath = "C:\\Program Files (x86)\\OpenOffice 4\\program";
+//public static String LibreExePath = "C:\\Program Files (x86)\\LibreOffice 4\\program";
 com.sun.star.uno.XComponentContext makeContext = null;
 com.sun.star.frame.XDesktop makeDesktop = null;
 XSpreadsheetDocument xSheetDocumentOut = null;
@@ -178,10 +180,13 @@ private static XDispatchProvider xDocDispatchProviderOut = null;
 
                     //テンプレート読み込み
                     com.sun.star.beans.PropertyValue[] propertyValue =
-                        new com.sun.star.beans.PropertyValue[1];
+                        new com.sun.star.beans.PropertyValue[2];
                     propertyValue[0] = new com.sun.star.beans.PropertyValue();
-                    propertyValue[0].Name = "Hidden";           //Hidden AsTemplate
+                    propertyValue[0].Name = "AsTemplate";
                     propertyValue[0].Value = true;
+                    propertyValue[1] = new com.sun.star.beans.PropertyValue();
+                    propertyValue[1].Name = "Hidden";
+                    propertyValue[1].Value = false;
                     java.io.File sourceFile = new java.io.File("print/" + printName);
                     StringBuilder sLoadUrl = new StringBuilder("file:///");
                     sLoadUrl.append(sourceFile.getCanonicalPath().replace('\\', '/'));
@@ -297,6 +302,14 @@ private static XDispatchProvider xDocDispatchProviderOut = null;
                 throw ex;
                 //return; ここには来ない
             }
+            
+        //tmpファイルの削除
+        for (int i = 0; i < ArrStr.size(); i++) {
+            File file = new File("tmp" + i + ".odt");
+            if (file.exists()){
+                file.delete();
+            }
+        }
     }
     public void initSheet(String printName) throws IllegalArgumentException, Exception {
         XComponentContext xContext = null;

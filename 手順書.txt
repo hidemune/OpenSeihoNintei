@@ -68,5 +68,13 @@ psql -l
 
 
 
+■Windows環境にCSV取り込み
 
+psql -U postgres openseiho
+
+※必要に応じて
+INSERT INTO ...;
+
+\q
+で終了。
 

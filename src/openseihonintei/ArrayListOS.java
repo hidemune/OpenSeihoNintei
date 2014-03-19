@@ -42,9 +42,9 @@ private ClassSetaiIn defaultSetaiIn;
         try {
             ret = this.get(idx);
         } catch (Exception e) {
-            if (this.get(0) instanceof ClassSetaiIn) {
+//            if (this.get(0) instanceof ClassSetaiIn) {
                 ret = (E) defaultSetaiIn;
-            }
+//            }
         }
         return ret;
     }
