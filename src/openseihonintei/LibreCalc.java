@@ -1,24 +1,39 @@
 package openseihonintei;
 
 
+import com.sun.star.awt.Point;
+import com.sun.star.awt.Size;
 import com.sun.star.beans.PropertyValue;
+import com.sun.star.beans.XPropertySet;
+import com.sun.star.beans.XPropertySetInfo;
+import com.sun.star.container.ElementExistException;
 import com.sun.star.container.XIndexAccess;
+import com.sun.star.container.XNameContainer;
+import com.sun.star.drawing.XDrawPage;
+import com.sun.star.drawing.XDrawPageSupplier;
+import com.sun.star.drawing.XShape;
 import com.sun.star.frame.XController;
 import com.sun.star.frame.XDesktop;
 import com.sun.star.frame.XDispatchHelper;
 import com.sun.star.frame.XDispatchProvider;
+import com.sun.star.frame.XFrame;
 import com.sun.star.frame.XModel;
 import com.sun.star.lang.IllegalArgumentException;
 import com.sun.star.lang.XMultiComponentFactory;
 import com.sun.star.lang.XMultiServiceFactory;
 import com.sun.star.sheet.XSpreadsheet;
 import com.sun.star.sheet.XSpreadsheetDocument;
+import com.sun.star.sheet.XSpreadsheetView;
 import com.sun.star.sheet.XSpreadsheets;
 import com.sun.star.table.XCell;
 import com.sun.star.table.XCellRange;
+import com.sun.star.uno.AnyConverter;
 import com.sun.star.uno.UnoRuntime;
 import com.sun.star.uno.XComponentContext;
 import java.io.File;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -232,7 +247,15 @@ private static XDispatchProvider xDocDispatchProviderOut = null;
                             System.err.println("Err : " + name + "/" + value);
                         }
                     }
-
+                    
+                    // Creating a string for the graphic url
+                    java.io.File sourceFileImg = new java.io.File("print/inei.png");
+                    StringBuffer sUrl = new StringBuffer("file:///");
+                    sUrl.append(sourceFileImg.getCanonicalPath().replace('\\', '/'));
+                    System.out.println( "insert graphic \"" + sUrl + "\"");
+                    //画像読み込み
+                    putImage(xContext, myDoc, xSheet, sUrl.toString(), new Point(1000, 2000), new Size(3000, 3000));
+                    
                     //copy
                     Object dispatchHelper = xMCF.createInstanceWithContext("com.sun.star.frame.DispatchHelper", makeContext);
                     XDispatchHelper xDispatchHelper =
@@ -523,6 +546,111 @@ private static XDispatchProvider xDocDispatchProviderOut = null;
             throw e;
         }
         return xDesktop;
+    }
+    
+// this one loads an image (.jpg) int the specified calc file at a specified location w/ the specified size ...
+    private static void putImage(XComponentContext xContext, XSpreadsheetDocument myDoc, XSpreadsheet xSpreadsheet, String sFilePath, Point imgPos,Size imgSize) {
+
+        XDrawPage xDrawPage = null; // return this to be able to delete imm after printing
+        String imgID = "tempImageId" + System.currentTimeMillis();
+        
+        try {
+
+            XSpreadsheetDocument xSpreadsheetDocument = (XSpreadsheetDocument) UnoRuntime.queryInterface(XSpreadsheetDocument.class,
+                    xContext);
+
+            XModel xModel = (XModel) UnoRuntime.queryInterface(XModel.class, myDoc);
+            XController xController = xModel.getCurrentController();
+
+            XSpreadsheetView xSpreadsheetView = (XSpreadsheetView) UnoRuntime.queryInterface(XSpreadsheetView.class, xController);
+            xSpreadsheetView.setActiveSheet((XSpreadsheet) xSpreadsheet);
+
+
+            XFrame xFrame = xController.getFrame();  // gets Frame of Spreadsheet loaded above !
+            XSpreadsheetDocument xDoc = (XSpreadsheetDocument)UnoRuntime.queryInterface(
+                                                XSpreadsheetDocument.class, xModel);
+
+            XSpreadsheetView xsv = (XSpreadsheetView)UnoRuntime.queryInterface(
+                                                XSpreadsheetView.class, xFrame.getController());
+            // TODO: replace w/ setting this to either sheetName or the sheetObj
+            XSpreadsheet curSheet = xsv.getActiveSheet();
+
+
+            XMultiComponentFactory mxMCF = xContext.getServiceManager();
+            XMultiServiceFactory x_msf = (XMultiServiceFactory) UnoRuntime.queryInterface(
+            XMultiServiceFactory.class, xModel);
+
+            // a bitmap container is used to hold graphic(s) permanently (as opposed to just having a link to the graphic(s)
+            // in the document ...
+            XNameContainer xBitmapContainer = null;
+            try {
+                xBitmapContainer = (XNameContainer) UnoRuntime.queryInterface(
+                            XNameContainer.class, x_msf.createInstance("com.sun.star.drawing.BitmapTable"));
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "BitmapContainer not found in " + "" + "!");
+                ex.printStackTrace();
+            }
+
+/*
+            String sFilePath = "file:///" + sGraphFile.replaceAll("[/|\\\\]+", "/");
+            String internalName = "";
+            try {
+                MessageDigest md = MessageDigest.getInstance("MD5");
+                md.update(sFilePath.getBytes(), 0, sFilePath.length());
+                internalName = new BigInteger(1, md.digest()).toString(16);
+            } catch (NoSuchAlgorithmException ex) {
+                ex.printStackTrace();
+            }
+*/
+            Object imgTemp = x_msf.createInstance("com.sun.star.drawing.GraphicObjectShape");
+            XShape xImage = (XShape)UnoRuntime.queryInterface(XShape.class, imgTemp);
+
+            XPropertySet xImgPropSet = ( XPropertySet )UnoRuntime.queryInterface(XPropertySet.class, xImage );
+            XPropertySetInfo xIPSInfo = xImgPropSet.getPropertySetInfo();
+            xImgPropSet.setPropertyValue("AnchorType",
+                        com.sun.star.text.TextContentAnchorType.AS_CHARACTER);
+
+            //sFilePath = "file:///" + sGraphFile.replaceAll("[/|\\\\]+", "/");
+        
+          try {
+             xBitmapContainer.insertByName(imgID, sFilePath);
+          } catch (ElementExistException ex) {
+             JOptionPane.showMessageDialog(null, "Element exists !, can't add the new image using this ID");
+             ex.printStackTrace();
+          }
+            String internalURL = AnyConverter.toString(xBitmapContainer.getByName(imgID));
+            xImgPropSet.setPropertyValue("GraphicURL", internalURL);
+            xImage.setPosition(imgPos);  // Values as used/shown by OpenOffice Calc, right click on img 'Position & Grösse'
+            xImage.setSize(imgSize);    // Values as used/shown by OpenOffice Calc, right click on img 'Position & Grösse'
+
+            // 2010-Apr-14: wbs/
+            // BugFix: [ ]  open
+            //
+            // added in an attempt to make the imgs discernable to OO, since saving the sheet and reopening it
+            // results currently in having all imgs placed earlier being all the same (actually the same as
+            // the last one placed.
+            xImgPropSet.setPropertyValue("Title",sFilePath);
+            xImgPropSet.setPropertyValue("Name", imgID);
+
+            com.sun.star.beans.Property[] aProps = xIPSInfo.getProperties();
+            for (int n=0;n<aProps.length;n++){
+                System.out.println(aProps[n].Name + ": Value:"+ xImgPropSet.getPropertyValue(aProps[n].Name));
+            }
+            System.out.println("eo PropSet for XShape (GraphObj)");
+
+            // and finally we add it to the DrawPage of this sheet
+            XDrawPageSupplier oDPS = (XDrawPageSupplier) UnoRuntime.queryInterface(
+                XDrawPageSupplier.class, curSheet);
+            xDrawPage = oDPS.getDrawPage();
+            xDrawPage.add(xImage);
+
+            System.out.println("Img added.");
+
+            // remove the helper-entry
+            xBitmapContainer.removeByName(imgID);
+        }   catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
     
 }
