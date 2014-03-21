@@ -31,9 +31,6 @@ import com.sun.star.uno.AnyConverter;
 import com.sun.star.uno.UnoRuntime;
 import com.sun.star.uno.XComponentContext;
 import java.io.File;
-import java.math.BigInteger;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -51,7 +48,7 @@ import ooo.connector.BootstrapSocketConnector;
  * @author hdm
  */
 public class LibreCalc {
-public static String LibreExePath = "C:\\Program Files (x86)\\OpenOffice 4\\program";
+public static String LibreExePath ;   //= "C:\\Program Files (x86)\\OpenOffice 4\\program";
 //public static String LibreExePath = "C:\\Program Files (x86)\\LibreOffice 4\\program";
 com.sun.star.uno.XComponentContext makeContext = null;
 com.sun.star.frame.XDesktop makeDesktop = null;
@@ -70,7 +67,8 @@ private static XDispatchProvider xDocDispatchProviderOut = null;
      * @param cellRangeEnd
      *  ex. "I52"
      */
-    public void makeCalcFile(ArrayList<String[][]> ArrStr, String printName, String paperType, String cellRangeEnd) {
+    public void makeCalcFile(String ExePath, ArrayList<String[][]> ArrStr, String printName, String paperType, String cellRangeEnd) {
+        LibreExePath = ExePath ;
         System.out.println("LibreExePath:" + LibreExePath);
         if (LibreExePath.equals("")) {
             //Msg
@@ -328,7 +326,7 @@ private static XDispatchProvider xDocDispatchProviderOut = null;
             
         //tmpファイルの削除
         for (int i = 0; i < ArrStr.size(); i++) {
-            File file = new File("tmp" + i + ".odt");
+            File file = new File("tmp" + i + ".ods");
             if (file.exists()){
                 file.delete();
             }
