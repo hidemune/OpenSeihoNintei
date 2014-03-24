@@ -252,7 +252,7 @@ private static XDispatchProvider xDocDispatchProviderOut = null;
                     sUrl.append(sourceFileImg.getCanonicalPath().replace('\\', '/'));
                     System.out.println( "insert graphic \"" + sUrl + "\"");
                     //画像読み込み
-                    putImage(xContext, myDoc, xSheet, sUrl.toString(), new Point(1000, 2000), new Size(3000, 3000));
+                    putImage(xContext, myDoc, xSheet, sUrl.toString(), new Point(12000, 4500), new Size(2500, 2500));
                     
                     //copy
                     Object dispatchHelper = xMCF.createInstanceWithContext("com.sun.star.frame.DispatchHelper", makeContext);

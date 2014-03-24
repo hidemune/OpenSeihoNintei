@@ -2916,8 +2916,10 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
             }
         });
 
+        comboIDsOffecePath.setID1("1");
         comboIDsOffecePath.setCaption("sOffice");
         comboIDsOffecePath.setComboWidth(new java.lang.Integer(500));
+        comboIDsOffecePath.setDefaultID1(1);
         comboIDsOffecePath.setId0(new java.lang.Integer(20));
         comboIDsOffecePath.setPostCap("");
 
@@ -3594,10 +3596,10 @@ String[][] field = {
         
         //介護費算出
         int kaigo = 0;
-        for (int i = 0; i < listIryoKijyun.getModel().getSize(); i++) {
-            kaigo = kaigo + DbAccessOS.getValueI((String) listIryoKijyun.getModel().getElementAt(i));
-            kaigo = kaigo - DbAccessOS.getValueI((String) listIryouHoken.getModel().getElementAt(i));
-            kaigo = kaigo - DbAccessOS.getValueI((String) listIryouSonota.getModel().getElementAt(i));
+        for (int i = 0; i < listKaigoKijyun.getModel().getSize(); i++) {
+            kaigo = kaigo + DbAccessOS.getValueI((String) listKaigoKijyun.getModel().getElementAt(i));
+            kaigo = kaigo - DbAccessOS.getValueI((String) listKaigoHoken.getModel().getElementAt(i));
+            kaigo = kaigo - DbAccessOS.getValueI((String) listKaigoSonota.getModel().getElementAt(i));
         }
         textKaigo.setText("" + kaigo);
         
@@ -3774,26 +3776,30 @@ String[][] field = {
                 ((DefaultListModel)listKyouikuSonota1.getModel()).addElement("" + sonota);
 
             }
-            //((DefaultListModel)listSetaiInH2K.getModel()).addElement(nameKj);
-            ((DefaultListModel)listSetaiInH3.getModel()).addElement(nameKj);
-            ((DefaultListModel)listSetaiInH4.getModel()).addElement(nameKj);
             
+            //医療
             int kijyunI = dbSaiseihi.getValueI(rsSaiseihiN, "IryouGetugaku", i);
             int hokenI = dbSaiseihi.getValueI(rsSaiseihiN, "IryouHoken", i);
             int sonotaI = dbSaiseihi.getValueI(rsSaiseihiN, "IryouKouhi", i);
             
-            //医療、介護
-            ((DefaultListModel)listIryoKijyun1.getModel()).addElement("" + kijyunI);
-            ((DefaultListModel)listIryouHoken1.getModel()).addElement("" + hokenI);
-            ((DefaultListModel)listIryouSonota1.getModel()).addElement("" + sonotaI);
+            if ((kijyunI != 0) || (hokenI != 0) || (sonotaI != 0)) {
+                ((DefaultListModel)listSetaiInH4.getModel()).addElement(nameKj);
+                ((DefaultListModel)listIryoKijyun1.getModel()).addElement("" + kijyunI);
+                ((DefaultListModel)listIryouHoken1.getModel()).addElement("" + hokenI);
+                ((DefaultListModel)listIryouSonota1.getModel()).addElement("" + sonotaI);
+            }
             
+            //介護
             int kijyunK = dbSaiseihi.getValueI(rsSaiseihiN, "KaigoGetugaku", i);
             int hokenK = dbSaiseihi.getValueI(rsSaiseihiN, "KaigoHoken", i);
             int sonotaK = dbSaiseihi.getValueI(rsSaiseihiN, "KaigoSonota", i);
             
-            ((DefaultListModel)listKaigoHoken1.getModel()).addElement("" + hokenK);
-            ((DefaultListModel)listKaigoKijyun1.getModel()).addElement("" + kijyunK);
-            ((DefaultListModel)listKaigoSonota1.getModel()).addElement("" + sonotaK);
+            if ((kijyunK != 0) || (hokenK != 0) || (sonotaK != 0)) {
+                ((DefaultListModel)listSetaiInH3.getModel()).addElement(nameKj);
+                ((DefaultListModel)listKaigoHoken1.getModel()).addElement("" + hokenK);
+                ((DefaultListModel)listKaigoKijyun1.getModel()).addElement("" + kijyunK);
+                ((DefaultListModel)listKaigoSonota1.getModel()).addElement("" + sonotaK);
+            }
             
             String ippan1 = dbSaiseihi.getValue(rsSaiseihiN, "ichiRuiIppan", i);
             String kasan = dbSaiseihi.getValue(rsSaiseihiN, "ichiRuiKasan", i);
@@ -4091,6 +4097,35 @@ String[][] field = {
                 }
             }
             
+            String KgGetugaku = "0";
+            String KgHoken = "0";
+            String KgSonota = "0";
+
+            String IrGetugaku = "0";
+            String IrHoken = "0";
+            String IrSonota = "0";
+            //介護扶助対象か？
+            for (int j = 0; j < listSetaiInH3.getModel().getSize(); j++) {
+                String NameKjWk = ((String) listSetaiInH3.getModel().getElementAt(j)).trim();
+                if (NameKj.equals(NameKjWk)) {
+                    KgGetugaku = (String) listKaigoKijyun1.getModel().getElementAt(j);
+                    KgHoken = (String) listKaigoHoken1.getModel().getElementAt(j);
+                    KgSonota = (String) listKaigoSonota1.getModel().getElementAt(j);
+                    break;
+                }
+            }
+            
+            //医療扶助対象か？
+            for (int j = 0; j < listSetaiInH4.getModel().getSize(); j++) {
+                String NameKjWk = ((String) listSetaiInH4.getModel().getElementAt(j)).trim();
+                if (NameKj.equals(NameKjWk)) {
+                    IrGetugaku = (String) listIryoKijyun1.getModel().getElementAt(j);
+                    IrHoken = (String) listIryouHoken1.getModel().getElementAt(j);
+                    IrSonota = (String) listIryouSonota1.getModel().getElementAt(j);
+                    break;
+                }
+            }
+            
 String[][] field = {
     {"caseNo", valueBefore, textCaseNo.getText()},		//TEXT
     {"inNo", valueBefore, "" + inNo},		//INTEGER
@@ -4113,13 +4148,13 @@ String[][] field = {
     {"KyouikuSienHi", valueBefore, KyouikuSienHi},		//TEXT
     {"KyouikuSonota", valueBefore, KyouikuSonota},		//TEXT
     {"KyouikuTotal", valueBefore, KyouikuTotal},		//INTEGER
-    {"KaigoGetugaku", valueBefore, (String) listKaigoKijyun1.getModel().getElementAt(i)},		//TEXT
-    {"KaigoHoken", valueBefore, (String) listKaigoHoken1.getModel().getElementAt(i)},		//TEXT
-    {"KaigoSonota", valueBefore, (String) listKaigoSonota1.getModel().getElementAt(i)},		//TEXT
+    {"KaigoGetugaku", valueBefore, KgGetugaku},		//TEXT
+    {"KaigoHoken", valueBefore, KgHoken},		//TEXT
+    {"KaigoSonota", valueBefore, KgSonota},		//TEXT
     {"KaigoTotal", valueBefore, KaigoTotal},		//INTEGER
-    {"IryouGetugaku", valueBefore, (String) listIryoKijyun1.getModel().getElementAt(i)},		//TEXT
-    {"IryouHoken", valueBefore, (String) listIryouHoken1.getModel().getElementAt(i)},		//TEXT
-    {"IryouKouhi", valueBefore, (String) listIryouSonota1.getModel().getElementAt(i)},		//TEXT
+    {"IryouGetugaku", valueBefore, IrGetugaku},		//TEXT
+    {"IryouHoken", valueBefore, IrHoken},		//TEXT
+    {"IryouKouhi", valueBefore, IrSonota},		//TEXT
     {"IryouTotal", valueBefore, IryouTotal},		//INTEGER
     {"Total", valueBefore, Total}		//INTEGER
 };
@@ -4144,6 +4179,8 @@ String[][] field = {
             ArrayListOS<ClassSetaiIn> arrSetaiIn = new ArrayListOS<ClassSetaiIn>();
             //教育扶助は別枠で
             ArrayListOS<ClassSetaiIn> arrSetaiInKyoiku = new ArrayListOS<ClassSetaiIn>();
+            ArrayListOS<ClassSetaiIn> arrSetaiInKg = new ArrayListOS<ClassSetaiIn>();
+            ArrayListOS<ClassSetaiIn> arrSetaiInIr = new ArrayListOS<ClassSetaiIn>();
             
             for (int i = 0; i < jComboBoxKojin.getItemCount(); i++) {
                 String[] strInNo = jComboBoxKojin.getItemAt(i).toString().split("\\.", 2);
@@ -4171,8 +4208,34 @@ String[][] field = {
                         break;
                     }
                 }
+                //介護扶助対象か？
+                for (int j = 0; j < listSetaiInH3.getModel().getSize(); j++) {
+                    String NameKjWk = ((String) listSetaiInH3.getModel().getElementAt(j)).trim();
+                    if (strInNo[1].equals(NameKjWk)) {
+                        ClassSetaiIn wkSetaiInKg = new ClassSetaiIn();
+                        wkSetaiInKg.NameKj = NameKjWk;
+                        wkSetaiInKg.KgGetugaku = (String) listKaigoKijyun1.getModel().getElementAt(j);
+                        wkSetaiInKg.KgHoken = (String) listKaigoHoken1.getModel().getElementAt(j);
+                        wkSetaiInKg.KgSonota = (String) listKaigoSonota1.getModel().getElementAt(j);
+                        arrSetaiInKg.add(wkSetaiInKg);
+                        break;
+                    }
+                }
+                //医療扶助対象か？
+                for (int j = 0; j < listSetaiInH4.getModel().getSize(); j++) {
+                    String NameKjWk = ((String) listSetaiInH4.getModel().getElementAt(j)).trim();
+                    if (strInNo[1].equals(NameKjWk)) {
+                        ClassSetaiIn wkSetaiInIr = new ClassSetaiIn();
+                        wkSetaiInIr.NameKj = NameKjWk;
+                        wkSetaiInIr.IrGetugaku = (String) listIryoKijyun1.getModel().getElementAt(j);
+                        wkSetaiInIr.IrHoken = (String) listIryouHoken1.getModel().getElementAt(j);
+                        wkSetaiInIr.IrSonota = (String) listIryouSonota1.getModel().getElementAt(j);
+                        arrSetaiInIr.add(wkSetaiInIr);
+                        break;
+                    }
+                }
             }
-
+//1ページ目
 String[][] field = {
     {"CaseNo", textCaseNo.getText()},
     {"NinteiYmd", textYmdNintei.getTextYMD()},
@@ -4281,53 +4344,212 @@ String[][] field = {
     {"KSonota4", arrSetaiInKyoiku.getSafety(4).KSonota},
     {"KyoikuTotal", textKyouiku1.getText()},
     
-    {"KgNameKj0", arrSetaiIn.getSafety(0).NameKj},
-    {"KgNameKj1", arrSetaiIn.getSafety(1).NameKj},
-    {"KgNameKj2", arrSetaiIn.getSafety(2).NameKj},
-    {"KgNameKj3", arrSetaiIn.getSafety(3).NameKj},
-    {"KgNameKj4", arrSetaiIn.getSafety(4).NameKj},
-    {"KgGetugaku0", arrSetaiIn.getSafety(0).KgGetugaku},
-    {"KgGetugaku1", arrSetaiIn.getSafety(1).KgGetugaku},
-    {"KgGetugaku2", arrSetaiIn.getSafety(2).KgGetugaku},
-    {"KgGetugaku3", arrSetaiIn.getSafety(3).KgGetugaku},
-    {"KgGetugaku4", arrSetaiIn.getSafety(4).KgGetugaku},
-    {"KgHoken0", arrSetaiIn.getSafety(0).KgHoken},
-    {"KgHoken1", arrSetaiIn.getSafety(1).KgHoken},
-    {"KgHoken2", arrSetaiIn.getSafety(2).KgHoken},
-    {"KgHoken3", arrSetaiIn.getSafety(3).KgHoken},
-    {"KgHoken4", arrSetaiIn.getSafety(4).KgHoken},
-    {"KgSonota0", arrSetaiIn.getSafety(0).KgSonota},
-    {"KgSonota1", arrSetaiIn.getSafety(1).KgSonota},
-    {"KgSonota2", arrSetaiIn.getSafety(2).KgSonota},
-    {"KgSonota3", arrSetaiIn.getSafety(3).KgSonota},
-    {"KgSonota4", arrSetaiIn.getSafety(4).KgSonota},
+    {"KgNameKj0", arrSetaiInKg.getSafety(0).NameKj},
+    {"KgNameKj1", arrSetaiInKg.getSafety(1).NameKj},
+    {"KgNameKj2", arrSetaiInKg.getSafety(2).NameKj},
+    {"KgNameKj3", arrSetaiInKg.getSafety(3).NameKj},
+    {"KgNameKj4", arrSetaiInKg.getSafety(4).NameKj},
+    {"KgGetugaku0", arrSetaiInKg.getSafety(0).KgGetugaku},
+    {"KgGetugaku1", arrSetaiInKg.getSafety(1).KgGetugaku},
+    {"KgGetugaku2", arrSetaiInKg.getSafety(2).KgGetugaku},
+    {"KgGetugaku3", arrSetaiInKg.getSafety(3).KgGetugaku},
+    {"KgGetugaku4", arrSetaiInKg.getSafety(4).KgGetugaku},
+    {"KgHoken0", arrSetaiInKg.getSafety(0).KgHoken},
+    {"KgHoken1", arrSetaiInKg.getSafety(1).KgHoken},
+    {"KgHoken2", arrSetaiInKg.getSafety(2).KgHoken},
+    {"KgHoken3", arrSetaiInKg.getSafety(3).KgHoken},
+    {"KgHoken4", arrSetaiInKg.getSafety(4).KgHoken},
+    {"KgSonota0", arrSetaiInKg.getSafety(0).KgSonota},
+    {"KgSonota1", arrSetaiInKg.getSafety(1).KgSonota},
+    {"KgSonota2", arrSetaiInKg.getSafety(2).KgSonota},
+    {"KgSonota3", arrSetaiInKg.getSafety(3).KgSonota},
+    {"KgSonota4", arrSetaiInKg.getSafety(4).KgSonota},
     {"KaigoTotal", textKaigo1.getText()},
     
-    {"IrNameKj0", arrSetaiIn.getSafety(0).NameKj},
-    {"IrNameKj1", arrSetaiIn.getSafety(1).NameKj},
-    {"IrNameKj2", arrSetaiIn.getSafety(2).NameKj},
-    {"IrNameKj3", arrSetaiIn.getSafety(3).NameKj},
-    {"IrNameKj4", arrSetaiIn.getSafety(4).NameKj},
-    {"IrGetugaku0", arrSetaiIn.getSafety(0).IrGetugaku},
-    {"IrGetugaku1", arrSetaiIn.getSafety(1).IrGetugaku},
-    {"IrGetugaku2", arrSetaiIn.getSafety(2).IrGetugaku},
-    {"IrGetugaku3", arrSetaiIn.getSafety(3).IrGetugaku},
-    {"IrGetugaku4", arrSetaiIn.getSafety(4).IrGetugaku},
-    {"IrHoken0", arrSetaiIn.getSafety(0).IrHoken},
-    {"IrHoken1", arrSetaiIn.getSafety(1).IrHoken},
-    {"IrHoken2", arrSetaiIn.getSafety(2).IrHoken},
-    {"IrHoken3", arrSetaiIn.getSafety(3).IrHoken},
-    {"IrHoken4", arrSetaiIn.getSafety(4).IrHoken},
-    {"IrSonota0", arrSetaiIn.getSafety(0).IrSonota},
-    {"IrSonota1", arrSetaiIn.getSafety(1).IrSonota},
-    {"IrSonota2", arrSetaiIn.getSafety(2).IrSonota},
-    {"IrSonota3", arrSetaiIn.getSafety(3).IrSonota},
-    {"IrSonota4", arrSetaiIn.getSafety(4).IrSonota},
+    {"IrNameKj0", arrSetaiInIr.getSafety(0).NameKj},
+    {"IrNameKj1", arrSetaiInIr.getSafety(1).NameKj},
+    {"IrNameKj2", arrSetaiInIr.getSafety(2).NameKj},
+    {"IrNameKj3", arrSetaiInIr.getSafety(3).NameKj},
+    {"IrNameKj4", arrSetaiInIr.getSafety(4).NameKj},
+    {"IrGetugaku0", arrSetaiInIr.getSafety(0).IrGetugaku},
+    {"IrGetugaku1", arrSetaiInIr.getSafety(1).IrGetugaku},
+    {"IrGetugaku2", arrSetaiInIr.getSafety(2).IrGetugaku},
+    {"IrGetugaku3", arrSetaiInIr.getSafety(3).IrGetugaku},
+    {"IrGetugaku4", arrSetaiInIr.getSafety(4).IrGetugaku},
+    {"IrHoken0", arrSetaiInIr.getSafety(0).IrHoken},
+    {"IrHoken1", arrSetaiInIr.getSafety(1).IrHoken},
+    {"IrHoken2", arrSetaiInIr.getSafety(2).IrHoken},
+    {"IrHoken3", arrSetaiInIr.getSafety(3).IrHoken},
+    {"IrHoken4", arrSetaiInIr.getSafety(4).IrHoken},
+    {"IrSonota0", arrSetaiInIr.getSafety(0).IrSonota},
+    {"IrSonota1", arrSetaiInIr.getSafety(1).IrSonota},
+    {"IrSonota2", arrSetaiInIr.getSafety(2).IrSonota},
+    {"IrSonota3", arrSetaiInIr.getSafety(3).IrSonota},
+    {"IrSonota4", arrSetaiInIr.getSafety(4).IrSonota},
     {"IryoTotal", textIryou1.getText()},
     {"Total", textTotal1.getText()}
     
 };
 ArrStr.add(field);
+
+//2ページ目(世帯員が10人を超えたときのみ出力)
+if (jComboBoxKojin.getItemCount() > 10) {
+String[][] field2 = {
+    {"CaseNo", textCaseNo.getText()},
+    {"NinteiYmd", textYmdNintei.getTextYMD()},
+    {"KianYmd", textYmdKian.getTextYMD()},
+    
+    {"inNo0", arrSetaiIn.getSafety(10).inNo},
+    {"inNo1", arrSetaiIn.getSafety(11).inNo},
+    {"inNo2", arrSetaiIn.getSafety(12).inNo},
+    {"inNo3", arrSetaiIn.getSafety(13).inNo},
+    {"inNo4", arrSetaiIn.getSafety(14).inNo},
+    {"inNo5", arrSetaiIn.getSafety(15).inNo},
+    {"inNo6", arrSetaiIn.getSafety(16).inNo},
+    {"inNo7", arrSetaiIn.getSafety(17).inNo},
+    {"inNo8", arrSetaiIn.getSafety(18).inNo},
+    {"inNo9", arrSetaiIn.getSafety(19).inNo},
+    {"NameKj0", arrSetaiIn.getSafety(10).NameKj},
+    {"NameKj1", arrSetaiIn.getSafety(11).NameKj},
+    {"NameKj2", arrSetaiIn.getSafety(12).NameKj},
+    {"NameKj3", arrSetaiIn.getSafety(13).NameKj},
+    {"NameKj4", arrSetaiIn.getSafety(14).NameKj},
+    {"NameKj5", arrSetaiIn.getSafety(15).NameKj},
+    {"NameKj6", arrSetaiIn.getSafety(16).NameKj},
+    {"NameKj7", arrSetaiIn.getSafety(17).NameKj},
+    {"NameKj8", arrSetaiIn.getSafety(18).NameKj},
+    {"NameKj9", arrSetaiIn.getSafety(19).NameKj},
+    {"Ippan0", arrSetaiIn.getSafety(10).ItiruiIppan},
+    {"Ippan1", arrSetaiIn.getSafety(11).ItiruiIppan},
+    {"Ippan2", arrSetaiIn.getSafety(12).ItiruiIppan},
+    {"Ippan3", arrSetaiIn.getSafety(13).ItiruiIppan},
+    {"Ippan4", arrSetaiIn.getSafety(14).ItiruiIppan},
+    {"Ippan5", arrSetaiIn.getSafety(15).ItiruiIppan},
+    {"Ippan6", arrSetaiIn.getSafety(16).ItiruiIppan},
+    {"Ippan7", arrSetaiIn.getSafety(17).ItiruiIppan},
+    {"Ippan8", arrSetaiIn.getSafety(18).ItiruiIppan},
+    {"Ippan9", arrSetaiIn.getSafety(19).ItiruiIppan},
+    {"Kasan0", arrSetaiIn.getSafety(10).Kasan},
+    {"Kasan1", arrSetaiIn.getSafety(11).Kasan},
+    {"Kasan2", arrSetaiIn.getSafety(12).Kasan},
+    {"Kasan3", arrSetaiIn.getSafety(13).Kasan},
+    {"Kasan4", arrSetaiIn.getSafety(14).Kasan},
+    {"Kasan5", arrSetaiIn.getSafety(15).Kasan},
+    {"Kasan6", arrSetaiIn.getSafety(16).Kasan},
+    {"Kasan7", arrSetaiIn.getSafety(17).Kasan},
+    {"Kasan8", arrSetaiIn.getSafety(18).Kasan},
+    {"Kasan9", arrSetaiIn.getSafety(19).Kasan},
+    {"Seikatu0", arrSetaiIn.getSafety(10).KasanSbt},
+    {"Seikatu1", arrSetaiIn.getSafety(11).KasanSbt},
+    {"Seikatu2", arrSetaiIn.getSafety(12).KasanSbt},
+    {"Seikatu3", arrSetaiIn.getSafety(13).KasanSbt},
+    {"Seikatu4", arrSetaiIn.getSafety(14).KasanSbt},
+    {"Seikatu5", arrSetaiIn.getSafety(15).KasanSbt},
+    {"Seikatu6", arrSetaiIn.getSafety(16).KasanSbt},
+    {"Seikatu7", arrSetaiIn.getSafety(17).KasanSbt},
+    {"Seikatu8", arrSetaiIn.getSafety(18).KasanSbt},
+    {"Seikatu9", arrSetaiIn.getSafety(19).KasanSbt},
+ /*   
+    {"SyoukeiIppan", text1Ippan1.getText()},
+    {"SyoukeiKasan", text1Kasan1.getText()},
+    {"TeigenRitu", textTeigenRitu1.getText()},
+    {"ItiruiTotal", text1Total1.getText()},
+    {"NiruiTotal", text2Total1.getText()},
+    {"Touki", textTouki1.getText()},
+    {"Kimatu", textKimatu1.getText()},
+    {"SeikatuTotal", textSeikatuKei1.getText()},
+    {"JyutakuTotal", textJyutaku1.getText()},
+*/    
+    {"KNameKj0", arrSetaiInKyoiku.getSafety(5).NameKj},
+    {"KNameKj1", arrSetaiInKyoiku.getSafety(6).NameKj},
+    {"KNameKj2", arrSetaiInKyoiku.getSafety(7).NameKj},
+    {"KNameKj3", arrSetaiInKyoiku.getSafety(8).NameKj},
+    {"KNameKj4", arrSetaiInKyoiku.getSafety(9).NameKj},
+    {"Gakunen0", arrSetaiInKyoiku.getSafety(5).Gakunen},
+    {"Gakunen1", arrSetaiInKyoiku.getSafety(6).Gakunen},
+    {"Gakunen2", arrSetaiInKyoiku.getSafety(7).Gakunen},
+    {"Gakunen3", arrSetaiInKyoiku.getSafety(8).Gakunen},
+    {"Gakunen4", arrSetaiInKyoiku.getSafety(9).Gakunen},
+    {"KKijyun0", arrSetaiInKyoiku.getSafety(5).KKijyun},
+    {"KKijyun1", arrSetaiInKyoiku.getSafety(6).KKijyun},
+    {"KKijyun2", arrSetaiInKyoiku.getSafety(7).KKijyun},
+    {"KKijyun3", arrSetaiInKyoiku.getSafety(8).KKijyun},
+    {"KKijyun4", arrSetaiInKyoiku.getSafety(9).KKijyun},
+    {"Kyozai0", arrSetaiInKyoiku.getSafety(5).Kyozai},
+    {"Kyozai1", arrSetaiInKyoiku.getSafety(6).Kyozai},
+    {"Kyozai2", arrSetaiInKyoiku.getSafety(7).Kyozai},
+    {"Kyozai3", arrSetaiInKyoiku.getSafety(8).Kyozai},
+    {"Kyozai4", arrSetaiInKyoiku.getSafety(9).Kyozai},
+    {"Kyusyoku0", arrSetaiInKyoiku.getSafety(5).Kyusyoku},
+    {"Kyusyoku1", arrSetaiInKyoiku.getSafety(6).Kyusyoku},
+    {"Kyusyoku2", arrSetaiInKyoiku.getSafety(7).Kyusyoku},
+    {"Kyusyoku3", arrSetaiInKyoiku.getSafety(8).Kyusyoku},
+    {"Kyusyoku4", arrSetaiInKyoiku.getSafety(9).Kyusyoku},
+    {"Koutu0", arrSetaiInKyoiku.getSafety(5).Kyusyoku},
+    {"Koutu1", arrSetaiInKyoiku.getSafety(6).Kyusyoku},
+    {"Koutu2", arrSetaiInKyoiku.getSafety(7).Kyusyoku},
+    {"Koutu3", arrSetaiInKyoiku.getSafety(8).Kyusyoku},
+    {"Koutu4", arrSetaiInKyoiku.getSafety(9).Kyusyoku},
+    {"Sien0", arrSetaiInKyoiku.getSafety(5).Sien},
+    {"Sien1", arrSetaiInKyoiku.getSafety(6).Sien},
+    {"Sien2", arrSetaiInKyoiku.getSafety(7).Sien},
+    {"Sien3", arrSetaiInKyoiku.getSafety(8).Sien},
+    {"Sien4", arrSetaiInKyoiku.getSafety(9).Sien},
+    {"KSonota0", arrSetaiInKyoiku.getSafety(5).KSonota},
+    {"KSonota1", arrSetaiInKyoiku.getSafety(6).KSonota},
+    {"KSonota2", arrSetaiInKyoiku.getSafety(7).KSonota},
+    {"KSonota3", arrSetaiInKyoiku.getSafety(8).KSonota},
+    {"KSonota4", arrSetaiInKyoiku.getSafety(9).KSonota},
+//    {"KyoikuTotal", textKyouiku1.getText()},
+    
+    {"KgNameKj0", arrSetaiInKg.getSafety(5).NameKj},
+    {"KgNameKj1", arrSetaiInKg.getSafety(6).NameKj},
+    {"KgNameKj2", arrSetaiInKg.getSafety(7).NameKj},
+    {"KgNameKj3", arrSetaiInKg.getSafety(8).NameKj},
+    {"KgNameKj4", arrSetaiInKg.getSafety(9).NameKj},
+    {"KgGetugaku0", arrSetaiInKg.getSafety(5).KgGetugaku},
+    {"KgGetugaku1", arrSetaiInKg.getSafety(6).KgGetugaku},
+    {"KgGetugaku2", arrSetaiInKg.getSafety(7).KgGetugaku},
+    {"KgGetugaku3", arrSetaiInKg.getSafety(8).KgGetugaku},
+    {"KgGetugaku4", arrSetaiInKg.getSafety(9).KgGetugaku},
+    {"KgHoken0", arrSetaiInKg.getSafety(5).KgHoken},
+    {"KgHoken1", arrSetaiInKg.getSafety(6).KgHoken},
+    {"KgHoken2", arrSetaiInKg.getSafety(7).KgHoken},
+    {"KgHoken3", arrSetaiInKg.getSafety(8).KgHoken},
+    {"KgHoken4", arrSetaiInKg.getSafety(9).KgHoken},
+    {"KgSonota0", arrSetaiInKg.getSafety(5).KgSonota},
+    {"KgSonota1", arrSetaiInKg.getSafety(6).KgSonota},
+    {"KgSonota2", arrSetaiInKg.getSafety(7).KgSonota},
+    {"KgSonota3", arrSetaiInKg.getSafety(8).KgSonota},
+    {"KgSonota4", arrSetaiInKg.getSafety(9).KgSonota},
+//    {"KaigoTotal", textKaigo1.getText()},
+    
+    {"IrNameKj0", arrSetaiInIr.getSafety(5).NameKj},
+    {"IrNameKj1", arrSetaiInIr.getSafety(6).NameKj},
+    {"IrNameKj2", arrSetaiInIr.getSafety(7).NameKj},
+    {"IrNameKj3", arrSetaiInIr.getSafety(8).NameKj},
+    {"IrNameKj4", arrSetaiInIr.getSafety(9).NameKj},
+    {"IrGetugaku0", arrSetaiInIr.getSafety(5).IrGetugaku},
+    {"IrGetugaku1", arrSetaiInIr.getSafety(6).IrGetugaku},
+    {"IrGetugaku2", arrSetaiInIr.getSafety(7).IrGetugaku},
+    {"IrGetugaku3", arrSetaiInIr.getSafety(8).IrGetugaku},
+    {"IrGetugaku4", arrSetaiInIr.getSafety(9).IrGetugaku},
+    {"IrHoken0", arrSetaiInIr.getSafety(5).IrHoken},
+    {"IrHoken1", arrSetaiInIr.getSafety(6).IrHoken},
+    {"IrHoken2", arrSetaiInIr.getSafety(7).IrHoken},
+    {"IrHoken3", arrSetaiInIr.getSafety(8).IrHoken},
+    {"IrHoken4", arrSetaiInIr.getSafety(9).IrHoken},
+    {"IrSonota0", arrSetaiInIr.getSafety(5).IrSonota},
+    {"IrSonota1", arrSetaiInIr.getSafety(6).IrSonota},
+    {"IrSonota2", arrSetaiInIr.getSafety(7).IrSonota},
+    {"IrSonota3", arrSetaiInIr.getSafety(8).IrSonota},
+    {"IrSonota4", arrSetaiInIr.getSafety(9).IrSonota}
+//    {"IryoTotal", textIryou1.getText()},
+//    {"Total", textTotal1.getText()}
+    
+};
+ArrStr.add(field2);
+}
             lbr.makeCalcFile(comboIDsOffecePath.getSelectedItem(), ArrStr, "chosyo2.ods", "A4P", "J50");
             JOptionPane.showMessageDialog(this, "更新しました。");
             //同じキーで再読み込み

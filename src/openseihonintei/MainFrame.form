@@ -4308,8 +4308,10 @@
                 </Component>
                 <Component class="openseiho.comboID" name="comboIDsOffecePath">
                   <Properties>
+                    <Property name="ID1" type="java.lang.String" value="1"/>
                     <Property name="caption" type="java.lang.String" value="sOffice"/>
                     <Property name="comboWidth" type="java.lang.Integer" value="500"/>
+                    <Property name="defaultID1" type="int" value="1"/>
                     <Property name="id0" type="java.lang.Integer" value="20"/>
                     <Property name="postCap" type="java.lang.String" value=""/>
                   </Properties>
