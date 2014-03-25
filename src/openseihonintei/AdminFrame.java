@@ -68,7 +68,7 @@ public class AdminFrame extends javax.swing.JFrame {
 
         jLabel1.setText("データベース");
 
-        comboDB.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "テーブルを選択", "setai", "kojin", "saiseihi", "chosyo2", "kijyun" }));
+        comboDB.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "テーブルを選択", "id_text", "setai", "kojin", "saiseihi", "chosyo2", "kijyun" }));
 
         comboAction.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "操作を選択", "create", "edit", "drop", "program", "SQL Test" }));
 
@@ -174,6 +174,10 @@ public class AdminFrame extends javax.swing.JFrame {
         
         //DBアクセサーを選択
         DbAccessOS accesser = null;
+/*        if (table.equals("id_text")) {
+            //DbAccessOS.DebugMode = true;
+            accesser = new openseiho.dbIdText();            
+        } // */
         if (table.equals("setai")) {
             //DbAccessOS.DebugMode = true;
             accesser = new DbSetai();            

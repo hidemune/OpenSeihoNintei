@@ -6,7 +6,7 @@
 
 package openseihonintei;
 
-import openseiho.classYMD;
+import openseiho.OsClassYMD;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -54,7 +54,7 @@ public class DbAccessOS {
         if (value == null) {
             return koumokuName + "が入力されていません。\n";
         }
-        if (!(classYMD.isNumeric(value))) {
+        if (!(OsClassYMD.isNumeric(value))) {
             return koumokuName + "の値が不正です。\n";
         }
         long ret = 0;
@@ -112,7 +112,7 @@ public class DbAccessOS {
         }
     }
     /**
-     * 0以外ならTrueを返す仕様。数値の場合はエラー。
+     * 0以外ならTrueを返す仕様。数値以外の文字列の場合はエラー。
      * @param flg
      * @return 
      */

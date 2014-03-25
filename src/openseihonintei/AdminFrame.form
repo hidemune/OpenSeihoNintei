@@ -99,13 +99,14 @@
         <Component class="javax.swing.JComboBox" name="comboDB">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="6">
+              <StringArray count="7">
                 <StringItem index="0" value="&#x30c6;&#x30fc;&#x30d6;&#x30eb;&#x3092;&#x9078;&#x629e;"/>
-                <StringItem index="1" value="setai"/>
-                <StringItem index="2" value="kojin"/>
-                <StringItem index="3" value="saiseihi"/>
-                <StringItem index="4" value="chosyo2"/>
-                <StringItem index="5" value="kijyun"/>
+                <StringItem index="1" value="id_text"/>
+                <StringItem index="2" value="setai"/>
+                <StringItem index="3" value="kojin"/>
+                <StringItem index="4" value="saiseihi"/>
+                <StringItem index="5" value="chosyo2"/>
+                <StringItem index="6" value="kijyun"/>
               </StringArray>
             </Property>
           </Properties>

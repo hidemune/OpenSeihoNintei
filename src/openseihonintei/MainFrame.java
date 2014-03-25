@@ -6,7 +6,7 @@
 
 package openseihonintei;
 
-import openseiho.classYMD;
+import openseiho.OsClassYMD;
 import com.ibm.icu.text.SimpleDateFormat;
 import com.ibm.icu.text.Transliterator;
 import java.awt.Desktop;
@@ -73,15 +73,18 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         this.setBounds(x, y, thisBounds.width, thisBounds.height);
         //初期化
         //世帯一覧画面：世帯員パネルの生成
-        int h = OpenSeihoNintei.MaxSetaiIn * 64;
+        int h = OpenSeihoNintei.MaxSetaiIn * 74;
         Dimension dimP = panelSetaiBase.getPreferredSize();
+        //Dimension dimSP = jScrollPaneSetai.getPreferredSize();
+        
+        //jScrollPaneSetai.setPreferredSize(new Dimension(dimSP.width, h + 600));
         panelSetaiBase.setPreferredSize(new Dimension(dimP.width, h + 100));
         panelSetai.setPreferredSize(new Dimension(dimP.width, h));
-        jPanelkojin.setPreferredSize(new Dimension(dimP.width, h));
+        //jPanelkojin.setPreferredSize(new Dimension(dimP.width, h));
         
         for (int i = 0; i < OpenSeihoNintei.MaxSetaiIn; i++) {
             panelSetai.add(sp[i]);
-            sp[i].setPreferredSize(new Dimension(dimP.width, 64));
+            sp[i].setPreferredSize(new Dimension(dimP.width, 74));
             sp[i].setVisible(true);
         }
         //IME抑止
@@ -96,11 +99,11 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         jScrollPaneHiwari.getVerticalScrollBar().setUnitIncrement(25);
         
         //画面クリア
-        init();
+        initMain();
         
     }
 
-    public void init() {
+    public void initMain() {
         //認定日・起案日
         String strWk = "";
         Calendar cal = Calendar.getInstance();
@@ -228,7 +231,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
     }
     
     public void findSetai(String caseNo) {
-        init();
+        initMain();
 //        String[][] rs = dbSetai.getResultSetTable("WHERE caseNo = '" + caseNo + "'");
         String SQL = "SELECT * FROM setai WHERE caseNo = '" + caseNo + "'";
         String[][] rs = dbSetai.getResultSetTableBySQL(SQL);
@@ -432,64 +435,64 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         panelSetai = new javax.swing.JPanel();
         jButton2 = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
-        textCaseNo = new javax.swing.JTextField();
         jButton7 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        textMyouji = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        textMyoujiKana = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
-        comboIDNinzuu = new openseiho.comboID();
+        comboIDNinzuu = new openseiho.OsComboID();
+        textMyouji = new openseiho.OsText();
+        textMyoujiKana = new openseiho.OsText();
         checkBoxSyokken = new javax.swing.JCheckBox();
-        textYmdNintei = new openseiho.textYmdPanel();
-        textYmdKian = new openseiho.textYmdPanel();
+        textYmdNintei = new openseiho.OsTextYmd();
+        textYmdKian = new openseiho.OsTextYmd();
         panelJyusyo = new openseiho.JyusyoPanel();
+        textCaseNo = new openseiho.OsText();
         jScrollPane2 = new javax.swing.JScrollPane();
         jPanelkojin = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jPanelKasan = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         chkNinsanpu = new javax.swing.JCheckBox();
-        comboIDKasanNinpu = new openseiho.comboID();
-        comboIDKasanSanpu = new openseiho.comboID();
-        textSyussanYmd = new openseiho.textYmdPanel();
+        comboIDKasanNinpu = new openseiho.OsComboID();
+        comboIDKasanSanpu = new openseiho.OsComboID();
+        textSyussanYmd = new openseiho.OsTextYmd();
         jPanel7 = new javax.swing.JPanel();
         chkSyougai = new javax.swing.JCheckBox();
-        comboIDKasanSyougai = new openseiho.comboID();
+        comboIDKasanSyougai = new openseiho.OsComboID();
         jLabel4 = new javax.swing.JLabel();
-        textKaigoHi = new javax.swing.JTextField();
+        textKaigoHi = new openseiho.OsTextNum();
         jLabel7 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         chkKaigoSisetu = new javax.swing.JCheckBox();
-        textKaigoSisetu = new javax.swing.JTextField();
+        textKaigoSisetu = new openseiho.OsTextNum();
         jLabel8 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         chkZaitaku = new javax.swing.JCheckBox();
         jPanel10 = new javax.swing.JPanel();
         chkHousya = new javax.swing.JCheckBox();
-        comboIDHousyasen = new openseiho.comboID();
+        comboIDHousyasen = new openseiho.OsComboID();
         jPanel11 = new javax.swing.JPanel();
         chkJidouYouiku = new javax.swing.JCheckBox();
-        comboIDKasanJidouYouiku = new openseiho.comboID();
+        comboIDKasanJidouYouiku = new openseiho.OsComboID();
         jPanel12 = new javax.swing.JPanel();
         chkKaigoHokenRyou = new javax.swing.JCheckBox();
-        textKasanKaigoHokenRyou = new javax.swing.JTextField();
+        textKasanKaigoHokenRyou = new openseiho.OsTextNum();
         jLabel9 = new javax.swing.JLabel();
         jPanel13 = new javax.swing.JPanel();
         chkBoshi = new javax.swing.JCheckBox();
-        comboIDKasanBoshi = new openseiho.comboID();
-        textKasanBoshiNinzuu = new javax.swing.JTextField();
+        comboIDKasanBoshi = new openseiho.OsComboID();
+        textKasanBoshiNinzuu = new openseiho.OsTextNum();
         jLabel5 = new javax.swing.JLabel();
         chkTyouhuku = new javax.swing.JCheckBox();
         jLabel80 = new javax.swing.JLabel();
-        textKasanBoshiNinzuuS = new javax.swing.JTextField();
+        textKasanBoshiNinzuuS = new openseiho.OsTextNum();
         jPanel2 = new javax.swing.JPanel();
-        comboIDSeikatuKeitai = new openseiho.comboID();
+        comboIDSeikatuKeitai = new openseiho.OsComboID();
         jComboBoxKojin = new javax.swing.JComboBox();
         chkNushi = new javax.swing.JCheckBox();
-        comboIDKyuti = new openseiho.comboID();
-        comboIDTouki = new openseiho.comboID();
+        comboIDKyuti = new openseiho.OsComboID();
+        comboIDTouki = new openseiho.OsComboID();
         jButtonKojinCheck = new javax.swing.JButton();
         jButtonKojinInst = new javax.swing.JButton();
         setaiInPanel = new openseihonintei.SetaiPanel();
@@ -508,31 +511,31 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         jScrollPane5 = new javax.swing.JScrollPane();
         list1Kasan = new javax.swing.JList();
         jLabel13 = new javax.swing.JLabel();
-        text1Ippan = new javax.swing.JTextField();
-        text1Kasan = new javax.swing.JTextField();
+        text1Ippan = new openseiho.OsTextNum();
+        text1Kasan = new openseiho.OsTextNum();
         jLabel14 = new javax.swing.JLabel();
-        textTeigenRitu = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
-        text1Total = new javax.swing.JTextField();
+        text1Total = new openseiho.OsTextNum();
         jLabel16 = new javax.swing.JLabel();
-        text2Total = new javax.swing.JTextField();
+        text2Total = new openseiho.OsTextNum();
         jLabel17 = new javax.swing.JLabel();
-        textKimatu = new javax.swing.JTextField();
+        textKimatu = new openseiho.OsTextNum();
         jLabel18 = new javax.swing.JLabel();
-        textSeikatuKei = new javax.swing.JTextField();
+        textSeikatuKei = new openseiho.OsTextNum();
         jScrollPane21 = new javax.swing.JScrollPane();
         list1KasanSbt = new javax.swing.JList();
         jLabel78 = new javax.swing.JLabel();
         jLabel81 = new javax.swing.JLabel();
-        textTouki = new javax.swing.JTextField();
-        text1TotalKyotaku = new javax.swing.JTextField();
+        textTouki = new openseiho.OsTextNum();
+        text1TotalKyotaku = new openseiho.OsTextNum();
         jLabel82 = new javax.swing.JLabel();
         jScrollPane45 = new javax.swing.JScrollPane();
         list1IppanA = new javax.swing.JList();
         jLabel85 = new javax.swing.JLabel();
+        textTeigenRitu = new openseiho.OsText();
         jPanel5 = new javax.swing.JPanel();
         jLabel19 = new javax.swing.JLabel();
-        textJyutaku = new javax.swing.JTextField();
+        textJyutaku = new openseiho.OsTextNum();
         jPanel14 = new javax.swing.JPanel();
         jLabel20 = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
@@ -544,7 +547,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         jScrollPane8 = new javax.swing.JScrollPane();
         listKyouikuKijyun = new javax.swing.JList();
         jLabel23 = new javax.swing.JLabel();
-        textKyouiku = new javax.swing.JTextField();
+        textKyouiku = new openseiho.OsTextNum();
         jLabel24 = new javax.swing.JLabel();
         jScrollPane9 = new javax.swing.JScrollPane();
         listKyouikuKyouzai = new javax.swing.JList();
@@ -575,7 +578,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         jScrollPane16 = new javax.swing.JScrollPane();
         listKaigoSonota = new javax.swing.JList();
         jLabel33 = new javax.swing.JLabel();
-        textKaigo = new javax.swing.JTextField();
+        textKaigo = new openseiho.OsTextNum();
         jPanel16 = new javax.swing.JPanel();
         jLabel32 = new javax.swing.JLabel();
         jScrollPane17 = new javax.swing.JScrollPane();
@@ -590,11 +593,11 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         jScrollPane20 = new javax.swing.JScrollPane();
         listIryouSonota = new javax.swing.JList();
         jLabel37 = new javax.swing.JLabel();
-        textIryou = new javax.swing.JTextField();
+        textIryou = new openseiho.OsTextNum();
         jLabel70 = new javax.swing.JLabel();
         jLabel72 = new javax.swing.JLabel();
         jLabel73 = new javax.swing.JLabel();
-        textTotal = new javax.swing.JTextField();
+        textTotal = new openseiho.OsTextNum();
         jLabel75 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         textBikou = new javax.swing.JTextArea();
@@ -611,26 +614,26 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         jScrollPane24 = new javax.swing.JScrollPane();
         list1Kasan1 = new javax.swing.JList();
         jLabel41 = new javax.swing.JLabel();
-        text1Ippan1 = new javax.swing.JTextField();
-        text1Kasan1 = new javax.swing.JTextField();
+        text1Ippan1 = new openseiho.OsTextNum();
+        text1Kasan1 = new openseiho.OsTextNum();
         jLabel42 = new javax.swing.JLabel();
-        textTeigenRitu1 = new javax.swing.JTextField();
         jLabel43 = new javax.swing.JLabel();
-        text1Total1 = new javax.swing.JTextField();
+        text1Total1 = new openseiho.OsTextNum();
         jLabel44 = new javax.swing.JLabel();
-        text2Total1 = new javax.swing.JTextField();
+        text2Total1 = new openseiho.OsTextNum();
         jLabel45 = new javax.swing.JLabel();
-        textKimatu1 = new javax.swing.JTextField();
+        textKimatu1 = new openseiho.OsTextNum();
         jLabel46 = new javax.swing.JLabel();
-        textSeikatuKei1 = new javax.swing.JTextField();
+        textSeikatuKei1 = new openseiho.OsTextNum();
         jLabel79 = new javax.swing.JLabel();
         jScrollPane42 = new javax.swing.JScrollPane();
         list1KasanSbt1 = new javax.swing.JList();
         jLabel83 = new javax.swing.JLabel();
-        textTouki1 = new javax.swing.JTextField();
+        textTouki1 = new openseiho.OsTextNum();
+        textTeigenRitu1 = new openseiho.OsText();
         jPanel19 = new javax.swing.JPanel();
         jLabel47 = new javax.swing.JLabel();
-        textJyutaku1 = new javax.swing.JTextField();
+        textJyutaku1 = new openseiho.OsTextNum();
         jPanel20 = new javax.swing.JPanel();
         jLabel48 = new javax.swing.JLabel();
         jScrollPane25 = new javax.swing.JScrollPane();
@@ -642,7 +645,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         jScrollPane27 = new javax.swing.JScrollPane();
         listKyouikuKijyun1 = new javax.swing.JList();
         jLabel51 = new javax.swing.JLabel();
-        textKyouiku1 = new javax.swing.JTextField();
+        textKyouiku1 = new openseiho.OsTextNum();
         jLabel52 = new javax.swing.JLabel();
         jScrollPane28 = new javax.swing.JScrollPane();
         listKyouikuKyouzai1 = new javax.swing.JList();
@@ -672,7 +675,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         jScrollPane35 = new javax.swing.JScrollPane();
         listKaigoSonota1 = new javax.swing.JList();
         jLabel60 = new javax.swing.JLabel();
-        textKaigo1 = new javax.swing.JTextField();
+        textKaigo1 = new openseiho.OsTextNum();
         jPanel22 = new javax.swing.JPanel();
         jLabel61 = new javax.swing.JLabel();
         jScrollPane36 = new javax.swing.JScrollPane();
@@ -687,7 +690,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         jScrollPane39 = new javax.swing.JScrollPane();
         listIryouSonota1 = new javax.swing.JList();
         jLabel65 = new javax.swing.JLabel();
-        textIryou1 = new javax.swing.JTextField();
+        textIryou1 = new openseiho.OsTextNum();
         jPanel23 = new javax.swing.JPanel();
         jLabel66 = new javax.swing.JLabel();
         jScrollPane40 = new javax.swing.JScrollPane();
@@ -698,10 +701,10 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         jLabel68 = new javax.swing.JLabel();
         jLabel69 = new javax.swing.JLabel();
         jLabel74 = new javax.swing.JLabel();
-        textTotal1 = new javax.swing.JTextField();
+        textTotal1 = new openseiho.OsTextNum();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        comboIDsOffecePath = new openseiho.comboID();
+        comboIDsOffecePath = new openseiho.OsComboID();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem4 = new javax.swing.JMenuItem();
@@ -716,6 +719,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
 
         jTabbedPane1.setFocusable(false);
         jTabbedPane1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jTabbedPane1.setPreferredSize(new java.awt.Dimension(1103, 2108));
         jTabbedPane1.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 jTabbedPane1StateChanged(evt);
@@ -744,12 +748,6 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         jLabel6.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel6.setText("ケースNo");
 
-        textCaseNo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textCaseNoActionPerformed(evt);
-            }
-        });
-
         jButton7.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jButton7.setText("自動採番");
         jButton7.setToolTipText("");
@@ -772,13 +770,6 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         jLabel2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel2.setText("苗字カナ");
 
-        textMyoujiKana.setToolTipText("ひらがな入力してEnterを押すと、全角カナになります");
-        textMyoujiKana.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textMyoujiKanaActionPerformed(evt);
-            }
-        });
-
         jButton1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jButton1.setText("苗字セット");
         jButton1.setToolTipText("構成員チェックした行のみ苗字が反映されます。\nこの機能は無理に使う必要はありません。");
@@ -798,6 +789,12 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         comboIDNinzuu.setId0(new java.lang.Integer(3));
         comboIDNinzuu.setPostCap("人世帯");
 
+        textMyoujiKana.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textMyoujiKanaActionPerformed(evt);
+            }
+        });
+
         org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -806,12 +803,12 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                 .addContainerGap()
                 .add(jLabel1)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(textMyouji, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 94, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(textMyouji, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 89, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(31, 31, 31)
                 .add(jLabel2)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(textMyoujiKana, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 94, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(textMyoujiKana, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 84, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(41, 41, 41)
                 .add(comboIDNinzuu, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 121, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jButton1)
@@ -828,9 +825,9 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                     .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                         .add(org.jdesktop.layout.GroupLayout.TRAILING, jButton1)
                         .add(org.jdesktop.layout.GroupLayout.TRAILING, comboIDNinzuu, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .add(org.jdesktop.layout.GroupLayout.TRAILING, textMyoujiKana, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 22, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(org.jdesktop.layout.GroupLayout.TRAILING, textMyoujiKana, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 20, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .add(org.jdesktop.layout.GroupLayout.TRAILING, textMyouji, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 22, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                        .add(org.jdesktop.layout.GroupLayout.TRAILING, textMyouji, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
@@ -848,6 +845,12 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
 
         textYmdKian.setCaption("起案日");
 
+        textCaseNo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textCaseNoActionPerformed(evt);
+            }
+        });
+
         org.jdesktop.layout.GroupLayout panelSetaiBaseLayout = new org.jdesktop.layout.GroupLayout(panelSetaiBase);
         panelSetaiBase.setLayout(panelSetaiBaseLayout);
         panelSetaiBaseLayout.setHorizontalGroup(
@@ -862,7 +865,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                                 .add(panelSetaiBaseLayout.createSequentialGroup()
                                     .add(jLabel6)
                                     .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                    .add(textCaseNo, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 94, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                    .add(textCaseNo, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 105, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                                     .add(jButton7))
                                 .add(checkBoxSyokken))
@@ -889,8 +892,8 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                         .add(panelSetaiBaseLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(panelSetaiBaseLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                                 .add(jLabel6)
-                                .add(textCaseNo, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                .add(jButton7))
+                                .add(jButton7)
+                                .add(textCaseNo, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 25, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                             .add(textYmdNintei, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                         .add(panelSetaiBaseLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(panelSetaiBaseLayout.createSequentialGroup()
@@ -904,8 +907,8 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                 .add(2, 2, 2)
                 .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(panelSetai, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 769, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .add(panelSetai, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 968, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         textYmdNintei.getAccessibleContext().setAccessibleParent(this);
@@ -979,7 +982,6 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         jLabel4.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel4.setText("介護人費用");
 
-        textKaigoHi.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         textKaigoHi.setText("\\0");
 
         jLabel7.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
@@ -1020,8 +1022,12 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         chkKaigoSisetu.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         chkKaigoSisetu.setText("介護施設入所者");
 
-        textKaigoSisetu.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         textKaigoSisetu.setText("\\0");
+        textKaigoSisetu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                textKaigoSisetuActionPerformed(evt);
+            }
+        });
 
         jLabel8.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel8.setText("円");
@@ -1141,7 +1147,6 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         chkKaigoHokenRyou.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         chkKaigoHokenRyou.setText("介護保険料");
 
-        textKasanKaigoHokenRyou.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
         textKasanKaigoHokenRyou.setText("\\0");
 
         jLabel9.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
@@ -1179,9 +1184,6 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         comboIDKasanBoshi.setId0(new java.lang.Integer(19));
         comboIDKasanBoshi.setPostCap("");
 
-        textKasanBoshiNinzuu.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        textKasanBoshiNinzuu.setText("0");
-
         jLabel5.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel5.setText("人(内施設入所");
 
@@ -1190,9 +1192,6 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
 
         jLabel80.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel80.setText("人）");
-
-        textKasanBoshiNinzuuS.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        textKasanBoshiNinzuuS.setText("0");
 
         org.jdesktop.layout.GroupLayout jPanel13Layout = new org.jdesktop.layout.GroupLayout(jPanel13);
         jPanel13.setLayout(jPanel13Layout);
@@ -1222,11 +1221,11 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                     .add(comboIDKasanBoshi, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, chkBoshi, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 21, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(jLabel80, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .add(textKasanBoshiNinzuuS)
+                    .add(textKasanBoshiNinzuuS, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .add(jPanel13Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                         .add(jLabel5, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .add(chkTyouhuku, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 21, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                    .add(textKasanBoshiNinzuu))
+                    .add(textKasanBoshiNinzuu, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .add(5, 5, 5))
         );
 
@@ -1351,7 +1350,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                 .add(jLabel3)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jPanelKasan, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 227, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(666, Short.MAX_VALUE))
+                .addContainerGap(737, Short.MAX_VALUE))
         );
 
         jScrollPane2.setViewportView(jPanelkojin);
@@ -1421,8 +1420,6 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         jLabel14.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel14.setText("逓減率");
 
-        textTeigenRitu.setText("jTextField1");
-
         jLabel15.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel15.setText("第１類計");
 
@@ -1464,11 +1461,17 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         jLabel82.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel82.setText("内居宅一般分");
 
+        list1IppanA.setBackground(new java.awt.Color(255, 204, 204));
         list1IppanA.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         list1IppanA.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
+        });
+        list1IppanA.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                list1IppanAKeyPressed(evt);
+            }
         });
         jScrollPane45.setViewportView(list1IppanA);
 
@@ -1483,11 +1486,8 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                 .addContainerGap()
                 .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jPanel4Layout.createSequentialGroup()
-                        .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                            .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel4Layout.createSequentialGroup()
-                                .add(jLabel14)
-                                .add(65, 65, 65)
-                                .add(textTeigenRitu))
+                        .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(jLabel14)
                             .add(jPanel4Layout.createSequentialGroup()
                                 .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                                     .add(jLabel10)
@@ -1513,34 +1513,38 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                                         .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                                             .add(jLabel78)
                                             .add(jScrollPane21, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 74, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))))))
-                        .add(0, 32, Short.MAX_VALUE))
+                        .add(0, 0, Short.MAX_VALUE))
                     .add(jPanel4Layout.createSequentialGroup()
-                        .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
+                        .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(jPanel4Layout.createSequentialGroup()
-                                .add(jLabel81)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .add(textTouki, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 92, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                                .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
+                                    .add(jPanel4Layout.createSequentialGroup()
+                                        .add(jLabel81)
+                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .add(textTouki, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 92, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                                    .add(jPanel4Layout.createSequentialGroup()
+                                        .add(jLabel18)
+                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .add(textSeikatuKei, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 92, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                                    .add(org.jdesktop.layout.GroupLayout.LEADING, jPanel4Layout.createSequentialGroup()
+                                        .add(jLabel17)
+                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .add(textKimatu, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 92, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                                    .add(org.jdesktop.layout.GroupLayout.LEADING, jPanel4Layout.createSequentialGroup()
+                                        .add(jLabel16)
+                                        .add(65, 65, 65)
+                                        .add(text2Total, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                                .add(84, 84, 84)
+                                .add(jLabel82)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(text1TotalKyotaku, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 92, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                             .add(jPanel4Layout.createSequentialGroup()
-                                .add(jLabel18)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .add(textSeikatuKei, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 92, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                            .add(org.jdesktop.layout.GroupLayout.LEADING, jPanel4Layout.createSequentialGroup()
-                                .add(jLabel17)
-                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .add(textKimatu, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 92, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                            .add(org.jdesktop.layout.GroupLayout.LEADING, jPanel4Layout.createSequentialGroup()
-                                .add(jLabel16)
-                                .add(65, 65, 65)
-                                .add(text2Total))
-                            .add(org.jdesktop.layout.GroupLayout.LEADING, jPanel4Layout.createSequentialGroup()
                                 .add(jLabel15)
                                 .add(52, 52, 52)
-                                .add(text1Total, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 92, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jLabel82)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(text1TotalKyotaku, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 92, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                    .add(text1Total, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 92, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                    .add(textTeigenRitu, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 349, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))))
+                        .addContainerGap(13, Short.MAX_VALUE))))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -2157,7 +2161,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                         .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
                             .add(jPanel5, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .add(jScrollPane3))))
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addContainerGap(265, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -2186,7 +2190,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                 .add(jPanel3Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jPanel15, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(jPanel16, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(55, Short.MAX_VALUE))
+                .addContainerGap(263, Short.MAX_VALUE))
         );
 
         jScrollPaneGetugaku.setViewportView(jPanel3);
@@ -2239,8 +2243,6 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         jLabel42.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel42.setText("逓減率");
 
-        textTeigenRitu1.setText("jTextField1");
-
         jLabel43.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel43.setText("第１類計");
 
@@ -2283,59 +2285,62 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
             jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel18Layout.createSequentialGroup()
                 .addContainerGap()
-                .add(jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                    .add(jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
-                        .add(jPanel18Layout.createSequentialGroup()
-                            .add(jLabel46)
-                            .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .add(textSeikatuKei1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 92, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                        .add(org.jdesktop.layout.GroupLayout.LEADING, jPanel18Layout.createSequentialGroup()
-                            .add(jLabel44)
-                            .add(65, 65, 65)
-                            .add(text2Total1))
-                        .add(org.jdesktop.layout.GroupLayout.LEADING, jPanel18Layout.createSequentialGroup()
-                            .add(jLabel43)
-                            .add(52, 52, 52)
-                            .add(text1Total1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 92, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                .add(jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
                     .add(jPanel18Layout.createSequentialGroup()
                         .add(jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jLabel38)
-                            .add(jLabel41)
-                            .add(jScrollPane22, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 136, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jLabel39)
-                            .add(text1Ippan1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 64, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                            .add(jScrollPane23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 55, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jLabel40)
-                            .add(text1Kasan1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 69, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                            .add(jScrollPane24, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 58, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jLabel79)
-                            .add(jScrollPane42, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 142, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                            .add(jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
+                                .add(jPanel18Layout.createSequentialGroup()
+                                    .add(jLabel46)
+                                    .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .add(textSeikatuKei1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 92, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                                .add(org.jdesktop.layout.GroupLayout.LEADING, jPanel18Layout.createSequentialGroup()
+                                    .add(jLabel44)
+                                    .add(65, 65, 65)
+                                    .add(text2Total1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .add(org.jdesktop.layout.GroupLayout.LEADING, jPanel18Layout.createSequentialGroup()
+                                    .add(jLabel43)
+                                    .add(52, 52, 52)
+                                    .add(text1Total1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 92, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                            .add(jPanel18Layout.createSequentialGroup()
+                                .add(jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                    .add(jLabel38)
+                                    .add(jLabel41)
+                                    .add(jScrollPane22, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 136, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                    .add(jLabel39)
+                                    .add(text1Ippan1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 64, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                    .add(jScrollPane23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 55, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                    .add(jLabel40)
+                                    .add(text1Kasan1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 69, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                    .add(jScrollPane24, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 58, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                    .add(jLabel79)
+                                    .add(jScrollPane42, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 142, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                            .add(jPanel18Layout.createSequentialGroup()
+                                .add(jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                                    .add(jPanel18Layout.createSequentialGroup()
+                                        .add(101, 101, 101)
+                                        .add(textTouki1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 92, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                                    .add(jLabel83))
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(jLabel45)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(textKimatu1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 92, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .add(jPanel18Layout.createSequentialGroup()
                         .add(jLabel42)
-                        .add(65, 65, 65)
-                        .add(textTeigenRitu1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 300, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                    .add(jPanel18Layout.createSequentialGroup()
-                        .add(jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jPanel18Layout.createSequentialGroup()
-                                .add(101, 101, 101)
-                                .add(textTouki1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 92, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                            .add(jLabel83))
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jLabel45)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(textKimatu1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 92, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .add(64, 64, 64)
+                        .add(textTeigenRitu1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 334, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(0, 0, Short.MAX_VALUE))))
         );
         jPanel18Layout.setVerticalGroup(
             jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel18Layout.createSequentialGroup()
-                .add(0, 6, Short.MAX_VALUE)
+                .add(0, 3, Short.MAX_VALUE)
                 .add(jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jPanel18Layout.createSequentialGroup()
                         .add(jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
@@ -2361,11 +2366,11 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                                 .add(jScrollPane42, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                         .add(text1Kasan1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                .add(jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                .add(12, 12, 12)
+                .add(jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                     .add(jLabel42)
                     .add(textTeigenRitu1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(7, 7, 7)
                 .add(jPanel18Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jLabel43)
                     .add(text1Total1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
@@ -2916,10 +2921,9 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
             }
         });
 
-        comboIDsOffecePath.setID1("1");
         comboIDsOffecePath.setCaption("sOffice");
         comboIDsOffecePath.setComboWidth(new java.lang.Integer(500));
-        comboIDsOffecePath.setDefaultID1(1);
+        comboIDsOffecePath.setDefaultID1("1");
         comboIDsOffecePath.setId0(new java.lang.Integer(20));
         comboIDsOffecePath.setPostCap("");
 
@@ -2928,12 +2932,13 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         jPanel17Layout.setHorizontalGroup(
             jPanel17Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel17Layout.createSequentialGroup()
-                .addContainerGap(139, Short.MAX_VALUE)
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .add(jPanel17Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
                     .add(jPanel17Layout.createSequentialGroup()
                         .add(jPanel18, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jPanel19, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                        .add(jPanel19, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(318, 318, 318))
                     .add(jPanel17Layout.createSequentialGroup()
                         .add(comboIDsOffecePath, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 339, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .add(31, 31, 31)
@@ -3033,11 +3038,11 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jTabbedPane1)
+            .add(jTabbedPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jTabbedPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 971, Short.MAX_VALUE)
+            .add(jTabbedPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 1179, Short.MAX_VALUE)
         );
 
         pack();
@@ -3068,7 +3073,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         String msg = "";
         
         //年齢算出
-        int nendo = classYMD.getNendo(textYmdNintei.getID());
+        int nendo = OsClassYMD.getNendo(textYmdNintei.getID());
         for (int i = 0; i < OpenSeihoNintei.MaxSetaiIn; i++) {
             sp[i].setNenrei(nendo);
             if ((sp[i].isChecked()) && !(sp[i].isDate())) {
@@ -3114,13 +3119,6 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         //更新処理
         insertSetai();
     }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void textMyoujiKanaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textMyoujiKanaActionPerformed
-        // TODO add your handling code here:
-        //ひらがな→カタカナ変換
-        Transliterator tr = Transliterator.getInstance("Hiragana-Katakana");
-        textMyoujiKana.setText(tr.transform(textMyoujiKana.getText()));
-    }//GEN-LAST:event_textMyoujiKanaActionPerformed
 
     private void jTabbedPane1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jTabbedPane1StateChanged
         // TODO add your handling code here:
@@ -3217,6 +3215,11 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         //textYmdNintei.setID(dbKojin.getValue(rsKojin, "ninteiYmd", idx));
         
         chkNushi.setSelected(dbKojin.getValueB(rsKojin, "nushiFlg", idx));
+        
+        comboIDSeikatuKeitai.setID1(dbKojin.getValueI(rsKojin, "seikatuKeitai", idx));
+        comboIDKyuti.setID1(dbKojin.getValueI(rsKojin, "kyuti", idx));
+        comboIDTouki.setID1(dbKojin.getValueI(rsKojin, "touki", idx));
+        
 //        {"kasanNinpu", "TEXT"},
         comboIDKasanNinpu.setID1(dbKojin.getValueI(rsKojin, "kasanNinpu", idx));
 //        {"kasanSanpu", "TEXT"},
@@ -3296,11 +3299,6 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
             jButton1ActionPerformed(null);
         }
     }//GEN-LAST:event_jButton1KeyPressed
-
-    private void textCaseNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textCaseNoActionPerformed
-        // TODO add your handling code here:
-        findSetai(textCaseNo.getText());
-    }//GEN-LAST:event_textCaseNoActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
@@ -3689,6 +3687,31 @@ String[][] field = {
         instChosyo2();
     }//GEN-LAST:event_jButton3ActionPerformed
 
+    private void textCaseNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textCaseNoActionPerformed
+        findSetai(textCaseNo.getText());
+    }//GEN-LAST:event_textCaseNoActionPerformed
+
+    private void textMyoujiKanaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textMyoujiKanaActionPerformed
+        //ひらがな→カタカナ変換
+        Transliterator tr = Transliterator.getInstance("Hiragana-Katakana");
+        textMyoujiKana.setText(tr.transform(textMyoujiKana.getText()));
+    }//GEN-LAST:event_textMyoujiKanaActionPerformed
+
+    private void list1IppanAKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_list1IppanAKeyPressed
+        //list*KeyPressed
+        listNumSet(evt);
+    }//GEN-LAST:event_list1IppanAKeyPressed
+
+    private void textKaigoSisetuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textKaigoSisetuActionPerformed
+        //介護施設入所者加算：満額を表示
+        String ninteiYmd = textYmdNintei.getID();
+        int nendo = OsClassYMD.getNendo(ninteiYmd);
+        String[][] rsKijyun = dbKijyun.getResultSetTable("WHERE nendo = '" + nendo + "'");
+        String kyuti = comboIDKyuti.getID1();
+        String value = dbKijyun.getValue(rsKijyun, "KaigoNyusyo", dbKijyun.getKyutiIdx(rsKijyun, kyuti));
+        textKaigoSisetu.setText(value);
+    }//GEN-LAST:event_textKaigoSisetuActionPerformed
+
     /**
      * 日割り検索処理
      */
@@ -3696,7 +3719,7 @@ String[][] field = {
         String caseNo = textCaseNo.getText();
         String ninteiYmd = textYmdNintei.getID();
         String kianYmd = textYmdKian.getID();
-        int nendo = classYMD.getNendo(ninteiYmd);
+        int nendo = OsClassYMD.getNendo(ninteiYmd);
         String ninteYm = ninteiYmd.substring(0, 6);
         //生活歴の取得
         ((DefaultListModel)listSeikatuReki.getModel()).clear();
@@ -3709,9 +3732,9 @@ String[][] field = {
             String ninteiYmdWk = dbSaiseihi.getValue(rsSeikatuReki, "ninteiYmd", i);
             String kianYmdWk = dbSaiseihi.getValue(rsSeikatuReki, "kianYmd", i);
             
-            ((DefaultListModel)listSeikatuReki.getModel()).addElement("認定日:" + classYMD.YmdIdToStrS(ninteiYmdWk) + "　/　起案日:" + classYMD.YmdIdToStrS(kianYmdWk));
+            ((DefaultListModel)listSeikatuReki.getModel()).addElement("認定日:" + OsClassYMD.YmdIdToStrS(ninteiYmdWk) + "　/　起案日:" + OsClassYMD.YmdIdToStrS(kianYmdWk));
             //日数
-            nissu[i] = classYMD.getTukiNissu(ninteiYmdWk) - nissu[i - 1];
+            nissu[i] = OsClassYMD.getTukiNissu(ninteiYmdWk) - nissu[i - 1];
         }
         for (int i = 1; i < rsSeikatuReki.length; i++) {
             ((DefaultListModel)listNissu.getModel()).addElement("" + nissu[i]);
@@ -4566,12 +4589,13 @@ ArrStr.add(field2);
      * 世帯構成等は画面のものは使わず、全てテーブルを取得して行う。（データの整合性確認のため）
      */
     private void calc() {
-        //最低生活費認定　再計算
+        //最低生活費認定　計算
         
         String caseNo = textCaseNo.getText();
         String ninteiYmd = textYmdNintei.getID();
         String kianYmd = textYmdKian.getID();
-        int nendo = classYMD.getNendo(ninteiYmd);
+        int nendo = OsClassYMD.getNendo(ninteiYmd);
+        int ninteiM = DbAccessOS.getValueI(ninteiYmd.substring(4, 6));
         
         //setai, kojin の取得
         //String[][] rsSetaiN = dbSetai.getResultSetTable("WHERE caseNo = '" + caseNo + "'");
@@ -4589,8 +4613,11 @@ ArrStr.add(field2);
         }
         //個人の級地のインデックスを全員分取得
         Integer[] kijyunIdxKojin = new Integer[rsKojinN.length];
+        String[] kojinTouki = new String[rsKojinN.length];
         for (int i = 0; i < rsKojinN.length; i++) {
             String kojinKyuti = dbKojin.getValue(rsKojinN, "kyuti", i);
+            kojinTouki[i] = dbKojin.getValue(rsKojinN, "touki", i);
+            
             kijyunIdxKojin[i] = dbKijyun.getKyutiIdx(rsKijyun, kojinKyuti);
             if (kijyunIdx < 0) {
                 JOptionPane.showMessageDialog(this, "基準額データがみつかりません。" + kojinKyuti);
@@ -4696,6 +4723,38 @@ ArrStr.add(field2);
                 kyotaku1ruiKijyun1[i] = Kijyun1_1;
                 //(2)基準
                 kyotaku1ruiKijyun2[i] = Kijyun1_2;
+            } else if ((20 <= seikatukeitai) && (seikatukeitai <= 29)) {
+                //入院
+                int value = dbKijyun.getValueI(rsKijyun, "NyuinNitiyouHinPi" , kijyunIdxKojin[i]);
+                ((DefaultListModel)list1Ippan.getModel()).addElement("" + value);
+                ((DefaultListModel)list1IppanA.getModel()).addElement("" + value);
+                //冬季
+                if ((ninteiM >= 11) || (ninteiM <= 3)) {
+                    int touki = DbAccessOS.getValueI(textTouki.getText());
+                    touki = touki + dbKijyun.getValueI(rsKijyun, "NyuinNitiyouHinPi_T" + kojinTouki[i] , kijyunIdxKojin[i]);
+                    textTouki.setText("" + touki);
+                }
+            } else if ((30 <= seikatukeitai) && (seikatukeitai <= 39)) {
+                //救護施設
+                int value = dbKijyun.getValueI(rsKijyun, "KyugoSisetu" , kijyunIdxKojin[i]);
+                ((DefaultListModel)list1Ippan.getModel()).addElement("" + value);
+                ((DefaultListModel)list1IppanA.getModel()).addElement("" + value);
+            } else if ((40 <= seikatukeitai) && (seikatukeitai <= 49)) {
+                //更生施設
+                int value = dbKijyun.getValueI(rsKijyun, "KouseiSisetu" , kijyunIdxKojin[i]);
+                ((DefaultListModel)list1Ippan.getModel()).addElement("" + value);
+                ((DefaultListModel)list1IppanA.getModel()).addElement("" + value);
+            } else if ((50 <= seikatukeitai) && (seikatukeitai <= 59)) {
+                //介護施設
+                int value = dbKijyun.getValueI(rsKijyun, "KaigoSeikatuHi" , kijyunIdxKojin[i]);
+                ((DefaultListModel)list1Ippan.getModel()).addElement("" + value);
+                ((DefaultListModel)list1IppanA.getModel()).addElement("" + value);
+                //冬季
+                if ((ninteiM >= 11) || (ninteiM <= 3)) {
+                    int touki = DbAccessOS.getValueI(textTouki.getText());
+                    touki = touki + dbKijyun.getValueI(rsKijyun, "KaigoSeikatuHi_T" + kojinTouki[i] , kijyunIdxKojin[i]);
+                    textTouki.setText("" + touki);
+                }
             }
             
             //加算
@@ -5030,19 +5089,29 @@ double sikiB2 = sikiA * 0.9D;
             //２類(按分)
             text2Total.setText("" + Math.round(keisanZumi2rui));
             
-            int ninteiM = DbAccessOS.getValueI(ninteiYmd.substring(4, 6));
+            
             //冬季加算 11-3
-            int touki = 0;
+            int touki = DbAccessOS.getValueI(textTouki.getText());
             if ((ninteiM >= 11) || (ninteiM <= 3)) {
-                touki = dbKijyun.getValueI(rsKijyun, "kyotaku2_T" + OpenSeihoNintei.DefaultTouki + ninzuStr, kijyunIdx);
+                touki = touki + dbKijyun.getValueI(rsKijyun, "kyotaku2_T" + OpenSeihoNintei.DefaultTouki + ninzuStr, kijyunIdx);
+                //10人以上の場合
+                if (kyotakuNinzu >= 10) {
+                    int zoubun = dbKijyun.getValueI(rsKijyun, "kyotaku2_T" + OpenSeihoNintei.DefaultTouki + "10", kijyunIdx);
+                    touki = touki + (zoubun * (kyotakuNinzu - 9));
+                }
                 textTouki.setText("" + touki);
             } else {
                 textTouki.setText("0");
             }
             //期末一時扶助 12
-            int kimatu = 0;
+            int kimatu = DbAccessOS.getValueI(textKimatu.getText());
             if (ninteiM == 12) {
-                kimatu = dbKijyun.getValueI(rsKijyun, "Kimatu_" + ninzuStr, kijyunIdx);
+                kimatu = kimatu + dbKijyun.getValueI(rsKijyun, "Kimatu_" + ninzuStr, kijyunIdx);
+                //10人以上の場合
+                if (kyotakuNinzu >= 10) {
+                    int zoubun = dbKijyun.getValueI(rsKijyun, "Kimatu_10", kijyunIdx);
+                    kimatu = kimatu + (zoubun * (kyotakuNinzu - 9));
+                }
                 textKimatu.setText("" + kimatu);
             } else {
                 textKimatu.setText("0");
@@ -5116,17 +5185,17 @@ double sikiB2 = sikiA * 0.9D;
     private javax.swing.JCheckBox chkSyougai;
     private javax.swing.JCheckBox chkTyouhuku;
     private javax.swing.JCheckBox chkZaitaku;
-    private openseiho.comboID comboIDHousyasen;
-    private openseiho.comboID comboIDKasanBoshi;
-    private openseiho.comboID comboIDKasanJidouYouiku;
-    private openseiho.comboID comboIDKasanNinpu;
-    private openseiho.comboID comboIDKasanSanpu;
-    private openseiho.comboID comboIDKasanSyougai;
-    private openseiho.comboID comboIDKyuti;
-    private openseiho.comboID comboIDNinzuu;
-    private openseiho.comboID comboIDSeikatuKeitai;
-    private openseiho.comboID comboIDTouki;
-    private openseiho.comboID comboIDsOffecePath;
+    private openseiho.OsComboID comboIDHousyasen;
+    private openseiho.OsComboID comboIDKasanBoshi;
+    private openseiho.OsComboID comboIDKasanJidouYouiku;
+    private openseiho.OsComboID comboIDKasanNinpu;
+    private openseiho.OsComboID comboIDKasanSanpu;
+    private openseiho.OsComboID comboIDKasanSyougai;
+    private openseiho.OsComboID comboIDKyuti;
+    private openseiho.OsComboID comboIDNinzuu;
+    private openseiho.OsComboID comboIDSeikatuKeitai;
+    private openseiho.OsComboID comboIDTouki;
+    private openseiho.OsComboID comboIDsOffecePath;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -5350,45 +5419,45 @@ double sikiB2 = sikiA * 0.9D;
     private javax.swing.JPanel panelSetai;
     private javax.swing.JPanel panelSetaiBase;
     private openseihonintei.SetaiPanel setaiInPanel;
-    private javax.swing.JTextField text1Ippan;
-    private javax.swing.JTextField text1Ippan1;
-    private javax.swing.JTextField text1Kasan;
-    private javax.swing.JTextField text1Kasan1;
-    private javax.swing.JTextField text1Total;
-    private javax.swing.JTextField text1Total1;
-    private javax.swing.JTextField text1TotalKyotaku;
-    private javax.swing.JTextField text2Total;
-    private javax.swing.JTextField text2Total1;
+    private openseiho.OsTextNum text1Ippan;
+    private openseiho.OsTextNum text1Ippan1;
+    private openseiho.OsTextNum text1Kasan;
+    private openseiho.OsTextNum text1Kasan1;
+    private openseiho.OsTextNum text1Total;
+    private openseiho.OsTextNum text1Total1;
+    private openseiho.OsTextNum text1TotalKyotaku;
+    private openseiho.OsTextNum text2Total;
+    private openseiho.OsTextNum text2Total1;
     private javax.swing.JTextArea textBikou;
-    private javax.swing.JTextField textCaseNo;
-    private javax.swing.JTextField textIryou;
-    private javax.swing.JTextField textIryou1;
-    private javax.swing.JTextField textJyutaku;
-    private javax.swing.JTextField textJyutaku1;
-    private javax.swing.JTextField textKaigo;
-    private javax.swing.JTextField textKaigo1;
-    private javax.swing.JTextField textKaigoHi;
-    private javax.swing.JTextField textKaigoSisetu;
-    private javax.swing.JTextField textKasanBoshiNinzuu;
-    private javax.swing.JTextField textKasanBoshiNinzuuS;
-    private javax.swing.JTextField textKasanKaigoHokenRyou;
-    private javax.swing.JTextField textKimatu;
-    private javax.swing.JTextField textKimatu1;
-    private javax.swing.JTextField textKyouiku;
-    private javax.swing.JTextField textKyouiku1;
-    private javax.swing.JTextField textMyouji;
-    private javax.swing.JTextField textMyoujiKana;
-    private javax.swing.JTextField textSeikatuKei;
-    private javax.swing.JTextField textSeikatuKei1;
-    private openseiho.textYmdPanel textSyussanYmd;
-    private javax.swing.JTextField textTeigenRitu;
-    private javax.swing.JTextField textTeigenRitu1;
-    private javax.swing.JTextField textTotal;
-    private javax.swing.JTextField textTotal1;
-    private javax.swing.JTextField textTouki;
-    private javax.swing.JTextField textTouki1;
-    private openseiho.textYmdPanel textYmdKian;
-    private openseiho.textYmdPanel textYmdNintei;
+    private openseiho.OsText textCaseNo;
+    private openseiho.OsTextNum textIryou;
+    private openseiho.OsTextNum textIryou1;
+    private openseiho.OsTextNum textJyutaku;
+    private openseiho.OsTextNum textJyutaku1;
+    private openseiho.OsTextNum textKaigo;
+    private openseiho.OsTextNum textKaigo1;
+    private openseiho.OsTextNum textKaigoHi;
+    private openseiho.OsTextNum textKaigoSisetu;
+    private openseiho.OsTextNum textKasanBoshiNinzuu;
+    private openseiho.OsTextNum textKasanBoshiNinzuuS;
+    private openseiho.OsTextNum textKasanKaigoHokenRyou;
+    private openseiho.OsTextNum textKimatu;
+    private openseiho.OsTextNum textKimatu1;
+    private openseiho.OsTextNum textKyouiku;
+    private openseiho.OsTextNum textKyouiku1;
+    private openseiho.OsText textMyouji;
+    private openseiho.OsText textMyoujiKana;
+    private openseiho.OsTextNum textSeikatuKei;
+    private openseiho.OsTextNum textSeikatuKei1;
+    private openseiho.OsTextYmd textSyussanYmd;
+    private openseiho.OsText textTeigenRitu;
+    private openseiho.OsText textTeigenRitu1;
+    private openseiho.OsTextNum textTotal;
+    private openseiho.OsTextNum textTotal1;
+    private openseiho.OsTextNum textTouki;
+    private openseiho.OsTextNum textTouki1;
+    private openseiho.OsTextYmd textYmdKian;
+    private openseiho.OsTextYmd textYmdNintei;
     // End of variables declaration//GEN-END:variables
 
 }

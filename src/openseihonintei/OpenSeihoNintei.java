@@ -14,7 +14,7 @@ import javax.swing.UIManager;
  */
 public class OpenSeihoNintei {
 public static final String version = "0.01";
-public static int MaxSetaiIn = 14;
+public static int MaxSetaiIn = 20;
 public static String DefaultKyuti = "11";
 public static String DefaultTouki = "6";
 

@@ -18,8 +18,8 @@
 
 package openseihonintei;
 
-import openseiho.classYMD;
-import openseiho.comboID;
+import openseiho.OsClassYMD;
+import openseiho.OsComboID;
 import com.ibm.icu.text.Transliterator;
 
 /**
@@ -123,10 +123,10 @@ public class SetaiPanel extends javax.swing.JPanel {
      * @param ninteiYMD : YmdID
      */
     public void setNenreiCalc(String ninteiYMD) {
-        if (!classYMD.isNumeric(ninteiYMD)) {
+        if (!OsClassYMD.isNumeric(ninteiYMD)) {
             return;
         }
-        int nendo = classYMD.getNendo(ninteiYMD);
+        int nendo = OsClassYMD.getNendo(ninteiYMD);
         setNenrei(nendo);
     }
     /**
@@ -187,19 +187,19 @@ public class SetaiPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         checked = new javax.swing.JCheckBox();
-        textName = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
-        textNenrei = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        textYmd = new openseiho.textYmdPanel();
-        comboID1 = new openseiho.comboID();
-        comboID2 = new openseiho.comboID();
-        textKana = new javax.swing.JTextField();
+        textYmd = new openseiho.OsTextYmd();
+        comboID1 = new openseiho.OsComboID();
+        comboID2 = new openseiho.OsComboID();
         jLabel3 = new javax.swing.JLabel();
+        textName = new openseiho.OsText();
+        textKana = new openseiho.OsText();
+        textNenrei = new openseiho.OsTextNum();
 
         setFocusTraversalPolicyProvider(true);
         setMinimumSize(new java.awt.Dimension(0, 64));
-        setPreferredSize(new java.awt.Dimension(686, 64));
+        setPreferredSize(new java.awt.Dimension(686, 75));
 
         checked.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         checked.setText("構成員");
@@ -210,29 +210,13 @@ public class SetaiPanel extends javax.swing.JPanel {
             }
         });
 
-        textName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textNameActionPerformed(evt);
-            }
-        });
-        textName.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                textNameKeyPressed(evt);
-            }
-        });
-
         jLabel1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel1.setText("認定年齢");
-
-        textNenrei.setEditable(false);
-        textNenrei.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        textNenrei.setFocusable(false);
 
         jLabel2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel2.setText("歳");
 
         textYmd.setCaption("生年月日");
-        textYmd.setDebugGraphicsOptions(0);
         textYmd.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 textYmdPropertyChange(evt);
@@ -249,14 +233,16 @@ public class SetaiPanel extends javax.swing.JPanel {
         comboID2.setId0(new java.lang.Integer(2));
         comboID2.setPostCap("");
 
+        jLabel3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
+        jLabel3.setText("カナ氏名");
+
         textKana.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 textKanaActionPerformed(evt);
             }
         });
 
-        jLabel3.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel3.setText("カナ氏名");
+        textNenrei.setEditable(false);
 
         org.jdesktop.layout.GroupLayout layout = new org.jdesktop.layout.GroupLayout(this);
         this.setLayout(layout);
@@ -269,11 +255,11 @@ public class SetaiPanel extends javax.swing.JPanel {
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(layout.createSequentialGroup()
                         .add(textName, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 152, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(18, 18, 18)
                         .add(jLabel3)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(textKana, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 152, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                        .add(textKana, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 162, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(21, 21, 21)
                         .add(comboID1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 81, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(comboID2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 139, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
@@ -282,7 +268,7 @@ public class SetaiPanel extends javax.swing.JPanel {
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jLabel1)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(textNenrei, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 41, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(textNenrei, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 35, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jLabel2)))
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -293,9 +279,9 @@ public class SetaiPanel extends javax.swing.JPanel {
                 .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                         .add(checked)
-                        .add(textName, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .add(jLabel3)
-                        .add(textKana, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                        .add(textName, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(textKana, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                     .add(comboID2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(comboID1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
@@ -303,33 +289,11 @@ public class SetaiPanel extends javax.swing.JPanel {
                     .add(textYmd, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(layout.createParallelGroup(org.jdesktop.layout.GroupLayout.BASELINE)
                         .add(jLabel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .add(textNenrei, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .add(jLabel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .add(jLabel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 23, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(textNenrei, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void textNameKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_textNameKeyPressed
-
-    }//GEN-LAST:event_textNameKeyPressed
-
-    private void textKanaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textKanaActionPerformed
-        // TODO add your handling code here:
-        //ひらがな→カタカナ変換
-        Transliterator tr = Transliterator.getInstance("Hiragana-Katakana");
-        textKana.setText(tr.transform(textKana.getText()));
-    }//GEN-LAST:event_textKanaActionPerformed
-
-    private void textNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textNameActionPerformed
-        // Check
-        /*
-        if (textName.getText().equals("")) {
-            textName.setBackground(Color.red);
-        } else {
-            textName.setBackground(Color.green);
-        }
-                */
-    }//GEN-LAST:event_textNameActionPerformed
 
     private void checkedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkedActionPerformed
         // TODO add your handling code here:
@@ -345,17 +309,23 @@ public class SetaiPanel extends javax.swing.JPanel {
         setNenreiCalc(frame.getNinteiYMD());
     }//GEN-LAST:event_textYmdPropertyChange
 
+    private void textKanaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textKanaActionPerformed
+        //ひらがな→カタカナ変換
+        Transliterator tr = Transliterator.getInstance("Hiragana-Katakana");
+        textKana.setText(tr.transform(textKana.getText()));
+    }//GEN-LAST:event_textKanaActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox checked;
-    private openseiho.comboID comboID1;
-    private openseiho.comboID comboID2;
+    private openseiho.OsComboID comboID1;
+    private openseiho.OsComboID comboID2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JTextField textKana;
-    private javax.swing.JTextField textName;
-    private javax.swing.JTextField textNenrei;
-    private openseiho.textYmdPanel textYmd;
+    private openseiho.OsText textKana;
+    private openseiho.OsText textName;
+    private openseiho.OsTextNum textNenrei;
+    private openseiho.OsTextYmd textYmd;
     // End of variables declaration//GEN-END:variables
 
 }

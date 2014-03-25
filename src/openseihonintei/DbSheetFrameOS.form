@@ -252,7 +252,7 @@
                     <Property name="text" type="java.lang.String" value="&#x30c6;&#x30fc;&#x30d6;&#x30eb;&#x540d;"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="jTextFieldTableName">
+                <Component class="openseiho.OsText" name="jTextFieldTableName">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
                     <Property name="text" type="java.lang.String" value="jTextFieldTableName"/>
@@ -263,7 +263,7 @@
                     <Property name="text" type="java.lang.String" value="WHERE&#x53e5;"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="jTextFieldWhere">
+                <Component class="openseiho.OsText" name="jTextFieldWhere">
                   <Properties>
                     <Property name="editable" type="boolean" value="false"/>
                     <Property name="text" type="java.lang.String" value="jTextFieldWhere"/>

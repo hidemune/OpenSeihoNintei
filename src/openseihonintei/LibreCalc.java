@@ -240,6 +240,7 @@ private static XDispatchProvider xDocDispatchProviderOut = null;
                         String value = ArrStr.get(i)[j][1];
                         try {
                             xCellRange = xSheet.getCellRangeByName(name);
+                            value = value.replaceAll("''*", "'");
                             xCellRange.getCellByPosition(0, 0).setFormula(value);
                         } catch (Exception e) {
                             System.err.println("Err : " + name + "/" + value);

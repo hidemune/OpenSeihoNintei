@@ -21,7 +21,7 @@ package openseihonintei;
 import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.ListModel;
-import openseiho.classYMD;
+import openseiho.OsClassYMD;
 
 /**
  *
@@ -61,7 +61,7 @@ private String ninteiYmd;
         lstM.addElement("■今日付けで起案■");
         
         for (int i = 1; i < rs.length; i++) {
-            String wk = "認定日：" + classYMD.YmdIdToStr(rs[i][2]) + " 起案日：" + classYMD.YmdIdToStr(rs[i][1]) + "                |" + rs[i][0] + "|" + rs[i][1] + "|" + rs[i][2];
+            String wk = "認定日：" + OsClassYMD.YmdIdToStr(rs[i][2]) + " 起案日：" + OsClassYMD.YmdIdToStr(rs[i][1]) + "                                |" + rs[i][0] + "|" + rs[i][1] + "|" + rs[i][2];
             lstM.addElement(wk);
         }
         
