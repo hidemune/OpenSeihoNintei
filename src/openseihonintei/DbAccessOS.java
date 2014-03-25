@@ -349,7 +349,7 @@ public class DbAccessOS {
     }
     
     /**
-     * デフォルトソート版：強制的に、先頭カラムから順にソートされます。
+     * SQLを元にレザルトセットを取得
      * @param SQL
      * @return 
      */
@@ -447,6 +447,21 @@ public class DbAccessOS {
         return ret;
     }
     
+    /**
+     * レザルトセットを標準出力に
+     * 
+     */
+    public void printRS(String[][] rs) {
+        for (int i = 0; i < rs.length; i++) {
+            StringBuilder sb = new StringBuilder();
+            for (int j = 0; j < rs[i].length; j++) {
+                sb.append(rs[i][j]);
+                sb.append("\t");
+            }
+            //sb.append("\n");
+            System.out.println(sb.toString());
+        }
+    }
     /**
      * デフォルトソート版：強制的に、先頭カラムから順にソートされます。
      * @param where

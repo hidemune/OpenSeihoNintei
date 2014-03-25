@@ -699,7 +699,6 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         listNissu = new javax.swing.JList();
         jLabel67 = new javax.swing.JLabel();
         jLabel68 = new javax.swing.JLabel();
-        jLabel69 = new javax.swing.JLabel();
         jLabel74 = new javax.swing.JLabel();
         textTotal1 = new openseiho.OsTextNum();
         jButton3 = new javax.swing.JButton();
@@ -2835,7 +2834,6 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         });
         jScrollPane40.setViewportView(listSeikatuReki);
 
-        listNissu.setBackground(new java.awt.Color(255, 204, 204));
         listNissu.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         listNissu.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "9", "10", "11" };
@@ -2845,13 +2843,10 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         jScrollPane41.setViewportView(listNissu);
 
         jLabel67.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel67.setText("分母は、２月のみ実日数、その他は30日となります。");
+        jLabel67.setText("分母は、全ての月について実日数とします。");
 
         jLabel68.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel68.setText("日数");
-
-        jLabel69.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel69.setText("日数は、手修正が可能です。選択してEnterを押してください。");
 
         jLabel74.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jLabel74.setText("月額計");
@@ -2874,10 +2869,8 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                 .add(jPanel23Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jPanel23Layout.createSequentialGroup()
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(jPanel23Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                            .add(jLabel67)
-                            .add(jLabel69))
-                        .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .add(jLabel67)
+                        .addContainerGap(113, Short.MAX_VALUE))
                     .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel23Layout.createSequentialGroup()
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .add(jLabel74)
@@ -2899,8 +2892,6 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                             .add(jLabel74)
                             .add(textTotal1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .add(jLabel69)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                         .add(jLabel67))
                     .add(jLabel68))
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -2978,7 +2969,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                 .add(jPanel17Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(jPanel21, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                     .add(jPanel22, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .add(198, 198, 198))
         );
 
         jScrollPaneHiwari.setViewportView(jPanel17);
@@ -3718,26 +3709,42 @@ String[][] field = {
     private void hiwari() {
         String caseNo = textCaseNo.getText();
         String ninteiYmd = textYmdNintei.getID();
+        int ninteiY = DbAccessOS.getValueI(ninteiYmd.substring(4, 6));
         String kianYmd = textYmdKian.getID();
         int nendo = OsClassYMD.getNendo(ninteiYmd);
         String ninteYm = ninteiYmd.substring(0, 6);
         //生活歴の取得
         ((DefaultListModel)listSeikatuReki.getModel()).clear();
         ((DefaultListModel)listNissu.getModel()).clear();
-        String SQL =  "SELECT DISTINCT kianYmd , ninteiYmd FROM saiseihi WHERE caseNo = '" + caseNo + "' AND kianYmd <= '" + kianYmd + "' AND ninteiYmd >='" + ninteYm + "00" + "' AND ninteiYmd <='" + ninteYm + "99" + "'";
+//        String SQL =  "SELECT DISTINCT kianYmd , ninteiYmd FROM saiseihi WHERE caseNo = '" + caseNo + "' AND kianYmd <= '" + kianYmd + "' AND ninteiYmd >='" + ninteYm + "00" + "' AND ninteiYmd <='" + ninteYm + "99" + "'";
+        String SQL =  "SELECT DISTINCT kianYmd , ninteiYmd FROM saiseihi WHERE caseNo = '" + caseNo + "' AND kianYmd <= '" + kianYmd + "' AND ninteiYmd >='" + ninteYm + "00" + "' AND ninteiYmd <='" + ninteiYmd + "'";
         String[][] rsSeikatuReki = dbSaiseihi.getResultSetTableBySQL(SQL);
+        dbSaiseihi.printRS(rsSeikatuReki);
+        
         Integer[] nissu = new Integer[rsSeikatuReki.length];
-        nissu[0] = 0;
-        for (int i = 1; i < rsSeikatuReki.length; i++) {
+        //nissu[0] = 0;
+        int JituNissu = OsClassYMD.getTukiNissu(ninteiYmd);
+        for (int i = rsSeikatuReki.length - 1; i > 0 ; i--) {
             String ninteiYmdWk = dbSaiseihi.getValue(rsSeikatuReki, "ninteiYmd", i);
             String kianYmdWk = dbSaiseihi.getValue(rsSeikatuReki, "kianYmd", i);
+            String nintiD = ninteiYmdWk.substring(6, 8);
             
-            ((DefaultListModel)listSeikatuReki.getModel()).addElement("認定日:" + OsClassYMD.YmdIdToStrS(ninteiYmdWk) + "　/　起案日:" + OsClassYMD.YmdIdToStrS(kianYmdWk));
+            ((DefaultListModel)listSeikatuReki.getModel()).addElement("認定日:" + OsClassYMD.YmdIdToStrS(ninteiYmdWk) + "　/　起案日:" + OsClassYMD.YmdIdToStrS(kianYmdWk) + "                                   |" + kianYmdWk + "|" + ninteiYmdWk);
             //日数
-            nissu[i] = OsClassYMD.getTukiNissu(ninteiYmdWk) - nissu[i - 1];
+            nissu[i] = JituNissu - DbAccessOS.getValueI(nintiD) + 1;
+            JituNissu = DbAccessOS.getValueI(nintiD) - 1;
         }
-        for (int i = 1; i < rsSeikatuReki.length; i++) {
+        for (int i = rsSeikatuReki.length - 1; i > 0 ; i--) {
             ((DefaultListModel)listNissu.getModel()).addElement("" + nissu[i]);
+        }
+        
+        //3次元：起案順に全て取得
+        ArrayList<String[][]> arrKian = new ArrayList<String[][]>();
+        for (int i = 0; i < listNissu.getModel().getSize(); i++) {
+            String[] split = ((String)listSeikatuReki.getModel().getElementAt(i)).split("\\|");
+            String[][] rsSaiseihiRireki = dbSaiseihi.getResultSetTable("WHERE caseNo = '" + caseNo + "' AND kianYmd = '" + split[1] + "' AND ninteiYmd ='" + split[2] + "'");
+            arrKian.add(rsSaiseihiRireki);
+            dbSaiseihi.printRS(rsSaiseihiRireki);
         }
         
         //setai, kojin の取得
@@ -3824,7 +3831,33 @@ String[][] field = {
                 ((DefaultListModel)listKaigoSonota1.getModel()).addElement("" + sonotaK);
             }
             
-            String ippan1 = dbSaiseihi.getValue(rsSaiseihiN, "ichiRuiIppan", i);
+            //☆ 一般分！！！　日割り対象 ☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆
+            String ippan1 = "";         // dbSaiseihi.getValue(rsSaiseihiN, "ichiRuiIppan", i);
+            double ippanTotalWk = 0;
+            
+            double backWk = 0;
+            boolean flg = false;
+            double nissuAll = 30;
+//            if (ninteiY == 2) {
+//                nissuAll = OsClassYMD.getTukiNissu(ninteiYmd);
+//            }
+            //全ての月について、実日数とすべき
+            nissuAll = OsClassYMD.getTukiNissu(ninteiYmd);
+            for (int j = 0; j < listNissu.getModel().getSize(); j++) {
+                double ippanWk = dbSaiseihi.getValueI(arrKian.get(j), "ichiRuiIppan", i);
+                double nissuWk = DbAccessOS.getValueI((String) listNissu.getModel().getElementAt(j));
+                //そもそも生活形態は変わったか
+                if ((j > 0) && (backWk != ippanWk)) {
+                    flg = true;
+                }
+                ippanTotalWk = ippanTotalWk + (ippanWk * nissuWk / nissuAll);
+                backWk = ippanWk;
+            }
+            if (flg) {
+                ippan1 = String.valueOf(Math.round(ippanTotalWk));
+            } else {
+                ippan1 = dbSaiseihi.getValue(rsSaiseihiN, "ichiRuiIppan", i);
+            }
             String kasan = dbSaiseihi.getValue(rsSaiseihiN, "ichiRuiKasan", i);
             String kasankbn = dbSaiseihi.getValue(rsSaiseihiN, "ichiRuiKasanKbn", i);
             
@@ -3849,6 +3882,19 @@ String[][] field = {
                 
                 String teigen = dbSaiseihi.getValue(rsSaiseihiN, "ichiRuiTeigenRitu", i);
                 
+                double niruiTotalWk = 0;
+                for (int j = 0; j < listNissu.getModel().getSize(); j++) {
+                    double niruiWk = dbSaiseihi.getValueI(arrKian.get(j), "niRuiTotal", i);
+                    double nissuWk = DbAccessOS.getValueI((String) listNissu.getModel().getElementAt(j));
+                    //そもそも生活形態は変わったか
+                    if ((j > 0) && (backWk != niruiWk)) {
+                        flg = true;
+                    }
+                    niruiTotalWk = niruiTotalWk + (niruiWk * nissuWk / nissuAll);
+                    backWk = niruiWk;
+                }
+                niT = (int) Math.round(niruiTotalWk);
+                
                 text1Total1.setText("" + ichiT);
                 text2Total1.setText("" + niT);
                 textTouki1.setText("" + toukiT);
@@ -3872,6 +3918,29 @@ String[][] field = {
         }
         text1Ippan1.setText("" + itiRui);
         text1Kasan1.setText("" + kasan);
+        
+        hiwariRecalc();
+    }
+    private void hiwariRecalc() {
+        //合計金額等の再計算
+        int wk = 0;
+        wk = wk + DbAccessOS.getValueI(text1Ippan1.getText());
+        wk = wk + DbAccessOS.getValueI(text1Kasan1.getText());
+        text1Total1.setText("" + wk);
+        
+        wk = wk + DbAccessOS.getValueI(text2Total1.getText());
+        wk = wk + DbAccessOS.getValueI(textTouki1.getText());
+        wk = wk + DbAccessOS.getValueI(textKimatu1.getText());
+        
+        wk = (int) (Math.ceil((double)wk / 10D) * 10D);
+        textSeikatuKei1.setText("" + wk);
+        
+        wk = wk + DbAccessOS.getValueI(textJyutaku1.getText());
+        wk = wk + DbAccessOS.getValueI(textKyouiku1.getText());
+        wk = wk + DbAccessOS.getValueI(textIryou1.getText());
+        wk = wk + DbAccessOS.getValueI(textKaigo1.getText());
+        
+        textTotal1.setText("" + wk);
     }
     /**
      * 調書２の内容をテーブルに保存する。
@@ -5271,7 +5340,6 @@ double sikiB2 = sikiA * 0.9D;
     private javax.swing.JLabel jLabel66;
     private javax.swing.JLabel jLabel67;
     private javax.swing.JLabel jLabel68;
-    private javax.swing.JLabel jLabel69;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel70;
     private javax.swing.JLabel jLabel72;
