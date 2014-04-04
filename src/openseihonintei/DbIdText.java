@@ -25,32 +25,24 @@ package openseihonintei;
  * 
  * テーブル名：ID-Textテーブル
  */
-public class DbSetai extends DbAccessOS{
+public class DbIdText extends DbAccessOS{
     //個別部分 : テーブル定義
-    private static final String tableName = "setai";
-    private static final String[] tableUnique = {"caseNo", "inNo"};
-    private static final String[] tablePrimary = {"caseNo", "inNo"};
+    private static final String tableName = "id_text";
+    private static final String[] tableUnique = {"id0", "id1"};
+    private static final String[] tablePrimary = {"id0", "id1"};
     private static final String[][] tableField = {
         //列名, データ型(, 制約)
-        {"caseNo", "TEXT"}, 
-        {"inNo", "INTEGER"},
-        {"syokkenFlg", "INTEGER"},
-        {"yubinNo", "TEXT"},
-        {"Address1", "TEXT"},
-        {"Address2", "TEXT"},
-        {"kouseiIn", "INTEGER"},
-        {"nameKj", "TEXT"},
-        {"nameKn", "TEXT"},
-        {"seibetu", "INTEGER"},
-        {"zokuCd", "INTEGER"},
-        {"birthYmd", "TEXT"}
+        {"id0", "INTEGER"},
+        {"id1", "INTEGER"},
+        {"text", "TEXT"}
     };
     //共通部分
-    public DbSetai(){
+    public DbIdText(){
         setTableName(tableName);
         setTableUnique(tableUnique);
         setTablePrimary(tablePrimary);
         setTableField(tableField);
         logDebug("初期化:" + tableName);
     }
+    
 }

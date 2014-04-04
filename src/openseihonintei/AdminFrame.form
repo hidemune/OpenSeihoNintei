@@ -33,7 +33,7 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
-              <EmptySpace pref="17" max="32767" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
               <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="13" max="-2" attributes="0"/>
           </Group>
@@ -47,13 +47,6 @@
         <DimensionLayout dim="0">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                      <Component id="jScrollPane2" max="32767" attributes="0"/>
-                      <Component id="jScrollPane1" pref="483" max="32767" attributes="0"/>
-                  </Group>
-                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-              </Group>
-              <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
@@ -65,12 +58,24 @@
                   <Component id="jButton1" min="-2" pref="109" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
+              <Group type="102" alignment="0" attributes="0">
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Component id="osComboIDLibreExePath" alignment="1" min="-2" pref="453" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                          <Component id="jScrollPane2" max="32767" attributes="0"/>
+                          <Component id="jScrollPane1" pref="483" max="32767" attributes="0"/>
+                      </Group>
+                  </Group>
+                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+              </Group>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
+                  <Component id="osComboIDLibreExePath" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="jButton1" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
@@ -114,13 +119,15 @@
         <Component class="javax.swing.JComboBox" name="comboAction">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="6">
+              <StringArray count="8">
                 <StringItem index="0" value="&#x64cd;&#x4f5c;&#x3092;&#x9078;&#x629e;"/>
                 <StringItem index="1" value="create"/>
                 <StringItem index="2" value="edit"/>
                 <StringItem index="3" value="drop"/>
                 <StringItem index="4" value="program"/>
                 <StringItem index="5" value="SQL Test"/>
+                <StringItem index="6" value="Export"/>
+                <StringItem index="7" value="Import"/>
               </StringArray>
             </Property>
           </Properties>
@@ -165,6 +172,15 @@
             </Component>
           </SubComponents>
         </Container>
+        <Component class="openseiho.OsComboID" name="osComboIDLibreExePath">
+          <Properties>
+            <Property name="caption" type="java.lang.String" value="sOffice"/>
+            <Property name="comboWidth" type="java.lang.Integer" value="10000"/>
+            <Property name="defaultID1" type="int" value="1"/>
+            <Property name="id0" type="java.lang.Integer" value="20"/>
+            <Property name="postCap" type="java.lang.String" value=""/>
+          </Properties>
+        </Component>
       </SubComponents>
     </Container>
   </SubComponents>

@@ -63,6 +63,7 @@ public class AdminFrame extends javax.swing.JFrame {
         textPG = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
         textRS = new javax.swing.JTextArea();
+        osComboIDLibreExePath = new openseiho.OsComboID();
 
         setTitle("データベース管理");
 
@@ -70,7 +71,7 @@ public class AdminFrame extends javax.swing.JFrame {
 
         comboDB.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "テーブルを選択", "id_text", "setai", "kojin", "saiseihi", "chosyo2", "kijyun" }));
 
-        comboAction.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "操作を選択", "create", "edit", "drop", "program", "SQL Test" }));
+        comboAction.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "操作を選択", "create", "edit", "drop", "program", "SQL Test", "Export", "Import" }));
 
         jButton1.setText("実行");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -89,15 +90,16 @@ public class AdminFrame extends javax.swing.JFrame {
         textRS.setRows(5);
         jScrollPane2.setViewportView(textRS);
 
+        osComboIDLibreExePath.setCaption("sOffice");
+        osComboIDLibreExePath.setComboWidth(new java.lang.Integer(10000));
+        osComboIDLibreExePath.setDefaultID1(1);
+        osComboIDLibreExePath.setId0(new java.lang.Integer(20));
+        osComboIDLibreExePath.setPostCap("");
+
         org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-            .add(jPanel1Layout.createSequentialGroup()
-                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
-                    .add(jScrollPane2)
-                    .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 483, Short.MAX_VALUE))
-                .add(0, 0, Short.MAX_VALUE))
             .add(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .add(jLabel1)
@@ -108,11 +110,20 @@ public class AdminFrame extends javax.swing.JFrame {
                 .add(18, 18, 18)
                 .add(jButton1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 109, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .add(jPanel1Layout.createSequentialGroup()
+                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                    .add(osComboIDLibreExePath, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 453, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
+                        .add(jScrollPane2)
+                        .add(jScrollPane1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 483, Short.MAX_VALUE)))
+                .add(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
+                .add(osComboIDLibreExePath, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                 .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
                     .add(jButton1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .add(jPanel1Layout.createSequentialGroup()
@@ -139,7 +150,7 @@ public class AdminFrame extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(17, Short.MAX_VALUE)
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .add(13, 13, 13))
         );
@@ -174,10 +185,10 @@ public class AdminFrame extends javax.swing.JFrame {
         
         //DBアクセサーを選択
         DbAccessOS accesser = null;
-/*        if (table.equals("id_text")) {
+        if (table.equals("id_text")) {
             //DbAccessOS.DebugMode = true;
-            accesser = new openseiho.dbIdText();            
-        } // */
+            accesser = new DbIdText();            
+        } 
         if (table.equals("setai")) {
             //DbAccessOS.DebugMode = true;
             accesser = new DbSetai();            
@@ -249,6 +260,34 @@ public class AdminFrame extends javax.swing.JFrame {
             textRS.setText(sb.toString());
         }
         
+        if (action.equals("Export")) {
+            String where = "";
+            String[][] rs = accesser.getResultSetTable(where);
+            //ODFファイルへ吐き出し
+            LibreCalc lbr = new LibreCalc();
+            flg = true;
+            try{
+                lbr.exportTable(osComboIDLibreExePath.getSelectedItem(), rs, "noformat.ods", "A4L");
+            }catch (Exception e) {
+                msg = "Calcへの吐き出し時にエラーが発生しました。";
+            }
+        }
+        
+        if (action.equals("Import")) {
+            //ODFファイルから読出し
+            LibreCalc lbr = new LibreCalc();
+            flg = true;
+            String[][] rs = null;
+            try{
+                rs = lbr.importTable(osComboIDLibreExePath.getSelectedItem(), "print/id_text.for_import.ods");
+                DbAccessOS.printRS(rs);
+                //更新処理
+                
+            }catch (Exception e) {
+                msg = "Calcからの呼び出し及び更新時にエラーが発生しました。";
+            }
+        }
+        
         if (!(msg.equals(""))) {
             JOptionPane.showMessageDialog(this, msg);
             return;
@@ -304,6 +343,7 @@ public class AdminFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private openseiho.OsComboID osComboIDLibreExePath;
     private javax.swing.JTextArea textPG;
     private javax.swing.JTextArea textRS;
     // End of variables declaration//GEN-END:variables

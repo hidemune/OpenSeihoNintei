@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2014 hdm
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
+ */
+
 package openseihonintei;
 
 
@@ -53,6 +71,7 @@ public static String LibreExePath ;   //= "C:\\Program Files (x86)\\OpenOffice 4
 com.sun.star.uno.XComponentContext makeContext = null;
 com.sun.star.frame.XDesktop makeDesktop = null;
 XSpreadsheetDocument xSheetDocumentOut = null;
+Object oDocToStoreOut = null;
 private static XDispatchHelper xDispatchHelperOut = null;
 private static XDispatchProvider xDocDispatchProviderOut = null;
 
@@ -93,10 +112,68 @@ private static XDispatchProvider xDocDispatchProviderOut = null;
             e.printStackTrace(System.err);
             return;
         }
-        JOptionPane.showMessageDialog(null, "処理が完了しました。\n目次を右クリックして「目次と索引の更新」を実行してください。\nその後、名前をつけて保存してください。");
+        JOptionPane.showMessageDialog(null, "処理が完了しました。\n印刷後、必要に応じて名前をつけて保存してください。");
         System.out.println("Done");
     }
-    
+
+    public void exportTable(String ExePath, String[][] rs, String printName, String paperType) {
+        LibreExePath = ExePath ;
+        System.out.println("LibreExePath:" + LibreExePath);
+        if (LibreExePath.equals("")) {
+            //Msg
+            JOptionPane.showMessageDialog(null, "LibreOfficeの実行ファイルのあるフォルダが設定されていません。処理を中断します。");
+            return;
+        }
+        if (JOptionPane.showConfirmDialog(null, "LibreOffice文書を作成します。\nよろしいですか？") != JOptionPane.YES_OPTION) {
+            return;
+        }
+
+        try {
+            //com.sun.star.frame.XDesktop xDesktop = null;
+            makeDesktop = getDesktop();
+            
+            xSheetDocumentOut = openCreatedocument(makeDesktop, paperType);
+            initSheet(printName);
+            
+            export(rs, printName, paperType);
+            
+        }
+        catch( Exception e) {
+            e.printStackTrace(System.err);
+            return;
+        }
+        JOptionPane.showMessageDialog(null, "処理が完了しました。\n印刷後、必要に応じて名前をつけて保存してください。");
+        System.out.println("Done");
+    }
+    public String[][] importTable(String ExePath, String printName) {
+        String[][] rs = null;
+        LibreExePath = ExePath ;
+        System.out.println("LibreExePath:" + LibreExePath);
+        if (LibreExePath.equals("")) {
+            //Msg
+            JOptionPane.showMessageDialog(null, "LibreOfficeの実行ファイルのあるフォルダが設定されていません。処理を中断します。");
+            return rs;
+        }
+        if (JOptionPane.showConfirmDialog(null, "LibreOffice文書をDBに登録します。\nよろしいですか？") != JOptionPane.YES_OPTION) {
+            return rs;
+        }
+
+        try {
+            //com.sun.star.frame.XDesktop xDesktop = null;
+            makeDesktop = getDesktop();
+            
+//            initSheet(printName);
+            
+            rs = importRS(printName);
+        }
+        catch( Exception e) {
+            e.printStackTrace(System.err);
+            return rs;
+        }
+        JOptionPane.showMessageDialog(null, "処理が完了しました。\n");
+        System.out.println("Done");
+        return rs;
+    }
     
     public XSpreadsheetDocument openCreatedocument(XDesktop xDesktop, String paperType)
     {
@@ -333,6 +410,252 @@ private static XDispatchProvider xDocDispatchProviderOut = null;
             }
         }
     }
+    
+    public void export(String[][] rs, String printName, String paper) throws IllegalArgumentException, Exception {
+        XComponentContext xContext = null;
+        
+            try {
+                //テンプレートファイル
+                // get the remote office component context
+                String oooExeFolder = LibreExePath;
+                xContext = BootstrapSocketConnector.bootstrap(oooExeFolder);
+                //xContext = com.sun.star.comp.helper.Bootstrap.bootstrap();
+                System.out.println("Connected to a office ...");
+
+                // get the remote office service manager
+                com.sun.star.lang.XMultiComponentFactory xMCF =
+                    xContext.getServiceManager();
+                Object oDesktop = xMCF.createInstanceWithContext(
+                    "com.sun.star.frame.Desktop", xContext);
+                
+                com.sun.star.frame.XComponentLoader xCompLoader =
+                    (com.sun.star.frame.XComponentLoader)
+                         UnoRuntime.queryInterface(
+                             com.sun.star.frame.XComponentLoader.class, oDesktop);
+                
+                
+                //コマンドを発行可能にする
+                XMultiComponentFactory xRemoteServiceManager = null;
+                xRemoteServiceManager = makeContext.getServiceManager();
+                Object configProvider = xRemoteServiceManager.createInstanceWithContext(
+                              "com.sun.star.configuration.ConfigurationProvider",
+                              makeContext );
+                XMultiServiceFactory xConfigProvider = null;
+                xConfigProvider = (com.sun.star.lang.XMultiServiceFactory)
+                    UnoRuntime.queryInterface(
+                        com.sun.star.lang.XMultiServiceFactory.class, configProvider );
+                enableCommands(xConfigProvider);
+                
+                //Calc
+                //XSpreadsheetDocument myDoc = (XSpreadsheetDocument)UnoRuntime.queryInterface( XSpreadsheetDocument.class, xs);
+                XSpreadsheets xSheets = xSheetDocumentOut.getSheets() ;
+                XSpreadsheet xSheet = null;
+                //リザルトセットから、列数を取得
+                for (int i = 0; i < rs.length; i++) {
+                    XCellRange xCellRange = null;
+                    XCell xCell = null;
+
+                    //値をセット
+                    XIndexAccess oIndexSheets = (XIndexAccess) UnoRuntime.queryInterface(
+                        XIndexAccess.class, xSheets);
+                    xSheet = (XSpreadsheet) UnoRuntime.queryInterface(
+                        XSpreadsheet.class, oIndexSheets.getByIndex(0));
+                    for (int j = 0; j < rs[i].length; j++) {
+                        String value = rs[i][j];
+                        try {
+                            xCellRange = xSheet.getCellRangeByPosition(j,i,j,i);
+                            value = value.replaceAll("''*", "'");
+                            xCellRange.getCellByPosition(0, 0).setFormula(value);
+                        } catch (Exception e) {
+                            System.err.println("Err : " + i + "," + j + "/" + value);
+                        }
+                    }
+                }
+                //閉じる 
+                com.sun.star.util.XCloseable xCloseable = (com.sun.star.util.XCloseable)
+                    UnoRuntime.queryInterface(com.sun.star.util.XCloseable.class,
+                                              oDocToStoreOut );
+
+                if (xCloseable != null ) {
+                    xCloseable.close(false);
+                } else {
+                    com.sun.star.lang.XComponent xComp = (com.sun.star.lang.XComponent)
+                        UnoRuntime.queryInterface(
+                            com.sun.star.lang.XComponent.class, oDocToStoreOut );
+                    xComp.dispose();
+                }
+            } catch (com.sun.star.lang.IllegalArgumentException ex) {
+                Logger.getLogger(LibreCalc.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "エラーが発生しました。\nカレントディレクトリに「print/" + printName + "」があるか確認してください。");
+                throw ex;
+                //return; ここには来ない
+            } catch (Exception ex) {
+                Logger.getLogger(LibreCalc.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "エラーが発生しました。");
+                throw ex;
+                //return; ここには来ない
+            }
+            
+    }
+    public String[][] importRS(String printName) throws IllegalArgumentException, Exception {
+        XComponentContext xContext = null;
+        String[][] rs = null;
+        
+            try {
+                //テンプレートファイル
+                // get the remote office component context
+                String oooExeFolder = LibreExePath;
+                xContext = BootstrapSocketConnector.bootstrap(oooExeFolder);
+                //xContext = com.sun.star.comp.helper.Bootstrap.bootstrap();
+                System.out.println("Connected to a office ...");
+
+                // get the remote office service manager
+                com.sun.star.lang.XMultiComponentFactory xMCF =
+                    xContext.getServiceManager();
+                Object oDesktop = xMCF.createInstanceWithContext(
+                    "com.sun.star.frame.Desktop", xContext);
+                
+                com.sun.star.frame.XComponentLoader xCompLoader =
+                    (com.sun.star.frame.XComponentLoader)
+                         UnoRuntime.queryInterface(
+                             com.sun.star.frame.XComponentLoader.class, oDesktop);
+                
+                //コマンドを発行可能にする
+                XMultiComponentFactory xRemoteServiceManager = null;
+                xRemoteServiceManager = makeContext.getServiceManager();
+                Object configProvider = xRemoteServiceManager.createInstanceWithContext(
+                              "com.sun.star.configuration.ConfigurationProvider",
+                              makeContext );
+                XMultiServiceFactory xConfigProvider = null;
+                xConfigProvider = (com.sun.star.lang.XMultiServiceFactory)
+                    UnoRuntime.queryInterface(
+                        com.sun.star.lang.XMultiServiceFactory.class, configProvider );
+                enableCommands(xConfigProvider);
+                
+                //テンプレート読み込み
+                com.sun.star.beans.PropertyValue[] propertyValue =
+                    new com.sun.star.beans.PropertyValue[1];
+                propertyValue[0] = new com.sun.star.beans.PropertyValue();
+                propertyValue[0].Name = "Hidden";           //Hidden AsTemplate
+                propertyValue[0].Value = false;
+                java.io.File sourceFile = new java.io.File(printName);
+                StringBuilder sLoadUrl = new StringBuilder("file:///");
+                sLoadUrl.append(sourceFile.getCanonicalPath().replace('\\', '/'));
+                oDocToStoreOut = xCompLoader.loadComponentFromURL(
+                    sLoadUrl.toString(), "_blank", 0, propertyValue );
+                System.out.println(sLoadUrl.toString());
+                
+                com.sun.star.frame.XStorable xStorable =
+                    (com.sun.star.frame.XStorable)UnoRuntime.queryInterface(
+                        com.sun.star.frame.XStorable.class, oDocToStoreOut );
+                sourceFile = new java.io.File("tmp.ods");
+                StringBuilder sSaveUrl = new StringBuilder("file:///");
+                sSaveUrl.append(sourceFile.getCanonicalPath().replace('\\', '/'));
+                // save
+                propertyValue = new com.sun.star.beans.PropertyValue[ 2 ];
+                propertyValue[0] = new com.sun.star.beans.PropertyValue();
+                propertyValue[0].Name = "Overwrite";
+                propertyValue[0].Value = new Boolean(true);
+                propertyValue[1] = new com.sun.star.beans.PropertyValue();
+                propertyValue[1].Name = "FilterName";
+                propertyValue[1].Value = "calc8";
+                xStorable.storeAsURL( sSaveUrl.toString(), propertyValue );
+
+                //Calc
+                xSheetDocumentOut = (XSpreadsheetDocument)UnoRuntime.queryInterface( XSpreadsheetDocument.class, xStorable);
+                
+                //Calc
+                XSpreadsheets xSheets = xSheetDocumentOut.getSheets() ;
+                XSpreadsheet xSheet = null;
+                XIndexAccess oIndexSheets = (XIndexAccess) UnoRuntime.queryInterface(
+                    XIndexAccess.class, xSheets);
+                xSheet = (XSpreadsheet) UnoRuntime.queryInterface(
+                    XSpreadsheet.class, oIndexSheets.getByIndex(0));
+                
+                //シートから、行数、列数を取得
+                XCellRange xCellRange = null;
+                int Row = 0;
+                int Col = 0;
+                //Row
+                while (true) {
+                    String value = "";
+                    try {
+                        xCellRange = xSheet.getCellRangeByPosition(0,Row,0,Row);
+                        value = xCellRange.getCellByPosition(0, 0).getFormula();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        System.err.println("Err : " + Row + "," + Col + "/" + value);
+                    }
+                    if (value == null) {
+                        break;
+                    }
+                    if (value.equals("")) {
+                        break;
+                    }
+                    Row = Row + 1;
+                }
+                //Col
+                while (true) {
+                    String value = "";
+                    try {
+                        xCellRange = xSheet.getCellRangeByPosition(Col,0,Col,0);
+                        value = xCellRange.getCellByPosition(0, 0).getFormula();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        System.err.println("Err : " + Row + "," + Col + "/" + value);
+                    }
+                    if (value == null) {
+                        break;
+                    }
+                    if (value.equals("")) {
+                        break;
+                    }
+                    Col = Col + 1;
+                }
+                //rs 初期化
+                rs = new String[Row][Col];
+                
+                for (int i = 0; i < Row; i++) {
+                    //値を取得
+                    for (int j = 0; j < Col; j++) {
+                        String value = "";
+                        try {
+                            xCellRange = xSheet.getCellRangeByPosition(j,i,j,i);
+                            value = xCellRange.getCellByPosition(0, 0).getFormula();
+                            rs[i][j] = value;
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            return rs;
+                        }
+                    }
+                }
+                //閉じる 
+                com.sun.star.util.XCloseable xCloseable = (com.sun.star.util.XCloseable)
+                    UnoRuntime.queryInterface(com.sun.star.util.XCloseable.class,
+                                              oDocToStoreOut );
+                
+                if (xCloseable != null ) {
+                    xCloseable.close(false);
+                } else {
+                    com.sun.star.lang.XComponent xComp = (com.sun.star.lang.XComponent)
+                        UnoRuntime.queryInterface(
+                            com.sun.star.lang.XComponent.class, oDocToStoreOut );
+                    xComp.dispose();
+                }
+            } catch (com.sun.star.lang.IllegalArgumentException ex) {
+                Logger.getLogger(LibreCalc.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "エラーが発生しました。\nカレントディレクトリに「print/" + printName + "」があるか確認してください。");
+                throw ex;
+                //return; ここには来ない
+            } catch (Exception ex) {
+                Logger.getLogger(LibreCalc.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "エラーが発生しました。");
+                throw ex;
+                //return; ここには来ない
+            }
+            return rs;
+    }
+    
     public void initSheet(String printName) throws IllegalArgumentException, Exception {
         XComponentContext xContext = null;
         XModel xDocModel = null;
@@ -379,12 +702,12 @@ private static XDispatchProvider xDocDispatchProviderOut = null;
                 java.io.File sourceFile = new java.io.File("print/" + printName);
                 StringBuilder sLoadUrl = new StringBuilder("file:///");
                 sLoadUrl.append(sourceFile.getCanonicalPath().replace('\\', '/'));
-                Object oDocToStore = xCompLoader.loadComponentFromURL(
+                oDocToStoreOut = xCompLoader.loadComponentFromURL(
                     sLoadUrl.toString(), "_blank", 0, propertyValue );
 
                 com.sun.star.frame.XStorable xStorable =
                     (com.sun.star.frame.XStorable)UnoRuntime.queryInterface(
-                        com.sun.star.frame.XStorable.class, oDocToStore );
+                        com.sun.star.frame.XStorable.class, oDocToStoreOut );
                 sourceFile = new java.io.File("tmp.ods");
                 StringBuilder sSaveUrl = new StringBuilder("file:///");
                 sSaveUrl.append(sourceFile.getCanonicalPath().replace('\\', '/'));
@@ -429,16 +752,29 @@ private static XDispatchProvider xDocDispatchProviderOut = null;
                 xDispatchHelperOut.executeDispatch(xDocDispatchProviderOut, ".uno:SelectAll", "", 0, new PropertyValue[0]);
                 xDispatchHelperOut.executeDispatch(xDocDispatchProviderOut, ".uno:Paste", "", 0, new PropertyValue[0]);
 
+                //閉じる　xStorable
+                com.sun.star.util.XCloseable xCloseableT = (com.sun.star.util.XCloseable)
+                    UnoRuntime.queryInterface(com.sun.star.util.XCloseable.class,
+                                              xStorable );
+                if (xCloseableT != null ) {
+                    xCloseableT.close(false);
+                } else {
+                    com.sun.star.lang.XComponent xComp = (com.sun.star.lang.XComponent)
+                        UnoRuntime.queryInterface(
+                            com.sun.star.lang.XComponent.class, xStorable );
+                    xComp.dispose();
+                }
+                
                 //閉じる
                 com.sun.star.util.XCloseable xCloseable = (com.sun.star.util.XCloseable)
                     UnoRuntime.queryInterface(com.sun.star.util.XCloseable.class,
-                                              oDocToStore );
+                                              oDocToStoreOut );
                 if (xCloseable != null ) {
                     xCloseable.close(false);
                 } else {
                     com.sun.star.lang.XComponent xComp = (com.sun.star.lang.XComponent)
                         UnoRuntime.queryInterface(
-                            com.sun.star.lang.XComponent.class, oDocToStore );
+                            com.sun.star.lang.XComponent.class, oDocToStoreOut );
                     xComp.dispose();
                 }
             } catch (com.sun.star.lang.IllegalArgumentException ex) {
