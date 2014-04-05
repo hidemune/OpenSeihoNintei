@@ -1,0 +1,3 @@
+
+java -jar OpenSeihoNintei.jar
+

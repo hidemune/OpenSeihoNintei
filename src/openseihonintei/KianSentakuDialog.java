@@ -56,6 +56,8 @@ private String ninteiYmd;
         String SQL = "SELECT caseNo, kianYmd, ninteiYmd FROM kojin WHERE caseNo = '" + caseNo + "' GROUP BY caseNo, kianYmd, ninteiYmd ";
         DbKojin dbK = new DbKojin();
         rs = dbK.getResultSetTableBySQL(SQL);
+        //ソート必須
+        rs = dbK.sortArray(rs);
         //画面に表示
         lstM.clear();
         lstM.addElement("■今日付けで起案■");

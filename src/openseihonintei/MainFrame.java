@@ -73,7 +73,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         }
         
         initComponents();
-        setIconImage(new ImageIcon("OpenSeiho.png").getImage());
+        setIconImage(new ImageIcon("OpenSeiho_s.png").getImage());
         //画面を中心に表示
         java.awt.GraphicsEnvironment env = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment();
         // 変数desktopBoundsにデスクトップ領域を表すRectangleが代入される
@@ -727,6 +727,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("生活保護認定");
+        setIconImages(null);
 
         jTabbedPane1.setFocusable(false);
         jTabbedPane1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
@@ -885,7 +886,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                                 .add(textYmdNintei, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 252, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                                 .add(textYmdKian, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 252, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))))
                     .add(panelJyusyo, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 136, Short.MAX_VALUE)
                 .add(jButton2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 150, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .add(126, 126, 126))
             .add(panelSetaiBaseLayout.createSequentialGroup()
@@ -3731,6 +3732,8 @@ String[][] field = {
 //        String SQL =  "SELECT DISTINCT kianYmd , ninteiYmd FROM saiseihi WHERE caseNo = '" + caseNo + "' AND kianYmd <= '" + kianYmd + "' AND ninteiYmd >='" + ninteYm + "00" + "' AND ninteiYmd <='" + ninteYm + "99" + "'";
         String SQL =  "SELECT DISTINCT kianYmd , ninteiYmd FROM saiseihi WHERE caseNo = '" + caseNo + "' AND kianYmd <= '" + kianYmd + "' AND ninteiYmd >='" + ninteYm + "00" + "' AND ninteiYmd <='" + ninteiYmd + "'";
         String[][] rsSeikatuReki = dbSaiseihi.getResultSetTableBySQL(SQL);
+        //ソート必須
+        rsSeikatuReki = dbSaiseihi.sortArray(rsSeikatuReki);
         dbSaiseihi.printRS(rsSeikatuReki);
         
         Integer[] nissu = new Integer[rsSeikatuReki.length];
@@ -4654,8 +4657,9 @@ String[][] field2 = {
 };
 ArrStr.add(field2);
 }
-            lbr.makeCalcFile(comboIDsOffecePath.getSelectedItem(), ArrStr, "chosyo2.ods", "A4P", "J50");
-            JOptionPane.showMessageDialog(this, "更新しました。");
+//            lbr.makeCalcFile(comboIDsOffecePath.getSelectedItem(), ArrStr, "chosyo2.ods", "A4P", "J50");
+            lbr.makeCalcFile(comboIDsOffecePath.getSelectedItem(), ArrStr, "chosyo2.ods", "A4P", "AMJ50");
+            //JOptionPane.showMessageDialog(this, "更新しました。");
             //同じキーで再読み込み
             getKojin();
         } else {

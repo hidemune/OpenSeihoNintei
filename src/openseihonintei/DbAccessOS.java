@@ -445,7 +445,7 @@ public class DbAccessOS {
                 e.printStackTrace();
             }
         }
-        ret = sortArray(ret);
+//        ret = sortArray(ret);
         /*
         System.err.println("Debug!!!!!!!!!");
         for (int i = 0; i < ret.length; i++) {
@@ -481,7 +481,15 @@ public class DbAccessOS {
      */
     public String[][] getResultSetTable(String where) {
         //SQLの実行
-        String SQL = "SELECT * FROM " + tableNameSup + " " + where;
+        StringBuilder sb = new StringBuilder();
+        sb.append(" ORDER BY ");
+        String sep = "";
+        for (int i = 0; i < tablePrimarySup.length; i++) {
+            sb.append(sep);
+            sb.append(tablePrimarySup[i]);
+            sep = ",";
+        }
+        String SQL = "SELECT * FROM " + tableNameSup + " " + where + sb.toString();
         return getResultSetTableBySQL(SQL);
     }
     /**
@@ -490,7 +498,7 @@ public class DbAccessOS {
      * @param src
      * @return 
      */
-    private String[][] sortArray(String[][] src) {
+    public String[][] sortArray(String[][] src) {
         int rows = src.length;
         int cols = src[0].length;
         String[][] desc = new String[rows][cols];
@@ -533,7 +541,7 @@ public class DbAccessOS {
         
         return desc;
     }
-
+// */
     //DROP TABLE
     public String dropTable(){
         logDebug("Drop/テーブル名:" + tableNameSup);

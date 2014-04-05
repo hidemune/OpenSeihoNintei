@@ -374,6 +374,7 @@ private static XDispatchProvider xDocDispatchProviderOut = null;
                     a[0].State = com.sun.star.beans.PropertyState.DIRECT_VALUE;
                     xDispatchHelperOut.executeDispatch(xDocDispatchProviderOut, ".uno:GoToCell", "", 0, a);
                     xDispatchHelperOut.executeDispatch(xDocDispatchProviderOut, ".uno:Paste", "", 0, new PropertyValue[0]);
+                    xDispatchHelperOut.executeDispatch(xDocDispatchProviderOut, ".uno:InsertRowBreak", "", 0, new PropertyValue[0]);
                     
                     //xText.setString("Page " + i);
                     

@@ -18,6 +18,8 @@
 
 package openseihonintei;
 
+import javax.swing.ImageIcon;
+
 /**
  *
  * @author hdm
@@ -29,6 +31,7 @@ public class SplashFrame extends javax.swing.JFrame {
      */
     public SplashFrame() {
         initComponents();
+        setIconImage(new ImageIcon("OpenSeiho_s.png").getImage());
         //画面を中心に表示
         java.awt.GraphicsEnvironment env = java.awt.GraphicsEnvironment.getLocalGraphicsEnvironment();
         // 変数desktopBoundsにデスクトップ領域を表すRectangleが代入される
