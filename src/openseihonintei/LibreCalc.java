@@ -467,6 +467,8 @@ private static XDispatchProvider xDocDispatchProviderOut = null;
                             xCellRange = xSheet.getCellRangeByPosition(j,i,j,i);
                             value = value.replaceAll("''*", "'");
                             xCellRange.getCellByPosition(0, 0).setFormula(value);
+                            //xCellRange.getCellByPosition(0, 0).setstri
+                            
                         } catch (Exception e) {
                             System.err.println("Err : " + i + "," + j + "/" + value);
                         }
