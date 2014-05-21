@@ -18,6 +18,8 @@
 
 package openseihonintei;
 
+import java.io.File;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 /**
@@ -268,6 +270,7 @@ public class AdminFrame extends javax.swing.JFrame {
             try{
                 lbr.exportTable(osComboIDLibreExePath.getSelectedItem(), rs, "noformat.ods", "A4L");
             }catch (Exception e) {
+                e.printStackTrace();
                 msg = "Calcへの吐き出し時にエラーが発生しました。";
             }
         }
@@ -278,11 +281,23 @@ public class AdminFrame extends javax.swing.JFrame {
             flg = true;
             String[][] rs = null;
             try{
-                rs = lbr.importTable(osComboIDLibreExePath.getSelectedItem(), "print/id_text.for_import.ods");
-                DbAccessOS.printRS(rs);
-                //更新処理
-                
+                JFileChooser filechooser = new JFileChooser();
+                String fname = "";
+                int selected = filechooser.showOpenDialog(this);
+                if (selected == JFileChooser.APPROVE_OPTION){
+                    File file = filechooser.getSelectedFile();
+                    fname = file.getAbsolutePath();
+                    rs = lbr.importTable(osComboIDLibreExePath.getSelectedItem(), fname);
+                    DbAccessOS.printRS(rs);
+                    //更新処理
+                    accesser.insertRS(rs);
+                }else if (selected == JFileChooser.CANCEL_OPTION){
+                  msg = "キャンセルされました";
+                }else if (selected == JFileChooser.ERROR_OPTION){
+                  msg = "エラー又は取消しがありました";
+                }
             }catch (Exception e) {
+                e.printStackTrace();
                 msg = "Calcからの呼び出し及び更新時にエラーが発生しました。";
             }
         }

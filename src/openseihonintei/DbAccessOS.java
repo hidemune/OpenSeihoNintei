@@ -42,7 +42,7 @@ import javax.swing.JOptionPane;
 public class DbAccessOS {
     String host = "localhost";
     String port = "5432";
-    String dbname = "openseiho";
+    String dbname = "OpenSeiho";
     String rolename = "postgres";
     String password = "xxxxxxxx";
     String url = "jdbc:postgresql://" + host + ":" + port + "/" + dbname;
@@ -745,5 +745,45 @@ public class DbAccessOS {
         logDebug(sb.toString());
         
         return sb.toString();
+    }
+
+    /**
+     * リザルトセット配列を、Delete&Insertする。
+     * LibreOffice文書のインポート用
+     * @param rs
+     * @return
+     */
+    public void insertRS(String[][] rs) {
+        /* データ構造
+id0	id1	text	
+1	1	男	
+1	2	女	
+        */
+        //２次元リストを２次元配列に変換
+        ArrayList arrSQL = new ArrayList();
+        String SQL = "";
+        String[] title = rs[0];
+        for (int i = 1; i < rs.length; i++) {
+            String[] field = rs[i];
+            ArrayList arr = new ArrayList();
+            for (int j = 0; j < title.length; j++) {
+                ArrayList row = new ArrayList();
+                row.add((String)title[j]);
+                row.add((String)field[j]);
+                row.add((String)field[j]);
+                arr.add(row.toArray(new String[0]));
+            }
+            String[][] fieldA = (String[][]) arr.toArray(new String[0][0]);
+            SQL = deleteSQL(fieldA);
+            logDebug(SQL);
+            arrSQL.add(SQL);
+            SQL = insertSQL(fieldA);
+            logDebug(SQL);
+            arrSQL.add(SQL);
+        }
+        String msg = execSQLUpdate((String[]) arrSQL.toArray(new String[0]));
+        if (!msg.equals("")) {
+            JOptionPane.showMessageDialog(null, msg);
+        }
     }
 }

@@ -170,7 +170,7 @@ private static XDispatchProvider xDocDispatchProviderOut = null;
             e.printStackTrace(System.err);
             return rs;
         }
-        JOptionPane.showMessageDialog(null, "処理が完了しました。\n");
+        //JOptionPane.showMessageDialog(null, "処理が完了しました。\n");
         System.out.println("Done");
         return rs;
     }
