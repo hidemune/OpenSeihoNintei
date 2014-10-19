@@ -4928,11 +4928,19 @@ ArrStr.add(field2);
 //        {"kasanJidouYouiku", "TEXT"},
             wk = dbKojin.getValueI(dbKojin.getValue(rsKojinN, "kasanJidouYouiku", i));
             if (wk == 1) {
-                kasan = kasan + dbKijyun.getValueI(rsKijyun, "JIdouyouiku1", kijyunIdxKojin[i]);
+                kasan = kasan + dbKijyun.getValueI(rsKijyun, "Jidouyouiku1", kijyunIdxKojin[i]);
                 kasanSbt = kasanSbt + ",児";
             }
             if (wk == 2) {
-                kasan = kasan + dbKijyun.getValueI(rsKijyun, "JIdouyouiku2", kijyunIdxKojin[i]);
+                kasan = kasan + dbKijyun.getValueI(rsKijyun, "Jidouyouiku2", kijyunIdxKojin[i]);
+                kasanSbt = kasanSbt + ",児";
+            }
+            if (wk == 3) {
+                kasan = kasan + dbKijyun.getValueI(rsKijyun, "Jidouyouiku1", kijyunIdxKojin[i]);
+                kasanSbt = kasanSbt + ",児";
+            }
+            if (wk == 4) {
+                kasan = kasan + dbKijyun.getValueI(rsKijyun, "Jidouyouiku2", kijyunIdxKojin[i]);
                 kasanSbt = kasanSbt + ",児";
             }
 //        {"kasanKaigoHokenRyou", "INTEGER"},
