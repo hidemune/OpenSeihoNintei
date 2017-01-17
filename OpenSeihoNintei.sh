@@ -2,8 +2,8 @@
 
 export _JAVA_OPTIONS='-Dawt.useSystemAAFontSettings=on'
 
-cp /home/hdm/NetBeansProjects/OpenSeihoCom/jpYmd.properties /home/hdm/NetBeansProjects/OpenSeihoNintei/dist
-cp /home/hdm/NetBeansProjects/OpenSeihoCom/KEN_ALL.CSV /home/hdm/NetBeansProjects/OpenSeihoNintei/dist
-cd /home/hdm/NetBeansProjects/OpenSeihoNintei/dist
+cp /home/user/git/OpenSeihoCom/jpYmd.properties /home/user/git/OpenSeihoNintei/dist
+cp /home/user/git/OpenSeihoCom/KEN_ALL.CSV /home/user/git/OpenSeihoNintei/dist
+cd /home/user/git/OpenSeihoNintei/dist
 
 java -jar OpenSeihoNintei.jar
