@@ -297,14 +297,10 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="textMyouji" min="-2" pref="89" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-                              <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="textMyoujiKana" min="-2" pref="84" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
+                              <Component id="txtMyouji" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
+                              <Component id="txtMyoujiKana" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="comboIDNinzuu" min="-2" pref="121" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jButton1" min="-2" max="-2" attributes="0"/>
@@ -316,18 +312,11 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace max="32767" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <EmptySpace min="1" pref="1" max="-2" attributes="0"/>
-                                      <Component id="jLabel1" max="32767" attributes="0"/>
-                                  </Group>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="jButton1" alignment="1" min="-2" max="-2" attributes="0"/>
-                                      <Component id="comboIDNinzuu" alignment="1" min="-2" max="-2" attributes="0"/>
-                                      <Component id="textMyoujiKana" alignment="1" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabel2" alignment="1" min="-2" pref="20" max="-2" attributes="0"/>
-                                      <Component id="textMyouji" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  </Group>
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="txtMyoujiKana" min="-2" max="-2" attributes="0"/>
+                                  <Component id="txtMyouji" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jButton1" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="comboIDNinzuu" alignment="1" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
@@ -335,22 +324,6 @@
                     </DimensionLayout>
                   </Layout>
                   <SubComponents>
-                    <Component class="javax.swing.JLabel" name="jLabel1">
-                      <Properties>
-                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="Dialog" size="12" style="0"/>
-                        </Property>
-                        <Property name="text" type="java.lang.String" value="&#x82d7;&#x5b57;"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="jLabel2">
-                      <Properties>
-                        <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                          <Font name="Dialog" size="12" style="0"/>
-                        </Property>
-                        <Property name="text" type="java.lang.String" value="&#x82d7;&#x5b57;&#x30ab;&#x30ca;"/>
-                      </Properties>
-                    </Component>
                     <Component class="javax.swing.JButton" name="jButton1">
                       <Properties>
                         <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -372,12 +345,9 @@
                         <Property name="postCap" type="java.lang.String" value="&#x4eba;&#x4e16;&#x5e2f;"/>
                       </Properties>
                     </Component>
-                    <Component class="openseiho.OsText" name="textMyouji">
+                    <Component class="openseiho.OsText2" name="txtMyouji">
                     </Component>
-                    <Component class="openseiho.OsText" name="textMyoujiKana">
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textMyoujiKanaActionPerformed"/>
-                      </Events>
+                    <Component class="openseiho.OsText2" name="txtMyoujiKana">
                     </Component>
                   </SubComponents>
                 </Container>
@@ -4303,7 +4273,6 @@
                   <Properties>
                     <Property name="caption" type="java.lang.String" value="sOffice"/>
                     <Property name="comboWidth" type="java.lang.Integer" value="500"/>
-                    <Property name="defaultID1" type="java.lang.String" value="1"/>
                     <Property name="id0" type="java.lang.Integer" value="20"/>
                     <Property name="postCap" type="java.lang.String" value=""/>
                   </Properties>

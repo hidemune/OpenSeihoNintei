@@ -449,12 +449,10 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         jLabel6 = new javax.swing.JLabel();
         jButton7 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         comboIDNinzuu = new openseiho.OsComboID();
-        textMyouji = new openseiho.OsText();
-        textMyoujiKana = new openseiho.OsText();
+        txtMyouji = new openseiho.OsText2();
+        txtMyoujiKana = new openseiho.OsText2();
         checkBoxSyokken = new javax.swing.JCheckBox();
         textYmdNintei = new openseiho.OsTextYmd();
         textYmdKian = new openseiho.OsTextYmd();
@@ -776,12 +774,6 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel1.setText("苗字");
-
-        jLabel2.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
-        jLabel2.setText("苗字カナ");
-
         jButton1.setFont(new java.awt.Font("Dialog", 0, 12)); // NOI18N
         jButton1.setText("苗字セット");
         jButton1.setToolTipText("構成員チェックした行のみ苗字が反映されます。\nこの機能は無理に使う必要はありません。");
@@ -801,26 +793,16 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         comboIDNinzuu.setId0(new java.lang.Integer(3));
         comboIDNinzuu.setPostCap("人世帯");
 
-        textMyoujiKana.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textMyoujiKanaActionPerformed(evt);
-            }
-        });
-
         org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .add(jLabel1)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(textMyouji, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 89, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(31, 31, 31)
-                .add(jLabel2)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(textMyoujiKana, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 84, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(41, 41, 41)
+                .add(txtMyouji, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .add(1, 1, 1)
+                .add(txtMyoujiKana, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                 .add(comboIDNinzuu, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 121, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jButton1)
@@ -830,16 +812,11 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(org.jdesktop.layout.GroupLayout.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                    .add(jPanel1Layout.createSequentialGroup()
-                        .add(1, 1, 1)
-                        .add(jLabel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                        .add(org.jdesktop.layout.GroupLayout.TRAILING, jButton1)
-                        .add(org.jdesktop.layout.GroupLayout.TRAILING, comboIDNinzuu, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .add(org.jdesktop.layout.GroupLayout.TRAILING, textMyoujiKana, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .add(org.jdesktop.layout.GroupLayout.TRAILING, jLabel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 20, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .add(org.jdesktop.layout.GroupLayout.TRAILING, textMyouji, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                .add(jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                    .add(txtMyoujiKana, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(txtMyouji, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jButton1)
+                    .add(comboIDNinzuu, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -1559,7 +1536,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                                 .add(jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                                     .add(text1Total, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 92, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                                     .add(textTeigenRitu, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 349, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))))
-                        .addContainerGap(20, Short.MAX_VALUE))))
+                        .addContainerGap(26, Short.MAX_VALUE))))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -2930,7 +2907,6 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
 
         comboIDsOffecePath.setCaption("sOffice");
         comboIDsOffecePath.setComboWidth(new java.lang.Integer(500));
-        comboIDsOffecePath.setDefaultID1("1");
         comboIDsOffecePath.setId0(new java.lang.Integer(20));
         comboIDsOffecePath.setPostCap("");
 
@@ -3068,8 +3044,8 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         //苗字セット
         for (int i = 0; i < OpenSeihoNintei.MaxSetaiIn; i++) {
             if (sp[i].isChecked()) {
-                sp[i].setMyouji(textMyouji.getText());
-                sp[i].setMyoujiKana(textMyoujiKana.getText());
+                sp[i].setMyouji(txtMyouji.getText());
+                sp[i].setMyoujiKana(txtMyoujiKana.getText());
             }
         }
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -3697,12 +3673,6 @@ String[][] field = {
     private void textCaseNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textCaseNoActionPerformed
         findSetai(textCaseNo.getText());
     }//GEN-LAST:event_textCaseNoActionPerformed
-
-    private void textMyoujiKanaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textMyoujiKanaActionPerformed
-        //ひらがな→カタカナ変換
-        Transliterator tr = Transliterator.getInstance("Hiragana-Katakana");
-        textMyoujiKana.setText(tr.transform(textMyoujiKana.getText()));
-    }//GEN-LAST:event_textMyoujiKanaActionPerformed
 
     private void list1IppanAKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_list1IppanAKeyPressed
         //list*KeyPressed
@@ -5302,7 +5272,6 @@ double sikiB2 = sikiA * 0.9D;
     private javax.swing.JButton jButtonKojinInst;
     private javax.swing.JButton jButtonSaikeisan;
     private javax.swing.JComboBox jComboBoxKojin;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -5313,7 +5282,6 @@ double sikiB2 = sikiA * 0.9D;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
@@ -5540,8 +5508,6 @@ double sikiB2 = sikiA * 0.9D;
     private openseiho.OsTextNum textKimatu1;
     private openseiho.OsTextNum textKyouiku;
     private openseiho.OsTextNum textKyouiku1;
-    private openseiho.OsText textMyouji;
-    private openseiho.OsText textMyoujiKana;
     private openseiho.OsTextNum textSeikatuKei;
     private openseiho.OsTextNum textSeikatuKei1;
     private openseiho.OsTextYmd textSyussanYmd;
@@ -5553,6 +5519,8 @@ double sikiB2 = sikiA * 0.9D;
     private openseiho.OsTextNum textTouki1;
     private openseiho.OsTextYmd textYmdKian;
     private openseiho.OsTextYmd textYmdNintei;
+    private openseiho.OsText2 txtMyouji;
+    private openseiho.OsText2 txtMyoujiKana;
     // End of variables declaration//GEN-END:variables
 
 }
