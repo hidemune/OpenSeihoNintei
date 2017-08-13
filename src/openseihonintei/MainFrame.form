@@ -160,9 +160,8 @@
                                   <Component id="jButton2" min="-2" pref="150" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="126" max="-2" attributes="0"/>
                               </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <Group type="103" groupAlignment="1" attributes="0">
-                                      <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Group type="102" attributes="0">
@@ -180,6 +179,7 @@
                                               <Component id="textYmdKian" pref="0" max="32767" attributes="0"/>
                                           </Group>
                                       </Group>
+                                      <Component id="jPanel1" alignment="0" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="32767" attributes="0"/>
                               </Group>
@@ -297,14 +297,14 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="txtMyouji" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
-                              <Component id="txtMyoujiKana" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="txtMyouji" min="-2" pref="160" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="txtMyoujiKana" min="-2" pref="195" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="comboIDNinzuu" min="-2" pref="121" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="jButton1" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="33" max="32767" attributes="0"/>
+                              <EmptySpace pref="80" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -346,8 +346,28 @@
                       </Properties>
                     </Component>
                     <Component class="openseiho.OsText2" name="txtMyouji">
+                      <Properties>
+                        <Property name="caption" type="java.lang.String" value="&#x82d7;&#x5b57;"/>
+                        <Property name="captionWidth" type="int" value="50"/>
+                        <Property name="mode" type="int" value="2"/>
+                        <Property name="text" type="java.lang.String" value=""/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtMyoujiKeyPressed"/>
+                        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtMyoujiKeyReleased"/>
+                      </Events>
                     </Component>
                     <Component class="openseiho.OsText2" name="txtMyoujiKana">
+                      <Properties>
+                        <Property name="caption" type="java.lang.String" value="&#x82d7;&#x5b57;&#x30ab;&#x30ca;"/>
+                        <Property name="captionWidth" type="int" value="70"/>
+                        <Property name="mode" type="int" value="1"/>
+                        <Property name="text" type="java.lang.String" value=""/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtMyoujiKanaKeyPressed"/>
+                        <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtMyoujiKanaKeyReleased"/>
+                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>

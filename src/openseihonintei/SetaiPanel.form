@@ -31,14 +31,14 @@
               <EmptySpace type="separate" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Component id="textName" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="3" max="-2" attributes="0"/>
+                      <Component id="textName" min="-2" pref="198" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="textKana" min="-2" pref="162" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
-                      <Component id="comboID1" min="-2" pref="81" max="-2" attributes="0"/>
+                      <Component id="textKana" min="-2" pref="154" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
+                      <Component id="comboID1" min="-2" pref="81" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="comboID2" min="-2" pref="139" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" attributes="0">
@@ -144,6 +144,9 @@
       </Properties>
     </Component>
     <Component class="openseiho.OsText" name="textKana">
+      <Properties>
+        <Property name="mode" type="int" value="1"/>
+      </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textKanaActionPerformed"/>
       </Events>
@@ -154,6 +157,11 @@
       </Properties>
     </Component>
     <Component class="openseiho.OsText2" name="textName">
+      <Properties>
+        <Property name="caption" type="java.lang.String" value="&#x6c0f;&#x540d;"/>
+        <Property name="captionWidth" type="int" value="50"/>
+        <Property name="mode" type="int" value="2"/>
+      </Properties>
     </Component>
   </SubComponents>
 </Form>

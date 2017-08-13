@@ -21,13 +21,18 @@ package openseihonintei;
 import openseiho.OsClassYMD;
 import com.ibm.icu.text.SimpleDateFormat;
 import com.ibm.icu.text.Transliterator;
+import com.sun.glass.events.KeyEvent;
+import java.awt.AWTException;
 import java.awt.Desktop;
 import java.awt.Dimension;
+import java.awt.Robot;
 import java.io.File;
 import java.net.URI;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JList;
@@ -50,6 +55,8 @@ private String[][] rsSetaiPre;
 private String[][] rsKojin;
 private String[][] rsSaiseihi;
 private String[][] rsChosyo2;
+private static Robot robot;
+
 private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
 //private ArrayList<String[][]> arrFieldSaiseihi = new ArrayList<String[][]>();
 
@@ -66,6 +73,11 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
      */
     public MainFrame() {
         DebugMode = true;
+        try {
+            robot = new Robot();
+        } catch (AWTException ex) {
+            Logger.getLogger(MainFrame.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
         sp = new SetaiPanel[OpenSeihoNintei.MaxSetaiIn];
         for (int i = 0; i < OpenSeihoNintei.MaxSetaiIn; i++) {
@@ -793,20 +805,46 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         comboIDNinzuu.setId0(new java.lang.Integer(3));
         comboIDNinzuu.setPostCap("人世帯");
 
+        txtMyouji.setCaption("苗字");
+        txtMyouji.setCaptionWidth(50);
+        txtMyouji.setmode(2);
+        txtMyouji.setText("");
+        txtMyouji.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtMyoujiKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtMyoujiKeyReleased(evt);
+            }
+        });
+
+        txtMyoujiKana.setCaption("苗字カナ");
+        txtMyoujiKana.setCaptionWidth(70);
+        txtMyoujiKana.setmode(1);
+        txtMyoujiKana.setText("");
+        txtMyoujiKana.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtMyoujiKanaKeyPressed(evt);
+            }
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtMyoujiKanaKeyReleased(evt);
+            }
+        });
+
         org.jdesktop.layout.GroupLayout jPanel1Layout = new org.jdesktop.layout.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .add(txtMyouji, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .add(1, 1, 1)
-                .add(txtMyoujiKana, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                .add(txtMyouji, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 160, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                .add(txtMyoujiKana, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 195, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(comboIDNinzuu, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 121, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jButton1)
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(80, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -853,9 +891,8 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                         .add(jButton2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 150, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                         .add(126, 126, 126))
                     .add(panelSetaiBaseLayout.createSequentialGroup()
-                        .add(panelSetaiBaseLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
-                            .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                            .add(org.jdesktop.layout.GroupLayout.LEADING, panelSetaiBaseLayout.createSequentialGroup()
+                        .add(panelSetaiBaseLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(panelSetaiBaseLayout.createSequentialGroup()
                                 .add(panelSetaiBaseLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                                     .add(panelSetaiBaseLayout.createSequentialGroup()
                                         .add(jLabel6)
@@ -867,7 +904,8 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                                 .add(18, 18, 18)
                                 .add(panelSetaiBaseLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
                                     .add(textYmdNintei, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
-                                    .add(textYmdKian, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))
+                                    .add(textYmdKian, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                            .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
                         .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .add(panelSetaiBaseLayout.createSequentialGroup()
                 .add(panelSetai, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 814, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
@@ -3688,6 +3726,35 @@ String[][] field = {
         String value = dbKijyun.getValue(rsKijyun, "KaigoNyusyo", dbKijyun.getKyutiIdx(rsKijyun, kyuti));
         textKaigoSisetu.setText(value);
     }//GEN-LAST:event_textKaigoSisetuActionPerformed
+
+    private void txtMyoujiKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMyoujiKeyPressed
+
+    }//GEN-LAST:event_txtMyoujiKeyPressed
+
+    private void txtMyoujiKanaKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMyoujiKanaKeyReleased
+
+    }//GEN-LAST:event_txtMyoujiKanaKeyReleased
+
+    private void txtMyoujiKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMyoujiKeyReleased
+        if ((evt.getKeyChar() >= 'a') && (evt.getKeyChar() <= 'z')) {
+            txtMyoujiKana.setText(txtMyouji.getText());
+        }
+        if (evt.getKeyCode() == 13) {
+            robot.keyPress(KeyEvent.VK_TAB);
+            robot.keyRelease(KeyEvent.VK_TAB);
+            robot.keyPress(KeyEvent.VK_ENTER);
+            robot.keyRelease(KeyEvent.VK_ENTER);
+        }
+    }//GEN-LAST:event_txtMyoujiKeyReleased
+
+    private void txtMyoujiKanaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMyoujiKanaKeyPressed
+        System.out.println(evt.getKeyCode());
+        if ((evt.getKeyCode() == 13)||(evt.getKeyCode() == 10)) {
+            //ひらがな→カタカナ変換
+            Transliterator tr = Transliterator.getInstance("Hiragana-Katakana");
+            txtMyoujiKana.setText(tr.transform(txtMyoujiKana.getText()));
+        }
+    }//GEN-LAST:event_txtMyoujiKanaKeyPressed
 
     /**
      * 日割り検索処理
