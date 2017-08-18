@@ -844,7 +844,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                 .add(comboIDNinzuu, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 121, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jButton1)
-                .addContainerGap(80, Short.MAX_VALUE))
+                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -886,27 +886,26 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                 .addContainerGap()
                 .add(panelSetaiBaseLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                     .add(panelSetaiBaseLayout.createSequentialGroup()
-                        .add(panelJyusyo, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 115, Short.MAX_VALUE)
-                        .add(jButton2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 150, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .add(126, 126, 126))
-                    .add(panelSetaiBaseLayout.createSequentialGroup()
                         .add(panelSetaiBaseLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
                             .add(panelSetaiBaseLayout.createSequentialGroup()
-                                .add(panelSetaiBaseLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
-                                    .add(panelSetaiBaseLayout.createSequentialGroup()
-                                        .add(jLabel6)
-                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                        .add(textCaseNo, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 105, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                                        .add(jButton7))
-                                    .add(checkBoxSyokken))
-                                .add(18, 18, 18)
-                                .add(panelSetaiBaseLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                                    .add(textYmdNintei, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
-                                    .add(textYmdKian, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
-                            .add(jPanel1, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .add(jLabel6)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(textCaseNo, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 105, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(jButton7))
+                            .add(checkBoxSyokken))
+                        .add(18, 18, 18)
+                        .add(panelSetaiBaseLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
+                            .add(textYmdNintei, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 270, Short.MAX_VALUE)
+                            .add(textYmdKian, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                        .addContainerGap(538, Short.MAX_VALUE))
+                    .add(panelSetaiBaseLayout.createSequentialGroup()
+                        .add(panelSetaiBaseLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING, false)
+                            .add(org.jdesktop.layout.GroupLayout.LEADING, jPanel1, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .add(org.jdesktop.layout.GroupLayout.LEADING, panelJyusyo, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 115, Short.MAX_VALUE)
+                        .add(jButton2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 150, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                        .add(126, 126, 126))))
             .add(panelSetaiBaseLayout.createSequentialGroup()
                 .add(panelSetai, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 814, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .add(0, 0, Short.MAX_VALUE))
@@ -980,7 +979,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(comboIDKasanSanpu, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 178, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                .add(textSyussanYmd, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
+                .add(textSyussanYmd, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 325, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
@@ -1032,7 +1031,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                 .add(textKaigoHi, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 108, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jLabel7)
-                .addContainerGap(167, Short.MAX_VALUE))
+                .addContainerGap(198, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -1073,7 +1072,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                 .add(textKaigoSisetu, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 108, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jLabel8)
-                .addContainerGap(496, Short.MAX_VALUE))
+                .addContainerGap(527, Short.MAX_VALUE))
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -1097,7 +1096,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
             .add(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
                 .add(chkZaitaku)
-                .addContainerGap(672, Short.MAX_VALUE))
+                .addContainerGap(703, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -1129,7 +1128,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                 .add(chkHousya)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
                 .add(comboIDHousyasen, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 105, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(535, Short.MAX_VALUE))
+                .addContainerGap(566, Short.MAX_VALUE))
         );
         jPanel10Layout.setVerticalGroup(
             jPanel10Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -1161,7 +1160,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                 .add(chkJidouYouiku)
                 .add(33, 33, 33)
                 .add(comboIDKasanJidouYouiku, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 163, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(476, Short.MAX_VALUE))
+                .addContainerGap(507, Short.MAX_VALUE))
         );
         jPanel11Layout.setVerticalGroup(
             jPanel11Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -1193,7 +1192,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                 .add(textKasanKaigoHokenRyou, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 100, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jLabel9)
-                .addContainerGap(515, Short.MAX_VALUE))
+                .addContainerGap(546, Short.MAX_VALUE))
         );
         jPanel12Layout.setVerticalGroup(
             jPanel12Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -1240,7 +1239,7 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
                 .add(textKasanBoshiNinzuuS, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 27, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
                 .add(jLabel80)
-                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 145, Short.MAX_VALUE)
+                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED, 176, Short.MAX_VALUE)
                 .add(chkTyouhuku)
                 .add(115, 115, 115))
         );
@@ -1320,22 +1319,25 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
             .add(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                    .add(setaiInPanel, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, 773, Short.MAX_VALUE)
                     .add(jPanel2Layout.createSequentialGroup()
-                        .add(chkNushi)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
-                        .add(comboIDSeikatuKeitai, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 269, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(comboIDKyuti, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 104, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
-                        .add(comboIDTouki, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 160, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                    .add(jPanel2Layout.createSequentialGroup()
-                        .add(jComboBoxKojin, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 167, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
-                        .add(37, 37, 37)
-                        .add(jButtonKojinCheck)
-                        .add(18, 18, 18)
-                        .add(jButtonKojinInst, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 135, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                    .add(setaiInPanel, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 709, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .add(jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                            .add(jPanel2Layout.createSequentialGroup()
+                                .add(chkNushi)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.UNRELATED)
+                                .add(comboIDSeikatuKeitai, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 269, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(comboIDKyuti, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 104, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(org.jdesktop.layout.LayoutStyle.RELATED)
+                                .add(comboIDTouki, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 160, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
+                            .add(jPanel2Layout.createSequentialGroup()
+                                .add(jComboBoxKojin, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 167, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                                .add(37, 37, 37)
+                                .add(jButtonKojinCheck)
+                                .add(18, 18, 18)
+                                .add(jButtonKojinInst, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 135, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                        .add(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -1362,15 +1364,14 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         jPanelkojinLayout.setHorizontalGroup(
             jPanelkojinLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
             .add(jPanelkojinLayout.createSequentialGroup()
-                .add(jPanelkojinLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING, false)
-                    .add(jPanelkojinLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .add(jLabel3))
-                    .add(jPanelkojinLayout.createSequentialGroup()
-                        .add(13, 13, 13)
-                        .add(jPanelKasan, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 757, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE))
-                    .add(jPanel2, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .add(jPanelkojinLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.TRAILING)
+                    .add(jPanelKasan, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, 788, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)
+                    .add(jPanelkojinLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
+                        .add(jPanelkojinLayout.createSequentialGroup()
+                            .addContainerGap()
+                            .add(jLabel3))
+                        .add(jPanel2, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE, org.jdesktop.layout.GroupLayout.DEFAULT_SIZE, org.jdesktop.layout.GroupLayout.PREFERRED_SIZE)))
+                .add(30, 279, Short.MAX_VALUE))
         );
         jPanelkojinLayout.setVerticalGroup(
             jPanelkojinLayout.createParallelGroup(org.jdesktop.layout.GroupLayout.LEADING)
@@ -3632,13 +3633,15 @@ String[][] field = {
         textTotal.setText("" + (seikatu + jyutaku + kyouiku + kaigo + iryo));
     }
     private void listNumSet(java.awt.event.KeyEvent evt) {
-        if (evt.getKeyChar() ==  '\n') {
+        if ((evt.getKeyCode() == 13)||(evt.getKeyCode() == 10)) {
             JList lst = (JList)evt.getSource();
             DefaultListModel lstM = ((DefaultListModel)lst.getModel());
             String strNum = (String) lst.getSelectedValue();
             inputNumDialog inp = new inputNumDialog(this, true, DbAccessOS.getValueI(strNum));
             int ret = inp.getNumber();
             lstM.setElementAt("" + ret, lst.getSelectedIndex());
+            //合計金額セット
+            recalc();
         }
     }
     private void listKyouikuKyouzaiKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_listKyouikuKyouzaiKeyPressed
@@ -3692,7 +3695,7 @@ String[][] field = {
     }//GEN-LAST:event_listIryouSonotaKeyPressed
 
     private void listKyouikuSonotaKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_listKyouikuSonotaKeyPressed
-        // TODO add your handling code here:
+        listNumSet(evt);
     }//GEN-LAST:event_listKyouikuSonotaKeyPressed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -3739,7 +3742,7 @@ String[][] field = {
         if ((evt.getKeyChar() >= 'a') && (evt.getKeyChar() <= 'z')) {
             txtMyoujiKana.setText(txtMyouji.getText());
         }
-        if (evt.getKeyCode() == 13) {
+        if ((evt.getKeyCode() == 13)||(evt.getKeyCode() == 10)) {
             robot.keyPress(KeyEvent.VK_TAB);
             robot.keyRelease(KeyEvent.VK_TAB);
             robot.keyPress(KeyEvent.VK_ENTER);
@@ -4474,11 +4477,11 @@ String[][] field = {
     {"Kyusyoku2", arrSetaiInKyoiku.getSafety(2).Kyusyoku},
     {"Kyusyoku3", arrSetaiInKyoiku.getSafety(3).Kyusyoku},
     {"Kyusyoku4", arrSetaiInKyoiku.getSafety(4).Kyusyoku},
-    {"Koutu0", arrSetaiInKyoiku.getSafety(0).Kyusyoku},
-    {"Koutu1", arrSetaiInKyoiku.getSafety(1).Kyusyoku},
-    {"Koutu2", arrSetaiInKyoiku.getSafety(2).Kyusyoku},
-    {"Koutu3", arrSetaiInKyoiku.getSafety(3).Kyusyoku},
-    {"Koutu4", arrSetaiInKyoiku.getSafety(4).Kyusyoku},
+    {"Koutu0", arrSetaiInKyoiku.getSafety(0).Koutu},
+    {"Koutu1", arrSetaiInKyoiku.getSafety(1).Koutu},
+    {"Koutu2", arrSetaiInKyoiku.getSafety(2).Koutu},
+    {"Koutu3", arrSetaiInKyoiku.getSafety(3).Koutu},
+    {"Koutu4", arrSetaiInKyoiku.getSafety(4).Koutu},
     {"Sien0", arrSetaiInKyoiku.getSafety(0).Sien},
     {"Sien1", arrSetaiInKyoiku.getSafety(1).Sien},
     {"Sien2", arrSetaiInKyoiku.getSafety(2).Sien},
