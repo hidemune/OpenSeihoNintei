@@ -1,0 +1,8 @@
+このフォルダに以下のファイルを置いてください。
+ 
+bootstrapconnector.jar
+javax.mail.jar
+juh-2.4.0.jar
+jurt-2.4.0.jar
+ridl-2.4.0.jar
+unoil.jar

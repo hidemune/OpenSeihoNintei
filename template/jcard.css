@@ -1,0 +1,157 @@
+@charset "UTF-8";
+/* Java版カード型データベース Ver 2.0.0.7・CSSファイル */
+
+/*============================================
+全般的なスタイル
+============================================*/
+* {
+	margin:0; padding:0; 	/*全要素のマージン・パディングをリセット*/
+} 
+
+@media only screen and (max-width: 1023px) {
+
+	#lt{
+		overflow: auto;
+	}
+	iframe {
+		overflow: auto;
+	}
+
+} /*デバイスの横幅が1023px以下の場合*/
+
+
+@media print {
+	#header{
+		height: 80px;
+		padding:0px;		/*見出し内容の位置調整*/
+		font-family:Arial, Helvetica, sans-serif;	/*フォントの種類*/
+		font-size:8px; font-weight:bold; text-align:center;
+		background-color:#daeff5;	/*ページ全体の背景色*/
+		color:#FFFFFF;
+		background-image:url(image/HP_Back.png)
+	}
+	#main{
+		position: absolute;
+		left: 0px;
+		top: 80px;
+		right: 0px;
+		bottom: 0px;
+//		overflow: auto;
+		background-color: #ffffff;
+		color: #000000;
+	}
+	#lt { display: none; }
+}
+
+@media screen {
+
+	html{
+		height:100%;
+	}
+
+	body{
+		height:100%;
+		width:100%;
+		margin:0px auto;
+		line-height: 1.3em;
+		background-color:#FFFFFF;	/*ページ全体の背景色*/
+		text-align:left;		/*IE6以下でalign設定するための対策*/
+	}
+
+	#header{
+		height: 80px;
+		padding:0px;		/*見出し内容の位置調整*/
+		font-family:Arial, Helvetica, sans-serif;	/*フォントの種類*/
+		font-size:8px; font-weight:bold; text-align:center;
+		background-color:#daeff5;	/*ページ全体の背景色*/
+		color:#FFFFFF;
+		background-image:url(image/HP_Back.png)
+	}
+	#lt{
+		position: absolute;
+		left: 0px;
+		top: 80px;
+		bottom: 0px;
+		width: 200px;
+		overflow: hidden;
+		z-index: 99;
+	}
+	#main{
+		position: absolute;
+		left: 200px;
+		top: 80px;
+		right: 0px;
+		bottom: 0px;
+		overflow: auto;
+		background-color: #ffffff;
+		color: #000000;
+	}
+	#main2{
+		margin: 20px;
+	}
+
+	/*============================================
+	目次
+	============================================*/
+
+	a {text-decoration:none;} 			/*リンクの下線を無くす*/
+
+	h1 {
+		padding:0px 0px 0px 0px;		/*見出し内容の位置調整*/
+		font-family:Arial, Helvetica, sans-serif;	/*フォントの種類*/
+		font-size:100%; font-weight:bold; text-align:left;
+	}
+	h2 {
+		padding:0px 0px 0px 1em;		/*見出し内容の位置調整*/
+		font-family:Arial, Helvetica, sans-serif;	/*フォントの種類*/
+		font-size:100%; font-weight:bold; text-align:left;
+	}
+	h3 {
+		padding:0px 0px 0px 2em;		/*見出し内容の位置調整*/
+		font-family:Arial, Helvetica, sans-serif;	/*フォントの種類*/
+		font-size:100%; font-weight:bold; text-align:left;
+	}
+	h4 {
+		padding:0px 0px 0px 3em;		/*見出し内容の位置調整*/
+		font-family:Arial, Helvetica, sans-serif;	/*フォントの種類*/
+		font-size:100%; font-weight:bold; text-align:left;
+	}
+	h5 {
+		padding:0px 0px 0px 4em;		/*見出し内容の位置調整*/
+		font-family:Arial, Helvetica, sans-serif;	/*フォントの種類*/
+		font-size:100%; font-weight:bold; text-align:left;
+	}
+
+	h1#onaji {
+		visibility:collapse;
+		line-height: 0%;
+	}
+	h2#onaji {
+		visibility:collapse;
+		line-height: 0%;
+	}
+	h3#onaji {
+		visibility:collapse;
+		line-height: 0%;
+	}
+	h4#onaji {
+		visibility:collapse;
+		line-height: 0%;
+	}
+	h5#onaji {
+		visibility:collapse;
+		line-height: 0%;
+	}
+
+	body#iframe {
+		background-color:#daeff5;
+	}
+
+	iframe {
+		overflow:visible;
+	}
+
+}
+
+
+

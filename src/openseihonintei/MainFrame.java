@@ -3349,7 +3349,9 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         URI uri = null;
         try {
             Desktop desktop = Desktop.getDesktop();
-            String jarPath = System.getProperty("java.class.path");
+            //String jarPath = System.getProperty("java.class.path");
+            String jarPath = MainFrame.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+            System.out.println(jarPath);
             String dirPath = jarPath.substring(0, jarPath.lastIndexOf(File.separator)+1);
             //props.load(new FileInputStream(dirPath + "hoge.properties"));
             file = new File(dirPath + "/OS_NinteiHelp/index.html");
