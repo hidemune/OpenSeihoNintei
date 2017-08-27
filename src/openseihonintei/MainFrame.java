@@ -31,8 +31,11 @@ import java.net.URI;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JList;
@@ -379,6 +382,9 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
             JOptionPane.showMessageDialog(this, "更新しました。");
             //同じキーで再読み込み
             getKojin();
+            //更新したら次の画面に
+            jTabbedPane1.setSelectedIndex(2);
+            jButtonSaikeisanActionPerformed(null);
         } else {
             JOptionPane.showMessageDialog(this, msg);
         }
@@ -439,6 +445,8 @@ private ArrayList<String[][]> arrFieldKojin = new ArrayList<String[][]>();
         String msg = dbSetai.execSQLUpdate(SQL);
         if (msg.equals("")) {
             JOptionPane.showMessageDialog(this, "更新しました。");
+            //個人状況表示
+            jTabbedPane1.setSelectedIndex(1);
         } else {
             JOptionPane.showMessageDialog(this, msg);
         }
@@ -3570,8 +3578,30 @@ String[][] field = {
         
         //チェックが終わって、初めて選択可能にする
         jComboBoxKojin.setEnabled(true);
-        jButtonKojinInst.setEnabled(true);
-        JOptionPane.showMessageDialog(this, "チェックが完了しました。\n別の世帯員を設定できます。");
+        
+        //ChkSumi
+        /*
+        //jComboBoxKojin.set(jComboBoxKojin.getSelectedItem() + "(済)");
+        List strarr = new ArrayList();
+        for (int i=0;i<jComboBoxKojin.getItemCount();i++) {
+            if (jComboBoxKojin.getSelectedIndex() == i) {
+                strarr.add(jComboBoxKojin.getItemAt(i) + "(済)");
+            } else {
+                strarr.add(jComboBoxKojin.setItemAt(i));
+            }
+        }
+        ComboBoxModel mod = new DefaultComboBoxModel(strarr.toArray());
+        jComboBoxKojin.setModel(mod);
+        */
+        
+        //全員チェック済か？
+        if (jComboBoxKojin.getItemCount() == arrFieldKojin.size()) {
+            JOptionPane.showMessageDialog(this, "チェックが完了しました。\n更新できます。");
+            jButtonKojinInst.setEnabled(true);
+        } else {
+            jComboBoxKojin.setSelectedIndex(jComboBoxKojin.getSelectedIndex()+1);
+        }
+        
     }//GEN-LAST:event_jButtonKojinCheckActionPerformed
 
     private void jButtonKojinInstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonKojinInstActionPerformed
@@ -4147,6 +4177,9 @@ String[][] field = {
             JOptionPane.showMessageDialog(this, "更新しました。");
             //同じキーで再読み込み
             getKojin();
+            //次のページ
+            jTabbedPane1.setSelectedIndex(3);
+            jButton4ActionPerformed(null);
         } else {
             JOptionPane.showMessageDialog(this, msg);
         }

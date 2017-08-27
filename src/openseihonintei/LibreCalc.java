@@ -94,10 +94,12 @@ private static XDispatchProvider xDocDispatchProviderOut = null;
             JOptionPane.showMessageDialog(null, "LibreOfficeの実行ファイルのあるフォルダが設定されていません。処理を中断します。");
             return;
         }
+        /*
         if (JOptionPane.showConfirmDialog(null, "LibreOffice文書を作成します。\nよろしいですか？") != JOptionPane.YES_OPTION) {
             return;
-        }
-
+        }*/
+        JOptionPane.showMessageDialog(null, "LibreOffice文書を作成します。");
+        
         try {
             //com.sun.star.frame.XDesktop xDesktop = null;
             makeDesktop = getDesktop();
@@ -323,7 +325,7 @@ private static XDispatchProvider xDocDispatchProviderOut = null;
                             System.err.println("Err : " + name + "/" + value);
                         }
                     }
-                    
+                    /*
                     // Creating a string for the graphic url
                     java.io.File sourceFileImg = new java.io.File("print/inei.png");
                     StringBuffer sUrl = new StringBuffer("file:///");
@@ -331,7 +333,7 @@ private static XDispatchProvider xDocDispatchProviderOut = null;
                     System.out.println( "insert graphic \"" + sUrl + "\"");
                     //画像読み込み
                     putImage(xContext, myDoc, xSheet, sUrl.toString(), new Point(12000, 4500), new Size(2500, 2500));
-                    
+                    */
                     //copy
                     Object dispatchHelper = xMCF.createInstanceWithContext("com.sun.star.frame.DispatchHelper", makeContext);
                     XDispatchHelper xDispatchHelper =
@@ -377,6 +379,27 @@ private static XDispatchProvider xDocDispatchProviderOut = null;
                     xDispatchHelperOut.executeDispatch(xDocDispatchProviderOut, ".uno:InsertRowBreak", "", 0, new PropertyValue[0]);
                     
                     //xText.setString("Page " + i);
+                    //com.sun.star.frame.XStorable xStorableO =
+                    //    (com.sun.star.frame.XStorable)UnoRuntime.queryInterface(
+                    //        com.sun.star.frame.XStorable.class, xDocDispatchProviderOut );
+                    //XSpreadsheetDocument myDocO = (XSpreadsheetDocument)UnoRuntime.queryInterface( XSpreadsheetDocument.class, xStorableO);
+                    XSpreadsheets xSheetsO = xSheetDocumentOut.getSheets() ;
+                    XSpreadsheet xSheetO = null;
+                    XCellRange xCellRangeO = null;
+                    XCell xCellO = null;
+
+                    //値をセット
+                    XIndexAccess oIndexSheetsO = (XIndexAccess) UnoRuntime.queryInterface(
+                        XIndexAccess.class, xSheetsO);
+                    xSheetO = (XSpreadsheet) UnoRuntime.queryInterface(
+                        XSpreadsheet.class, oIndexSheetsO.getByIndex(0));
+                    // Creating a string for the graphic url
+                    java.io.File sourceFileImg = new java.io.File("print/inei.png");
+                    StringBuffer sUrl = new StringBuffer("file:///");
+                    sUrl.append(sourceFileImg.getCanonicalPath().replace('\\', '/'));
+                    System.out.println( "insert graphic \"" + sUrl + "\"");
+                    //画像読み込み
+                    putImage(xContext, xSheetDocumentOut, xSheetO, sUrl.toString(), new Point(12000, 4500), new Size(2500, 2500));
                     
                     //閉じる
                     com.sun.star.util.XCloseable xCloseable = (com.sun.star.util.XCloseable)
