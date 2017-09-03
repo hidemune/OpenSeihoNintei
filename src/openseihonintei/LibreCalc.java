@@ -1012,7 +1012,7 @@ private static XDispatchProvider xDocDispatchProviderOut = null;
                         com.sun.star.text.TextContentAnchorType.AS_CHARACTER);
             //.uno:InteractiveTransparence
             xImgPropSet.setPropertyValue("FillTransparence", 100);
-            
+            xImgPropSet.setPropertyValue("LineStyle", 0);
             
             //sFilePath = "file:///" + sGraphFile.replaceAll("[/|\\\\]+", "/");
         
