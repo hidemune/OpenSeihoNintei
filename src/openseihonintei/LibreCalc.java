@@ -334,7 +334,7 @@ private static XDispatchProvider xDocDispatchProviderOut = null;
                     //画像読み込み
                     putImage(xContext, myDoc, xSheet, sUrl.toString(), new Point(12000, 4500), new Size(2500, 2500));
                     */
-                    //copy
+                    //copy A1:AMJ1048576
                     Object dispatchHelper = xMCF.createInstanceWithContext("com.sun.star.frame.DispatchHelper", makeContext);
                     XDispatchHelper xDispatchHelper =
                       (XDispatchHelper)UnoRuntime.queryInterface(XDispatchHelper.class, dispatchHelper); 
@@ -345,6 +345,43 @@ private static XDispatchProvider xDocDispatchProviderOut = null;
                     XDispatchProvider xDocDispatchProvider = (XDispatchProvider) UnoRuntime.queryInterface(
                             XDispatchProvider.class, xDocController);
                     //////
+                    
+                    
+                    if (i == 0) {
+                        //All Copy 1 page Only!
+                        com.sun.star.beans.PropertyValue[] a =
+                            new com.sun.star.beans.PropertyValue[1];
+                        a[0] = new com.sun.star.beans.PropertyValue();
+                        a[0].Name = "ToPoint";
+                        a[0].Value = "A1:AMJ1048576";;
+                        a[0].Handle = 0;
+                        a[0].State = com.sun.star.beans.PropertyState.DIRECT_VALUE;
+                        xDispatchHelper.executeDispatch(xDocDispatchProvider, ".uno:GoToCell", "", 0, a);
+                        xDispatchHelper.executeDispatch(xDocDispatchProvider, ".uno:Copy", "", 0, new PropertyValue[0]);
+                        //貼り付け
+                        Object dispatchHelperOut = xMCF.createInstanceWithContext("com.sun.star.frame.DispatchHelper", makeContext);
+                        xDispatchHelperOut =
+                          (XDispatchHelper)UnoRuntime.queryInterface(XDispatchHelper.class, dispatchHelperOut); 
+
+                        XModel xDocModelOut = (XModel) UnoRuntime.queryInterface(XModel.class, xSheetDocumentOut);
+                        XController  xDocControllerOut = (XController) UnoRuntime.queryInterface(
+                                XController.class, xDocModelOut.getCurrentController());
+                        xDocDispatchProviderOut = (XDispatchProvider) UnoRuntime.queryInterface(
+                                XDispatchProvider.class, xDocControllerOut);
+                        //PasteThread thread = new PasteThread();
+                        //thread.start();
+                        a[0] = new com.sun.star.beans.PropertyValue();
+                        a[0].Name = "ToPoint";
+                        a[0].Value = "A1";
+                        a[0].Handle = 0;
+                        a[0].State = com.sun.star.beans.PropertyState.DIRECT_VALUE;
+                        xDispatchHelperOut.executeDispatch(xDocDispatchProviderOut, ".uno:GoToCell", "", 0, a);
+                        xDispatchHelperOut.executeDispatch(xDocDispatchProviderOut, ".uno:Paste", "", 0, new PropertyValue[0]);
+                    }
+                    
+                    
+                    
+                    
                     com.sun.star.beans.PropertyValue[] a =
                         new com.sun.star.beans.PropertyValue[1];
                     a[0] = new com.sun.star.beans.PropertyValue();
@@ -361,7 +398,7 @@ private static XDispatchProvider xDocDispatchProviderOut = null;
                       (XDispatchHelper)UnoRuntime.queryInterface(XDispatchHelper.class, dispatchHelperOut); 
                     
                     XModel xDocModelOut = (XModel) UnoRuntime.queryInterface(XModel.class, xSheetDocumentOut);
-                    XController  xDocControllerOut = (XController) UnoRuntime.queryInterface(
+                    XController xDocControllerOut = (XController) UnoRuntime.queryInterface(
                             XController.class, xDocModelOut.getCurrentController());
                     xDocDispatchProviderOut = (XDispatchProvider) UnoRuntime.queryInterface(
                             XDispatchProvider.class, xDocControllerOut);
@@ -400,6 +437,9 @@ private static XDispatchProvider xDocDispatchProviderOut = null;
                     System.out.println( "insert graphic \"" + sUrl + "\"");
                     //画像読み込み
                     putImage(xContext, xSheetDocumentOut, xSheetO, sUrl.toString(), new Point(12000, 4500), new Size(2500, 2500));
+                    
+                    //透過100％、線無しにする必要あり
+                    
                     
                     //閉じる
                     com.sun.star.util.XCloseable xCloseable = (com.sun.star.util.XCloseable)
