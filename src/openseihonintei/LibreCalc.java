@@ -1010,7 +1010,10 @@ private static XDispatchProvider xDocDispatchProviderOut = null;
             XPropertySetInfo xIPSInfo = xImgPropSet.getPropertySetInfo();
             xImgPropSet.setPropertyValue("AnchorType",
                         com.sun.star.text.TextContentAnchorType.AS_CHARACTER);
-
+            //.uno:InteractiveTransparence
+            xImgPropSet.setPropertyValue("FillTransparence", 100);
+            
+            
             //sFilePath = "file:///" + sGraphFile.replaceAll("[/|\\\\]+", "/");
         
           try {
